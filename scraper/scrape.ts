@@ -208,7 +208,112 @@ async function fetchPostComments(post: RedditPost): Promise<RedditComment[]> {
   return extractComments(data, post.title, post.subreddit);
 }
 
-// ─── Social Scraping ─────────────────────────────────────────────────────────
+// ─── X/Twitter API ───────────────────────────────────────────────────────────
+
+const X_BEARER_TOKEN = 'AAAAAAAAAAAAAAAAAAAAABPy9gEAAAAAnL2nhrfiek5PYNiVD93bAWCYGCQ%3DoPU8eNCFChjfVVIRgZgBPDB0PgoHy5uJmRTUZOH8N1E50mPfNW';
+
+const X_SEARCH_QUERIES = [
+  'toronto mayor',
+  'olivia chow',
+  'brad bradford',
+  'toronto election 2026',
+  'toronto municipal election',
+  'toronto city hall',
+];
+
+interface XApiResponse {
+  data?: Array<{
+    id: string;
+    text: string;
+    author_id: string;
+    created_at?: string;
+    public_metrics?: {
+      like_count: number;
+      retweet_count: number;
+      reply_count: number;
+    };
+  }>;
+  includes?: {
+    users?: Array<{
+      id: string;
+      name: string;
+      username: string;
+    }>;
+  };
+  meta?: {
+    result_count: number;
+    next_token?: string;
+  };
+}
+
+async function fetchXSearchResults(query: string, maxResults = 20): Promise<Tweet[]> {
+  const url = `https://api.twitter.com/2/tweets/search/recent?query=${encodeURIComponent(query)}&max_results=${Math.min(maxResults, 100)}&tweet.fields=created_at,public_metrics,author_id&expansions=author_id&user.fields=username,name`;
+
+  const response = await fetch(url, {
+    headers: {
+      'Authorization': `Bearer ${X_BEARER_TOKEN}`,
+      'User-Agent': 'TorontoPulseBot/1.0',
+    },
+    signal: AbortSignal.timeout(15000),
+  });
+
+  if (!response.ok) {
+    const body = await response.text().catch(() => '');
+    throw new Error(`X API error ${response.status}: ${body.slice(0, 200)}`);
+  }
+
+  const data: XApiResponse = await response.json();
+  if (!data.data || data.data.length === 0) return [];
+
+  const userMap = new Map<string, { name: string; username: string }>();
+  for (const user of data.includes?.users || []) {
+    userMap.set(user.id, { name: user.name, username: user.username });
+  }
+
+  return data.data.map(tweet => {
+    const user = userMap.get(tweet.author_id);
+    const createdAt = tweet.created_at ? new Date(tweet.created_at) : new Date();
+
+    return {
+      id: `x_${tweet.id}`,
+      text: tweet.text.slice(0, 500),
+      author: user?.name || 'Unknown',
+      handle: user?.username ? `@${user.username}` : '@unknown',
+      likes: tweet.public_metrics?.like_count || 0,
+      retweets: tweet.public_metrics?.retweet_count || 0,
+      created_utc: Math.floor(createdAt.getTime() / 1000),
+      permalink: `https://x.com/${user?.username || 'i'}/status/${tweet.id}`,
+      source: 'twitter' as const,
+    };
+  });
+}
+
+async function fetchXTweets(): Promise<Tweet[]> {
+  const allTweets: Tweet[] = [];
+  const seenIds = new Set<string>();
+
+  for (const query of X_SEARCH_QUERIES) {
+    try {
+      console.log(`  X API search: "${query}"`);
+      const tweets = await fetchXSearchResults(query, 20);
+      for (const tweet of tweets) {
+        if (!seenIds.has(tweet.id)) {
+          seenIds.add(tweet.id);
+          allTweets.push(tweet);
+        }
+      }
+      console.log(`  "${query}": ${tweets.length} tweets (${allTweets.length} total unique)`);
+      // Small delay between queries to be respectful
+      await new Promise(r => setTimeout(r, 500));
+    } catch (err) {
+      console.warn(`  X search "${query}" failed: ${(err as Error).message}`);
+    }
+  }
+
+  return allTweets.sort((a, b) => b.created_utc - a.created_utc);
+}
+
+// ─── Bluesky (supplementary) ─────────────────────────────────────────────────
 
 const BLUESKY_ACTORS = [
   'oliviachow.bsky.social',
@@ -220,9 +325,7 @@ const BLUESKY_ACTORS = [
 
 function extractPostText(record: Record<string, unknown>): string {
   const text = typeof record.text === 'string' ? record.text : '';
-  return text
-    .replace(/\s+/g, ' ')
-    .trim();
+  return text.replace(/\s+/g, ' ').trim();
 }
 
 async function fetchBlueskyFeed(actor: string, limit = 20): Promise<Tweet[]> {
@@ -278,12 +381,12 @@ async function fetchBlueskyFeed(actor: string, limit = 20): Promise<Tweet[]> {
     .filter((tweet): tweet is Tweet => tweet !== null);
 }
 
-async function fetchTweets(): Promise<Tweet[]> {
+async function fetchBlueskyTweets(): Promise<Tweet[]> {
   const allTweets: Tweet[] = [];
 
   for (const actor of BLUESKY_ACTORS) {
     try {
-      console.log(`  Fetching Bluesky feed: ${actor}`);
+      console.log(`  Bluesky feed: ${actor}`);
       const posts = await fetchBlueskyFeed(actor, 20);
       console.log(`  ${actor}: ${posts.length} posts`);
       allTweets.push(...posts);
@@ -297,20 +400,24 @@ async function fetchTweets(): Promise<Tweet[]> {
     'north york', 'etobicoke', 'east york', 'budget', 'tax', 'olivia', 'chow', 'bradford'
   ];
 
-  const filtered = allTweets
-    .filter(tweet => electionKeywords.some(keyword => tweet.text.toLowerCase().includes(keyword)))
-    .sort((a, b) => b.created_utc - a.created_utc);
+  return allTweets
+    .filter(tweet => electionKeywords.some(kw => tweet.text.toLowerCase().includes(kw)))
+    .sort((a, b) => b.created_utc - a.created_utc)
+    .slice(0, 20);
+}
 
-  const deduped = filtered.filter((tweet, index, arr) => {
-    const normalized = tweet.text.toLowerCase().replace(/https?:\/\/\S+/g, '').trim();
-    return arr.findIndex(t => t.text.toLowerCase().replace(/https?:\/\/\S+/g, '').trim() === normalized) === index;
-  });
+async function fetchAllSocial(): Promise<Tweet[]> {
+  console.log('\n[X/Twitter] Fetching via API...');
+  const xTweets = await fetchXTweets();
+  console.log(`  X total: ${xTweets.length} tweets`);
 
-  if (deduped.length === 0) {
-    console.warn('  No relevant Bluesky posts matched election filters');
-  }
+  console.log('\n[Bluesky] Fetching feeds...');
+  const bskyTweets = await fetchBlueskyTweets();
+  console.log(`  Bluesky total: ${bskyTweets.length} posts`);
 
-  return deduped.slice(0, 30);
+  const combined = [...xTweets, ...bskyTweets].sort((a, b) => b.created_utc - a.created_utc);
+  console.log(`  Combined social: ${combined.length} items`);
+  return combined;
 }
 
 // ─── Sentiment Analysis ───────────────────────────────────────────────────────
@@ -480,9 +587,8 @@ async function main() {
     }
   }
 
-  // 3. Fetch tweets
-  console.log('\n[Twitter/X] Fetching tweets via Nitter...');
-  const tweets = await fetchTweets();
+  // 3. Fetch social (X + Bluesky)
+  const tweets = await fetchAllSocial();
 
   // 4. Run sentiment analysis
   console.log('\n[Sentiment] Analyzing...');
