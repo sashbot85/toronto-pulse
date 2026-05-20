@@ -9,6 +9,7 @@ export interface RedditPost {
   subreddit: string;
   permalink: string;
   url: string;
+  source?: 'reddit';
 }
 
 export interface RedditComment {
@@ -19,6 +20,19 @@ export interface RedditComment {
   created_utc: number;
   post_title: string;
   permalink: string;
+  source?: 'reddit';
+}
+
+export interface Tweet {
+  id: string;
+  text: string;
+  author: string;
+  handle: string;
+  likes: number;
+  retweets: number;
+  created_utc: number;
+  permalink: string;
+  source: 'twitter';
 }
 
 export interface Poll {
@@ -72,7 +86,7 @@ export interface SentimentData {
 }
 
 export type FeedItem = {
-  type: 'post' | 'comment';
+  type: 'post' | 'comment' | 'tweet';
   id: string;
   text: string;
   author: string;
@@ -83,4 +97,5 @@ export type FeedItem = {
   mentionsChow: boolean;
   mentionsBradford: boolean;
   sentiment: 'positive' | 'negative' | 'neutral';
+  source: 'reddit' | 'twitter';
 };

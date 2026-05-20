@@ -30,23 +30,33 @@ function timeAgo(utc: number): string {
   }
 }
 
+// Twitter/X bird icon (inline SVG path)
+function XIcon() {
+  return (
+    <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" style={{ display: 'inline', verticalAlign: 'middle' }}>
+      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.259 5.63L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77z"/>
+    </svg>
+  );
+}
+
+const ISSUE_KEYWORDS: Record<string, string[]> = {
+  'Housing': ['housing', 'rent', 'affordable', 'condo', 'landlord', 'tenant', 'eviction', 'zoning'],
+  'Transit/TTC': ['transit', 'ttc', 'subway', 'bus', 'traffic', 'bike lane', 'eglinton', 'streetcar'],
+  'Safety': ['safety', 'crime', 'police', 'shooting', 'violence', 'theft', 'assault'],
+  'Affordability': ['affordability', 'cost of living', 'taxes', 'property tax', 'inflation', 'expensive'],
+  'Homelessness': ['homeless', 'encampment', 'shelter', 'mental health', 'addiction'],
+  'Development': ['development', 'construction', 'condo tower', 'heritage', 'neighbourhood'],
+};
+
 export default function LiveFeed({ items, loading, issueFilter }: LiveFeedProps) {
-  const [tab, setTab] = useState<'all' | 'posts' | 'comments'>('all');
+  const [tab, setTab] = useState<'all' | 'posts' | 'comments' | 'x'>('all');
 
   const filtered = items.filter(item => {
     if (tab === 'posts' && item.type !== 'post') return false;
     if (tab === 'comments' && item.type !== 'comment') return false;
+    if (tab === 'x' && item.source !== 'twitter') return false;
     return true;
   }).slice(0, 50);
-
-  const ISSUE_KEYWORDS: Record<string, string[]> = {
-    'Housing': ['housing', 'rent', 'affordable', 'condo', 'landlord', 'tenant', 'eviction', 'zoning'],
-    'Transit/TTC': ['transit', 'ttc', 'subway', 'bus', 'traffic', 'bike lane', 'eglinton', 'streetcar'],
-    'Safety': ['safety', 'crime', 'police', 'shooting', 'violence', 'theft', 'assault'],
-    'Affordability': ['affordability', 'cost of living', 'taxes', 'property tax', 'inflation', 'expensive'],
-    'Homelessness': ['homeless', 'encampment', 'shelter', 'mental health', 'addiction'],
-    'Development': ['development', 'construction', 'condo tower', 'heritage', 'neighbourhood'],
-  };
 
   const issueFiltered = issueFilter
     ? filtered.filter(item => {
@@ -55,6 +65,8 @@ export default function LiveFeed({ items, loading, issueFilter }: LiveFeedProps)
         return keywords.some(kw => lower.includes(kw));
       })
     : filtered;
+
+  const tweetCount = items.filter(i => i.source === 'twitter').length;
 
   return (
     <div style={{
@@ -78,12 +90,13 @@ export default function LiveFeed({ items, loading, issueFilter }: LiveFeedProps)
             )}
           </h2>
           <p style={{ margin: '4px 0 0', fontSize: '12px', color: '#6b7280' }}>
-            {issueFiltered.length} items • Reddit r/toronto + r/CanadaPolitics + r/TorontoPolitics
+            {issueFiltered.length} items
+            {tweetCount > 0 && ` • ${tweetCount} from X`}
           </p>
         </div>
-        {/* Tabs */}
+        {/* Source filter tabs */}
         <div style={{ display: 'flex', borderRadius: '8px', overflow: 'hidden', border: '1px solid #1f2937' }}>
-          {(['all', 'posts', 'comments'] as const).map(t => (
+          {(['all', 'posts', 'comments', 'x'] as const).map((t, i, arr) => (
             <button
               key={t}
               onClick={() => setTab(t)}
@@ -93,14 +106,22 @@ export default function LiveFeed({ items, loading, issueFilter }: LiveFeedProps)
                 fontWeight: 600,
                 cursor: 'pointer',
                 background: tab === t ? '#1f2937' : 'transparent',
-                color: tab === t ? '#f9fafb' : '#6b7280',
+                color: tab === t ? (t === 'x' ? '#1d9bf0' : '#f9fafb') : '#6b7280',
                 border: 'none',
-                borderRight: t !== 'comments' ? '1px solid #1f2937' : 'none',
+                borderRight: i < arr.length - 1 ? '1px solid #1f2937' : 'none',
                 textTransform: 'capitalize',
                 transition: 'all 0.2s ease',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '4px',
               }}
             >
-              {t}
+              {t === 'x' ? (
+                <>
+                  <XIcon />
+                  X
+                </>
+              ) : t}
             </button>
           ))}
         </div>
@@ -125,46 +146,66 @@ export default function LiveFeed({ items, loading, issueFilter }: LiveFeedProps)
           <div style={{ textAlign: 'center', padding: '48px 24px', color: '#6b7280' }}>
             <div style={{ fontSize: '32px', marginBottom: '12px' }}>📭</div>
             <div style={{ fontSize: '14px', fontWeight: 600, color: '#9ca3af', marginBottom: '4px' }}>
-              No posts yet
+              No items yet
             </div>
             <div style={{ fontSize: '12px' }}>
-              Reddit data will appear here once fetched
+              Run the scraper to populate data
             </div>
           </div>
         ) : (
           issueFiltered.map((item) => {
+            const isTwitter = item.source === 'twitter';
             const subredditColor = item.subreddit ? (SUBREDDIT_COLORS[item.subreddit] || '#6b7280') : '#6b7280';
             const sentimentColor = SENTIMENT_COLORS[item.sentiment];
+            const href = isTwitter
+              ? item.permalink
+              : `https://reddit.com${item.permalink}`;
 
             return (
               <a
                 key={item.id}
-                href={`https://reddit.com${item.permalink}`}
+                href={href}
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{
                   display: 'block',
                   padding: '12px 14px',
-                  background: '#0d1424',
+                  background: isTwitter ? '#060d1a' : '#0d1424',
                   borderRadius: '10px',
-                  border: '1px solid #1f2937',
+                  border: `1px solid ${isTwitter ? '#1a2a3a' : '#1f2937'}`,
                   textDecoration: 'none',
                   transition: 'all 0.15s ease',
                   cursor: 'pointer',
                 }}
                 onMouseEnter={e => {
-                  (e.currentTarget as HTMLElement).style.borderColor = '#374151';
-                  (e.currentTarget as HTMLElement).style.background = '#111827';
+                  (e.currentTarget as HTMLElement).style.borderColor = isTwitter ? '#1d9bf040' : '#374151';
+                  (e.currentTarget as HTMLElement).style.background = isTwitter ? '#0a1628' : '#111827';
                 }}
                 onMouseLeave={e => {
-                  (e.currentTarget as HTMLElement).style.borderColor = '#1f2937';
-                  (e.currentTarget as HTMLElement).style.background = '#0d1424';
+                  (e.currentTarget as HTMLElement).style.borderColor = isTwitter ? '#1a2a3a' : '#1f2937';
+                  (e.currentTarget as HTMLElement).style.background = isTwitter ? '#060d1a' : '#0d1424';
                 }}
               >
                 {/* Top row */}
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px', flexWrap: 'wrap' }}>
-                  {/* Subreddit badge */}
-                  {item.subreddit && (
+                  {/* Source badge */}
+                  {isTwitter ? (
+                    <span style={{
+                      padding: '2px 8px',
+                      borderRadius: '12px',
+                      background: 'rgba(29, 155, 240, 0.15)',
+                      border: '1px solid rgba(29, 155, 240, 0.3)',
+                      fontSize: '10px',
+                      fontWeight: 600,
+                      color: '#1d9bf0',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '4px',
+                    }}>
+                      <XIcon />
+                      Twitter/X
+                    </span>
+                  ) : item.subreddit ? (
                     <span style={{
                       padding: '2px 8px',
                       borderRadius: '12px',
@@ -176,7 +217,7 @@ export default function LiveFeed({ items, loading, issueFilter }: LiveFeedProps)
                     }}>
                       r/{item.subreddit}
                     </span>
-                  )}
+                  ) : null}
 
                   {/* Type badge */}
                   <span style={{
@@ -255,16 +296,26 @@ export default function LiveFeed({ items, loading, issueFilter }: LiveFeedProps)
                   fontSize: '11px',
                   color: '#6b7280',
                 }}>
-                  <span>u/{item.author}</span>
+                  <span>{isTwitter ? `@${item.author}` : `u/${item.author}`}</span>
                   <span>·</span>
                   <span>{timeAgo(item.created_utc)}</span>
                   <span>·</span>
                   <span>
-                    {/* Arrow up SVG */}
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" style={{ display: 'inline', marginRight: '3px', verticalAlign: 'middle' }}>
-                      <path d="M12 4l8 8H4z"/>
-                    </svg>
-                    {item.score}
+                    {isTwitter ? (
+                      <>
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" style={{ display: 'inline', marginRight: '3px', verticalAlign: 'middle' }}>
+                          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                        </svg>
+                        {item.score}
+                      </>
+                    ) : (
+                      <>
+                        <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" style={{ display: 'inline', marginRight: '3px', verticalAlign: 'middle' }}>
+                          <path d="M12 4l8 8H4z"/>
+                        </svg>
+                        {item.score}
+                      </>
+                    )}
                   </span>
                 </div>
               </a>
