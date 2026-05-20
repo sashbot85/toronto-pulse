@@ -35,10 +35,10 @@ export default function IssueTracker({ sentiment, loading, onSelectIssue, select
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
         <div>
           <h2 style={{ margin: 0, fontSize: '16px', fontWeight: 700, color: '#f9fafb' }}>
-            Issue Tracker
+            Top Issue Clusters
           </h2>
-          <p style={{ margin: '4px 0 0', fontSize: '12px', color: '#6b7280' }}>
-            Click to filter feed by issue
+          <p style={{ margin: '4px 0 0', fontSize: '12px', color: '#7b8494' }}>
+            Tap a cluster to focus the signal feed
           </p>
         </div>
         {selectedIssue && (

@@ -82,16 +82,16 @@ export default function LiveFeed({ items, loading, issueFilter }: LiveFeedProps)
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
         <div>
           <h2 style={{ margin: 0, fontSize: '16px', fontWeight: 700, color: '#f9fafb' }}>
-            Live Feed
+            Live Signal
             {issueFilter && (
               <span style={{ marginLeft: '8px', fontSize: '12px', color: '#f59e0b', fontWeight: 600 }}>
                 · {issueFilter}
               </span>
             )}
           </h2>
-          <p style={{ margin: '4px 0 0', fontSize: '12px', color: '#6b7280' }}>
+          <p style={{ margin: '4px 0 0', fontSize: '12px', color: '#7b8494' }}>
             {issueFiltered.length} items
-            {tweetCount > 0 && ` • ${tweetCount} from X`}
+            {tweetCount > 0 && ` • ${tweetCount} from social feeds`}
           </p>
         </div>
         {/* Source filter tabs */}

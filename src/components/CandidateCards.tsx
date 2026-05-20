@@ -258,7 +258,7 @@ export default function CandidateCards({ sentiment, loading }: CandidateCardsPro
   return (
     <div style={{ marginBottom: '24px' }}>
       <h2 style={{ fontSize: '18px', fontWeight: 700, color: '#f9fafb', marginBottom: '16px' }}>
-        Candidate Comparison
+        Candidate Comparison Matrix
       </h2>
       <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
         <CandidateCard

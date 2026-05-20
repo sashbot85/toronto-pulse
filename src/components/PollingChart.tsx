@@ -78,10 +78,10 @@ export default function PollingChart({ polls, loading }: PollingChartProps) {
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
         <div>
           <h2 style={{ margin: 0, fontSize: '16px', fontWeight: 700, color: '#f9fafb' }}>
-            Polling Trends
+            Polling Velocity
           </h2>
-          <p style={{ margin: '4px 0 0', fontSize: '12px', color: '#6b7280' }}>
-            Head-to-head polling data — Toronto 2026 mayoral race
+          <p style={{ margin: '4px 0 0', fontSize: '12px', color: '#7b8494' }}>
+            Head-to-head polling data across the race cycle
           </p>
         </div>
         <div style={{

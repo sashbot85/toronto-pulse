@@ -31,10 +31,10 @@ export default function GeoSentiment({ sentiment, loading }: GeoSentimentProps) 
     }}>
       <div style={{ marginBottom: '20px' }}>
         <h2 style={{ margin: 0, fontSize: '16px', fontWeight: 700, color: '#f9fafb' }}>
-          Geographic Sentiment
+          Geographic Sentiment Map
         </h2>
-        <p style={{ margin: '4px 0 0', fontSize: '12px', color: '#6b7280' }}>
-          Sentiment by borough mentioned in posts
+        <p style={{ margin: '4px 0 0', fontSize: '12px', color: '#7b8494' }}>
+          Borough-level discussion detected across the social stream
         </p>
       </div>
 

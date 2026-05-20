@@ -352,7 +352,7 @@ async function fetchBlueskyFeed(actor: string, limit = 20): Promise<Tweet[]> {
     }>;
   };
 
-  return (data.feed || [])
+  const mapped: Array<Tweet | null> = (data.feed || [])
     .filter(item => item.post?.record && !item.reason && !item.post.record.reply)
     .map(item => {
       const record = item.post!.record!;
@@ -377,8 +377,9 @@ async function fetchBlueskyFeed(actor: string, limit = 20): Promise<Tweet[]> {
         permalink: `https://bsky.app/profile/${handle}/post/${postId}`,
         source: 'bluesky' as const,
       };
-    })
-    .filter((tweet): tweet is Tweet => tweet !== null);
+    });
+
+  return mapped.filter((tweet): tweet is Tweet => tweet !== null);
 }
 
 async function fetchBlueskyTweets(): Promise<Tweet[]> {

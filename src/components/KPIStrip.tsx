@@ -19,43 +19,36 @@ function KPICard({ title, value, subtitle, trend, color, loading }: {
     <div
       className="card-hover"
       style={{
-        background: '#111827',
-        border: '1px solid #1f2937',
-        borderRadius: '16px',
-        padding: '20px 24px',
+        background: 'linear-gradient(180deg, rgba(26,31,38,0.98), rgba(18,22,28,0.98))',
+        border: '1px solid #262c36',
+        borderRadius: '20px',
+        padding: '18px 20px',
         flex: 1,
         minWidth: 0,
       }}
     >
-      <div style={{ fontSize: '11px', color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 600, marginBottom: '8px' }}>
-        {title}
+      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '10px', marginBottom: '14px' }}>
+        <div style={{ fontSize: '11px', color: '#7b8494', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 700 }}>
+          {title}
+        </div>
+        {trend && !loading && (
+          <div style={{ color: trend === 'up' ? '#31d0aa' : '#fb7185', fontSize: '12px', fontWeight: 700 }}>
+            {trend === 'up' ? 'trending_up' : 'trending_down'}
+          </div>
+        )}
       </div>
       {loading ? (
         <div className="skeleton" style={{ height: '36px', width: '80%', marginBottom: '8px' }} />
       ) : (
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <div className="font-mono-num" style={{
-            fontSize: '32px',
-            fontWeight: 700,
-            color: color || '#f9fafb',
-            lineHeight: 1,
-          }}>
-            {value}
-          </div>
-          {trend && (
-            <div style={{
-              display: 'flex',
-              alignItems: 'center',
-              color: trend === 'up' ? '#10b981' : '#ef4444',
-              fontSize: '20px',
-            }}>
-              {trend === 'up' ? '↑' : '↓'}
-            </div>
+        <div style={{ display: 'flex', alignItems: 'flex-end', gap: '6px' }}>
+          <div className="font-mono-num" style={{ fontSize: '34px', fontWeight: 800, color: color || '#f9fafb', lineHeight: 0.95, letterSpacing: '-0.04em' }}>{value}</div>
+          {(title.includes('Sentiment') || title.includes('Chow') || title.includes('Bradford')) && (
+            <div style={{ color: '#7b8494', fontSize: '14px', marginBottom: '4px' }}>/ 100</div>
           )}
         </div>
       )}
       {subtitle && !loading && (
-        <div style={{ fontSize: '12px', color: '#6b7280', marginTop: '4px' }}>
+        <div style={{ fontSize: '12px', color: '#7b8494', marginTop: '8px' }}>
           {subtitle}
         </div>
       )}
@@ -88,15 +81,15 @@ function DominantSentimentCard({ sentiment, loading }: { sentiment: SentimentDat
     <div
       className="card-hover"
       style={{
-        background: '#111827',
-        border: '1px solid #1f2937',
-        borderRadius: '16px',
-        padding: '20px 24px',
+        background: 'linear-gradient(180deg, rgba(26,31,38,0.98), rgba(18,22,28,0.98))',
+        border: '1px solid #262c36',
+        borderRadius: '20px',
+        padding: '18px 20px',
         flex: 1,
         minWidth: 0,
       }}
     >
-      <div style={{ fontSize: '11px', color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 600, marginBottom: '8px' }}>
+      <div style={{ fontSize: '11px', color: '#7b8494', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 700, marginBottom: '14px' }}>
         Dominant Sentiment
       </div>
       {loading ? (
@@ -116,7 +109,7 @@ function DominantSentimentCard({ sentiment, loading }: { sentiment: SentimentDat
             width: '8px', height: '8px', borderRadius: '50%',
             backgroundColor: color,
           }} />
-          <span style={{ fontSize: '20px', fontWeight: 700, color, fontFamily: 'JetBrains Mono, monospace' }}>
+          <span style={{ fontSize: '20px', fontWeight: 800, color, fontFamily: 'JetBrains Mono, monospace' }}>
             {label}
           </span>
         </div>
@@ -132,11 +125,11 @@ export default function KPIStrip({ sentiment, loading }: KPIStripProps) {
 
   return (
     <div style={{
-      display: 'flex',
+      display: 'grid',
+      gridTemplateColumns: 'repeat(4, minmax(0, 1fr))',
       gap: '16px',
       marginBottom: '24px',
-      flexWrap: 'wrap',
-    }}>
+    }} className="kpi-grid">
       <KPICard
         title="Chow Approval"
         value={chowScore !== undefined ? `${chowScore}%` : '—'}
@@ -154,13 +147,21 @@ export default function KPIStrip({ sentiment, loading }: KPIStripProps) {
         loading={loading}
       />
       <KPICard
-        title="Posts Analyzed (24h)"
+        title="Total Signals (24h)"
         value={postsAnalyzed !== undefined ? postsAnalyzed.toLocaleString() : '—'}
-        subtitle="Posts + comments"
+        subtitle="Volume across Reddit, X, and Bluesky"
         color="#f9fafb"
         loading={loading}
       />
       <DominantSentimentCard sentiment={sentiment} loading={loading} />
+      <style>{`
+        @media (max-width: 1180px) {
+          .kpi-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        }
+        @media (max-width: 720px) {
+          .kpi-grid { grid-template-columns: 1fr; }
+        }
+      `}</style>
     </div>
   );
 }

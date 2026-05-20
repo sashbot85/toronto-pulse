@@ -1,18 +1,19 @@
 @import "tailwindcss";
 
 :root {
-  --bg-primary: #0a0f1a;
-  --bg-secondary: #0d1424;
-  --card: #111827;
-  --card-border: #1f2937;
-  --text-primary: #f9fafb;
-  --text-body: #d1d5db;
-  --text-muted: #6b7280;
+  --bg-primary: #0e1014;
+  --bg-secondary: #12161d;
+  --card: #171b21;
+  --card-border: #262c36;
+  --text-primary: #f5f7fb;
+  --text-body: #c7cfdd;
+  --text-muted: #7b8494;
   --accent-chow: #f59e0b;
   --accent-bradford: #3b82f6;
   --accent-positive: #10b981;
   --accent-negative: #ef4444;
   --accent-neutral: #6b7280;
+  --surface-soft: #1d232c;
 }
 
 * {
@@ -102,6 +103,83 @@ html, body {
 }
 
 .card-hover:hover {
-  border-color: #374151;
+  border-color: #3a4352;
   transform: translateY(-1px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.22);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.terminal-shell {
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, rgba(245, 158, 11, 0.1), transparent 26%),
+    radial-gradient(circle at top right, rgba(59, 130, 246, 0.09), transparent 22%),
+    linear-gradient(180deg, #0c0f14 0%, #0f1319 100%);
+}
+
+.app-grid {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+.side-nav {
+  border-right: 1px solid rgba(123, 132, 148, 0.12);
+  background: linear-gradient(180deg, rgba(20, 24, 31, 0.98), rgba(16, 19, 25, 0.98));
+  padding: 28px 20px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+.surface-card {
+  background: linear-gradient(180deg, rgba(25, 29, 36, 0.98), rgba(19, 23, 29, 0.98));
+  border: 1px solid var(--card-border);
+  border-radius: 22px;
+}
+
+.grid-main {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(340px, 0.9fr);
+  gap: 20px;
+}
+
+.top-tabs {
+  display: inline-flex;
+  gap: 8px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  padding: 6px;
+  border-radius: 999px;
+}
+
+.top-tab {
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.top-tab.active {
+  background: #f2f4f8;
+  color: #0f1319;
+}
+
+@media (max-width: 1180px) {
+  .app-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .side-nav {
+    display: none;
+  }
+
+  .grid-main {
+    grid-template-columns: 1fr;
+  }
 }
