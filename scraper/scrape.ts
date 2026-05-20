@@ -1,7 +1,7 @@
 #!/usr/bin/env tsx
 /**
  * Toronto Pulse Scraper
- * Scrapes Reddit + X (via Nitter), runs sentiment analysis,
+ * Scrapes Reddit + social posts, runs sentiment analysis,
  * and writes a static JSON file to public/data/pulse-data.json
  */
 
@@ -45,7 +45,7 @@ interface Tweet {
   retweets: number;
   created_utc: number;
   permalink: string;
-  source: 'twitter';
+  source: 'twitter' | 'bluesky';
 }
 
 // ─── Sentiment Keywords (from src/lib/sentiment.ts) ──────────────────────────
@@ -208,138 +208,109 @@ async function fetchPostComments(post: RedditPost): Promise<RedditComment[]> {
   return extractComments(data, post.title, post.subreddit);
 }
 
-// ─── Nitter / X Scraping ─────────────────────────────────────────────────────
+// ─── Social Scraping ─────────────────────────────────────────────────────────
 
-const NITTER_INSTANCES = [
-  'https://nitter.poast.org',
-  'https://xcancel.com',
-  'https://nitter.privacydev.net',
-  'https://nitter.cz',
+const BLUESKY_ACTORS = [
+  'oliviachow.bsky.social',
+  'joshmatlow.bsky.social',
+  'ausmamalik.bsky.social',
+  'coteau.bsky.social',
+  'bradford.bsky.social',
 ];
 
-function parseTweets(html: string, baseUrl: string): Tweet[] {
-  const tweets: Tweet[] = [];
+function extractPostText(record: Record<string, unknown>): string {
+  const text = typeof record.text === 'string' ? record.text : '';
+  return text
+    .replace(/\s+/g, ' ')
+    .trim();
+}
 
-  // Extract tweet blocks
-  const tweetPattern = /<div class="timeline-item[^"]*">([\s\S]*?)<\/div>\s*<\/div>\s*<\/div>/g;
-  let match;
+async function fetchBlueskyFeed(actor: string, limit = 20): Promise<Tweet[]> {
+  const url = `https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=${encodeURIComponent(actor)}&limit=${limit}`;
+  const response = await fetch(url, {
+    headers: {
+      'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36',
+      'Accept': 'application/json',
+    },
+    signal: AbortSignal.timeout(15000),
+  });
 
-  // Use a simpler line-by-line approach
-  const lines = html.split('\n');
-  let currentTweet: Partial<Tweet> | null = null;
-  let inTweet = false;
-  let tweetHtml = '';
+  if (!response.ok) throw new Error(`Bluesky feed error: ${response.status}`);
 
-  // Try regex approach on the whole HTML
-  const itemRegex = /<div class="timeline-item[^"]*">([\s\S]*?)(?=<div class="timeline-item|<\/div>\s*<\/div>\s*<div class="timeline-|$)/g;
+  const data = await response.json() as {
+    feed?: Array<{
+      reason?: unknown;
+      post?: {
+        uri?: string;
+        indexedAt?: string;
+        author?: { displayName?: string; handle?: string };
+        record?: Record<string, unknown> & { createdAt?: string; reply?: unknown };
+      };
+    }>;
+  };
 
-  while ((match = itemRegex.exec(html)) !== null) {
-    const block = match[0];
+  return (data.feed || [])
+    .filter(item => item.post?.record && !item.reason && !item.post.record.reply)
+    .map(item => {
+      const record = item.post!.record!;
+      const handle = item.post?.author?.handle || actor;
+      const text = extractPostText(record);
+      if (!text) return null;
 
-    // Extract username/handle
-    const handleMatch = block.match(/class="username"[^>]*>@([^<]+)</);
-    const nameMatch = block.match(/class="fullname"[^>]*>([^<]+)</);
+      const uri = item.post?.uri || '';
+      const uriParts = uri.split('/');
+      const postId = uriParts[uriParts.length - 1] || `${handle}-${Date.now()}`;
+      const createdAt = typeof record.createdAt === 'string' ? record.createdAt : item.post?.indexedAt;
+      const created_utc = createdAt ? Math.floor(new Date(createdAt).getTime() / 1000) : Math.floor(Date.now() / 1000);
 
-    // Extract tweet text
-    const textMatch = block.match(/class="tweet-content[^"]*"[^>]*>([\s\S]*?)<\/div>/);
-
-    // Extract timestamp
-    const timeMatch = block.match(/datetime="([^"]+)"/);
-
-    // Extract stats
-    const likeMatch = block.match(/class="icon-heart[^"]*"[\s\S]*?<span[^>]*>(\d+)/);
-    const retweetMatch = block.match(/class="icon-retweet[^"]*"[\s\S]*?<span[^>]*>(\d+)/);
-
-    // Extract permalink
-    const linkMatch = block.match(/class="tweet-link" href="([^"]+)"/);
-
-    if (!handleMatch || !textMatch) continue;
-
-    // Clean text
-    const rawText = textMatch[1]
-      .replace(/<[^>]+>/g, '')
-      .replace(/&amp;/g, '&')
-      .replace(/&lt;/g, '<')
-      .replace(/&gt;/g, '>')
-      .replace(/&quot;/g, '"')
-      .replace(/&#39;/g, "'")
-      .replace(/\s+/g, ' ')
-      .trim();
-
-    if (!rawText) continue;
-
-    const handle = handleMatch[1].trim();
-    const name = nameMatch ? nameMatch[1].trim() : handle;
-    const permalink = linkMatch
-      ? (linkMatch[1].startsWith('http') ? linkMatch[1] : `https://twitter.com${linkMatch[1].replace(/^\/[^/]+/, '')}`)
-      : `https://twitter.com/${handle}`;
-
-    let created_utc = Math.floor(Date.now() / 1000);
-    if (timeMatch) {
-      try {
-        created_utc = Math.floor(new Date(timeMatch[1]).getTime() / 1000);
-      } catch { /* keep default */ }
-    }
-
-    const id = `tweet_${handle}_${created_utc}`;
-
-    tweets.push({
-      id,
-      text: rawText.slice(0, 500),
-      author: name,
-      handle,
-      likes: likeMatch ? parseInt(likeMatch[1], 10) : 0,
-      retweets: retweetMatch ? parseInt(retweetMatch[1], 10) : 0,
-      created_utc,
-      permalink,
-      source: 'twitter' as const,
-    });
-
-    if (tweets.length >= 30) break;
-  }
-
-  return tweets;
+      return {
+        id: `bsky_${handle}_${postId}`,
+        text: text.slice(0, 500),
+        author: item.post?.author?.displayName?.trim() || handle,
+        handle,
+        likes: 0,
+        retweets: 0,
+        created_utc,
+        permalink: `https://bsky.app/profile/${handle}/post/${postId}`,
+        source: 'bluesky' as const,
+      };
+    })
+    .filter((tweet): tweet is Tweet => tweet !== null);
 }
 
 async function fetchTweets(): Promise<Tweet[]> {
-  const query = 'toronto election chow bradford mayor 2026';
-  const encodedQuery = encodeURIComponent(query);
+  const allTweets: Tweet[] = [];
 
-  for (const instance of NITTER_INSTANCES) {
+  for (const actor of BLUESKY_ACTORS) {
     try {
-      console.log(`  Trying nitter: ${instance}`);
-      const url = `${instance}/search?f=tweets&q=${encodedQuery}`;
-      const response = await fetch(url, {
-        headers: {
-          'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36',
-          'Accept': 'text/html,application/xhtml+xml',
-        },
-        signal: AbortSignal.timeout(10000),
-      });
-
-      if (!response.ok) {
-        console.warn(`  ${instance} returned ${response.status}`);
-        continue;
-      }
-
-      const html = await response.text();
-      if (html.includes('timeline-item') || html.includes('tweet-content')) {
-        const tweets = parseTweets(html, instance);
-        if (tweets.length > 0) {
-          console.log(`  Got ${tweets.length} tweets from ${instance}`);
-          return tweets;
-        }
-        console.warn(`  ${instance} responded but no tweets parsed`);
-      } else {
-        console.warn(`  ${instance} response doesn't look like tweets`);
-      }
+      console.log(`  Fetching Bluesky feed: ${actor}`);
+      const posts = await fetchBlueskyFeed(actor, 20);
+      console.log(`  ${actor}: ${posts.length} posts`);
+      allTweets.push(...posts);
     } catch (err) {
-      console.warn(`  ${instance} failed: ${(err as Error).message}`);
+      console.warn(`  ${actor} failed: ${(err as Error).message}`);
     }
   }
 
-  console.warn('  All nitter instances failed — no tweets collected');
-  return [];
+  const electionKeywords = [
+    'toronto', 'mayor', 'city hall', 'housing', 'ttc', 'transit', 'scarborough',
+    'north york', 'etobicoke', 'east york', 'budget', 'tax', 'olivia', 'chow', 'bradford'
+  ];
+
+  const filtered = allTweets
+    .filter(tweet => electionKeywords.some(keyword => tweet.text.toLowerCase().includes(keyword)))
+    .sort((a, b) => b.created_utc - a.created_utc);
+
+  const deduped = filtered.filter((tweet, index, arr) => {
+    const normalized = tweet.text.toLowerCase().replace(/https?:\/\/\S+/g, '').trim();
+    return arr.findIndex(t => t.text.toLowerCase().replace(/https?:\/\/\S+/g, '').trim() === normalized) === index;
+  });
+
+  if (deduped.length === 0) {
+    console.warn('  No relevant Bluesky posts matched election filters');
+  }
+
+  return deduped.slice(0, 30);
 }
 
 // ─── Sentiment Analysis ───────────────────────────────────────────────────────
