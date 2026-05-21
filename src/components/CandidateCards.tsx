@@ -105,12 +105,13 @@ function CandidateCard({
     <div
       className="card-hover"
       style={{
-        background: '#111827',
-        border: `1px solid ${color}30`,
-        borderRadius: '20px',
+        background: 'linear-gradient(180deg, rgba(25,29,36,0.98), rgba(18,22,28,0.98))',
+        border: `1px solid ${color}22`,
+        borderRadius: '24px',
         padding: '28px 24px',
         flex: 1,
         minWidth: 0,
+        boxShadow: '0 18px 48px rgba(0,0,0,0.18)',
       }}
     >
       {/* Avatar */}
@@ -257,7 +258,7 @@ export default function CandidateCards({ sentiment, loading }: CandidateCardsPro
 
   return (
     <div style={{ marginBottom: '24px' }}>
-      <h2 style={{ fontSize: '18px', fontWeight: 700, color: '#f9fafb', marginBottom: '16px' }}>
+      <h2 style={{ fontSize: '20px', fontWeight: 800, color: '#f5f7fb', marginBottom: '16px', letterSpacing: '-0.03em' }}>
         Candidate Comparison Matrix
       </h2>
       <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>

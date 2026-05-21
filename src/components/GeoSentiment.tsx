@@ -24,13 +24,14 @@ export default function GeoSentiment({ sentiment, loading }: GeoSentimentProps) 
 
   return (
     <div style={{
-      background: '#111827',
-      border: '1px solid #1f2937',
-      borderRadius: '16px',
+      background: 'linear-gradient(180deg, rgba(25,29,36,0.98), rgba(18,22,28,0.98))',
+      border: '1px solid #262c36',
+      borderRadius: '24px',
       padding: '24px',
+      boxShadow: '0 18px 48px rgba(0,0,0,0.18)',
     }}>
       <div style={{ marginBottom: '20px' }}>
-        <h2 style={{ margin: 0, fontSize: '16px', fontWeight: 700, color: '#f9fafb' }}>
+        <h2 style={{ margin: 0, fontSize: '20px', fontWeight: 800, color: '#f5f7fb', letterSpacing: '-0.03em' }}>
           Geographic Sentiment Map
         </h2>
         <p style={{ margin: '4px 0 0', fontSize: '12px', color: '#7b8494' }}>
