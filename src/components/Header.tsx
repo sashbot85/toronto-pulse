@@ -7,10 +7,11 @@ interface HeaderProps {
   lastUpdated: number | null;
   autoRefresh: boolean;
   onToggleRefresh: () => void;
+  onForceRefresh: () => void;
   isRefreshing: boolean;
 }
 
-export default function Header({ lastUpdated, autoRefresh, onToggleRefresh, isRefreshing }: HeaderProps) {
+export default function Header({ lastUpdated, autoRefresh, onToggleRefresh, onForceRefresh, isRefreshing }: HeaderProps) {
   const [timeAgo, setTimeAgo] = useState('');
 
   useEffect(() => {
@@ -41,6 +42,7 @@ export default function Header({ lastUpdated, autoRefresh, onToggleRefresh, isRe
         alignItems: 'center',
         justifyContent: 'space-between',
         gap: '16px',
+        flexWrap: 'wrap',
       }}>
         {/* Logo */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
@@ -68,7 +70,7 @@ export default function Header({ lastUpdated, autoRefresh, onToggleRefresh, isRe
         </div>
 
         {/* Status */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px 20px', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
           {/* Last updated */}
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12px', color: '#9ca3af' }}>
             <div
@@ -103,11 +105,37 @@ export default function Header({ lastUpdated, autoRefresh, onToggleRefresh, isRe
               transition: 'all 0.2s ease',
             }}
           >
-            {/* Refresh SVG */}
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.3"/>
             </svg>
             Auto-refresh {autoRefresh ? 'ON' : 'OFF'}
+          </button>
+
+          <button
+            onClick={onForceRefresh}
+            disabled={isRefreshing}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              padding: '6px 12px',
+              borderRadius: '8px',
+              border: '1px solid rgba(59, 130, 246, 0.35)',
+              background: isRefreshing ? 'rgba(31, 41, 55, 0.6)' : 'rgba(37, 99, 235, 0.12)',
+              color: isRefreshing ? '#6b7280' : '#93c5fd',
+              fontSize: '12px',
+              fontWeight: 600,
+              cursor: isRefreshing ? 'not-allowed' : 'pointer',
+              transition: 'all 0.2s ease',
+            }}
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M4 4v6h6"/>
+              <path d="M20 20v-6h-6"/>
+              <path d="M20 9a8 8 0 0 0-13.66-4.66L4 6"/>
+              <path d="M4 15a8 8 0 0 0 13.66 4.66L20 18"/>
+            </svg>
+            {isRefreshing ? 'Updating…' : 'Force update'}
           </button>
 
           {/* Live badge */}

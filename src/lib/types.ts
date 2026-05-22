@@ -32,7 +32,7 @@ export interface Tweet {
   retweets: number;
   created_utc: number;
   permalink: string;
-  source: 'twitter';
+  source: 'twitter' | 'bluesky';
 }
 
 export interface Poll {
@@ -97,5 +97,5 @@ export type FeedItem = {
   mentionsChow: boolean;
   mentionsBradford: boolean;
   sentiment: 'positive' | 'negative' | 'neutral';
-  source: 'reddit' | 'twitter';
+  source: 'reddit' | 'twitter' | 'bluesky';
 };
