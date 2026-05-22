@@ -2,6 +2,15 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { format, subDays } from 'date-fns';
 import { fileURLToPath } from 'url';
+import {
+  CHOW_NEGATIVE,
+  CHOW_POSITIVE,
+  BRADFORD_NEGATIVE,
+  BRADFORD_POSITIVE,
+  getSentimentScore,
+  mentionsBradford,
+  mentionsChow,
+} from './sentiment';
 
 export interface RedditPost {
   id: string;
@@ -48,33 +57,16 @@ export interface PulseData {
   sentiment: ReturnType<typeof runSentimentAnalysis>;
 }
 
-const CHOW_POSITIVE = [
-  'good mayor', 'support chow', 'voting chow', 'chow is right',
-  'approve', 'great job', 'doing well', 'better than', 're-elect',
-  'good leadership', 'love chow', 'chow doing', 'olivia is',
-  'chow has', 'chow will', 'backing chow', 'chow plan'
-];
-
-const CHOW_NEGATIVE = [
-  'chow sucks', 'worst mayor', 'fire chow', 'chow failed',
-  'terrible', 'incompetent', 'vote her out', 'disappointed',
-  'disaster', 'hate chow', 'chow is bad', 'chow is wrong',
-  'against chow', 'dump chow', 'chow is the worst', 'recall chow'
-];
-
-const BRADFORD_POSITIVE = [
-  'support bradford', 'voting bradford', 'bradford is right',
-  'fresh start', 'new leadership', 'better option', 'good platform',
-  'love bradford', 'brad is', 'bradford has', 'backing bradford',
-  'bradford plan', 'go bradford', 'vote bradford'
-];
-
-const BRADFORD_NEGATIVE = [
-  'bradford sucks', 'unknown', 'no experience', 'who is bradford',
-  "can't win", 'weak candidate', 'hate bradford', 'against bradford',
-  'bradford is bad', 'bradford failed', 'bradford is wrong',
-  'no bradford', 'dump bradford', 'brad sucks'
-];
+interface DailyHistoryPoint {
+  date: string;
+  chowPos: number;
+  chowNeg: number;
+  chowNeutral: number;
+  bradPos: number;
+  bradNeg: number;
+  bradNeutral: number;
+  total: number;
+}
 
 const ISSUE_KEYWORDS: Record<string, string[]> = {
   'Housing': ['housing', 'rent', 'affordable', 'condo', 'landlord', 'tenant', 'eviction', 'zoning'],
@@ -93,21 +85,8 @@ const GEO_KEYWORDS: Record<string, string[]> = {
   'East York': ['east york', 'danforth', 'greektown', 'pape', 'broadview'],
 };
 
-function mentionsChow(text: string): boolean {
-  const lower = text.toLowerCase();
-  return lower.includes('chow') || lower.includes('olivia');
-}
-
-function mentionsBradford(text: string): boolean {
-  const lower = text.toLowerCase();
-  return lower.includes('bradford') || lower.includes('brad ');
-}
-
 function scoreText(text: string, positiveKw: string[], negativeKw: string[]): number {
-  const lower = text.toLowerCase();
-  let score = 0;
-  for (const kw of positiveKw) if (lower.includes(kw)) score++;
-  for (const kw of negativeKw) if (lower.includes(kw)) score--;
+  const score = getSentimentScore(text, positiveKw, negativeKw);
   if (score > 0) return 1;
   if (score < 0) return -1;
   return 0;
@@ -234,7 +213,7 @@ interface XApiResponse {
   };
 }
 
-async function fetchXSearchResults(query: string, maxResults = 20): Promise<Tweet[]> {
+async function fetchXSearchResults(query: string, maxResults = 50): Promise<Tweet[]> {
   const url = `https://api.twitter.com/2/tweets/search/recent?query=${encodeURIComponent(query)}&max_results=${Math.min(maxResults, 100)}&tweet.fields=created_at,public_metrics,author_id&expansions=author_id&user.fields=username,name`;
 
   const response = await fetch(url, {
@@ -283,7 +262,7 @@ async function fetchXTweets(): Promise<Tweet[]> {
   for (const query of X_SEARCH_QUERIES) {
     try {
       console.log(`  X API search: "${query}"`);
-      const tweets = await fetchXSearchResults(query, 20);
+      const tweets = await fetchXSearchResults(query, 50);
       for (const tweet of tweets) {
         if (!seenIds.has(tweet.id)) {
           seenIds.add(tweet.id);
@@ -409,7 +388,8 @@ async function fetchAllSocial(): Promise<Tweet[]> {
 function runSentimentAnalysis(
   posts: RedditPost[],
   comments: RedditComment[],
-  tweets: Tweet[]
+  tweets: Tweet[],
+  history: DailyHistoryPoint[] = []
 ) {
   const allItems: Array<{ text: string; created_utc: number }> = [
     ...posts.map(p => ({ text: `${p.title} ${p.selftext}`, created_utc: p.created_utc })),
@@ -480,7 +460,11 @@ function runSentimentAnalysis(
     }
   }
 
-  const volumeByDay = Object.entries(dayBuckets).map(([date, data]) => ({ date, ...data }));
+  const liveVolumeByDay = Object.entries(dayBuckets).map(([date, data]) => ({ date, ...data }));
+  const historyMap = new Map<string, DailyHistoryPoint>();
+  for (const item of history) historyMap.set(item.date, item);
+  for (const item of liveVolumeByDay) historyMap.set(item.date, item);
+  const volumeByDay = Array.from(historyMap.values()).sort((a, b) => a.date.localeCompare(b.date)).slice(-14);
   const recentDays = volumeByDay.slice(-7);
   const prevDays = volumeByDay.slice(-14, -7);
   const recentChowScore = recentDays.reduce((a, d) => a + d.chowPos - d.chowNeg, 0);
@@ -567,9 +551,13 @@ export async function generatePulseData(): Promise<PulseData> {
   const tweets = await fetchAllSocial();
 
   console.log('\n[Sentiment] Analyzing...');
-  const sentiment = runSentimentAnalysis(uniquePosts, allComments, tweets);
+  const historyPath = getPulseHistoryOutputPath();
+  const history = readPulseHistoryFile(historyPath);
+  const sentiment = runSentimentAnalysis(uniquePosts, allComments, tweets, history);
   console.log(`  Posts analyzed: ${sentiment.postsAnalyzed}`);
   console.log(`  Chow mentions: ${sentiment.chowSentiment.total}, Bradford mentions: ${sentiment.bradfordSentiment.total}`);
+
+  writePulseHistoryFile(historyPath, sentiment.volumeByDay);
 
   return {
     lastScraped: Date.now(),
@@ -583,6 +571,26 @@ export async function generatePulseData(): Promise<PulseData> {
 export function getPulseDataOutputPath(): string {
   const fileDir = path.dirname(fileURLToPath(import.meta.url));
   return path.join(fileDir, '..', '..', 'public', 'data', 'pulse-data.json');
+}
+
+export function getPulseHistoryOutputPath(): string {
+  const fileDir = path.dirname(fileURLToPath(import.meta.url));
+  return path.join(fileDir, '..', '..', 'public', 'data', 'pulse-history.json');
+}
+
+function readPulseHistoryFile(historyPath = getPulseHistoryOutputPath()): DailyHistoryPoint[] {
+  try {
+    if (!fs.existsSync(historyPath)) return [];
+    const parsed = JSON.parse(fs.readFileSync(historyPath, 'utf8'));
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
+function writePulseHistoryFile(historyPath: string, data: DailyHistoryPoint[]): void {
+  fs.mkdirSync(path.dirname(historyPath), { recursive: true });
+  fs.writeFileSync(historyPath, JSON.stringify(data.slice(-30), null, 2));
 }
 
 export function writePulseDataFile(output: PulseData, outputPath = getPulseDataOutputPath()): void {

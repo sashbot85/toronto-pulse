@@ -140,7 +140,7 @@ export default function KPIStrip({ sentiment, loading }: KPIStripProps) {
       <KPICard
         title="Chow Approval"
         value={chowScore !== undefined ? `${chowScore}%` : '—'}
-        subtitle={sentiment ? `${sentiment.chowSentiment.positive}↑ / ${sentiment.chowSentiment.negative}↓ mentions` : undefined}
+        subtitle={sentiment ? `${sentiment.chowSentiment.total} mentions • ${sentiment.chowSentiment.positive}↑ / ${sentiment.chowSentiment.negative}↓` : undefined}
         trend={sentiment?.chowSentiment.trend}
         color="#f59e0b"
         loading={loading}
@@ -148,15 +148,15 @@ export default function KPIStrip({ sentiment, loading }: KPIStripProps) {
       <KPICard
         title="Bradford Approval"
         value={bradScore !== undefined ? `${bradScore}%` : '—'}
-        subtitle={sentiment ? `${sentiment.bradfordSentiment.positive}↑ / ${sentiment.bradfordSentiment.negative}↓ mentions` : undefined}
+        subtitle={sentiment ? `${sentiment.bradfordSentiment.total} mentions • ${sentiment.bradfordSentiment.positive}↑ / ${sentiment.bradfordSentiment.negative}↓` : undefined}
         trend={sentiment?.bradfordSentiment.trend}
         color="#3b82f6"
         loading={loading}
       />
       <KPICard
-        title="Posts Analyzed (24h)"
+        title="Items Analyzed"
         value={postsAnalyzed !== undefined ? postsAnalyzed.toLocaleString() : '—'}
-        subtitle="Posts + comments"
+        subtitle="Posts + comments + social"
         color="#f9fafb"
         loading={loading}
       />

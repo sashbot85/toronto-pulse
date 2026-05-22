@@ -73,7 +73,7 @@ export default function SentimentChart({ sentiment, loading }: SentimentChartPro
             Sentiment Over Time
           </h2>
           <p style={{ margin: '4px 0 0', fontSize: '12px', color: '#6b7280' }}>
-            Daily Reddit mention sentiment — last 10 days
+            Daily candidate sentiment snapshots — last 10 days
           </p>
         </div>
         {/* Candidate toggle */}

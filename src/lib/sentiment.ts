@@ -1,29 +1,38 @@
+const GLOBAL_POSITIVE = [
+  'good', 'great', 'strong', 'smart', 'effective', 'improved', 'improving', 'progress', 'popular',
+  'support', 'backing', 'endorse', 'endorsed', 'approve', 'approved', 'right', 'love', 'liked',
+  'winning', 'win', 'better', 'best', 'serious', 'competent', 'leadership', 'solid', 'praised'
+];
+
+const GLOBAL_NEGATIVE = [
+  'bad', 'terrible', 'awful', 'incompetent', 'failed', 'failure', 'weak', 'worse', 'worst',
+  'hate', 'angry', 'criticized', 'criticised', 'wrong', 'corrupt', 'clown', 'joke', 'embarrassing',
+  'threatened', 'threaten', 'tax hike', 'raise taxes', 'property taxes', 'pander', 'pandering',
+  'unsafe', 'disaster', 'mess', 'blame', 'out of touch', 'unpopular', 'frustrating', 'ridiculous'
+];
+
 export const CHOW_POSITIVE = [
-  'good mayor', 'support chow', 'voting chow', 'chow is right',
-  'approve', 'great job', 'doing well', 'better than', 're-elect',
-  'good leadership', 'love chow', 'chow doing', 'olivia is',
-  'chow has', 'chow will', 'backing chow', 'chow plan'
+  'support chow', 'voting chow', 'chow is right', 'good mayor', 're-elect chow',
+  'olivia chow is right', 'chow doing well', 'backing chow', 'chow plan', 'mayor chow',
+  'olivia is right', 'chow leadership'
 ];
 
 export const CHOW_NEGATIVE = [
-  'chow sucks', 'worst mayor', 'fire chow', 'chow failed',
-  'terrible', 'incompetent', 'vote her out', 'disappointed',
-  'disaster', 'hate chow', 'chow is bad', 'chow is wrong',
-  'against chow', 'dump chow', 'chow is the worst', 'recall chow'
+  'chow sucks', 'worst mayor', 'fire chow', 'chow failed', 'vote her out',
+  'hate chow', 'chow is bad', 'chow is wrong', 'against chow', 'dump chow',
+  'recall chow', 'olivia chow threatened', 'olivia chow made sure', 'mean comments',
+  'chow tax hike', 'chow raise taxes'
 ];
 
 export const BRADFORD_POSITIVE = [
-  'support bradford', 'voting bradford', 'bradford is right',
-  'fresh start', 'new leadership', 'better option', 'good platform',
-  'love bradford', 'brad is', 'bradford has', 'backing bradford',
-  'bradford plan', 'go bradford', 'vote bradford'
+  'support bradford', 'voting bradford', 'bradford is right', 'fresh start', 'new leadership',
+  'better option', 'good platform', 'love bradford', 'backing bradford', 'vote bradford'
 ];
 
 export const BRADFORD_NEGATIVE = [
-  'bradford sucks', 'unknown', 'no experience', 'who is bradford',
-  "can't win", 'weak candidate', 'hate bradford', 'against bradford',
-  'bradford is bad', 'bradford failed', 'bradford is wrong',
-  'no bradford', 'dump bradford', 'brad sucks'
+  'bradford sucks', 'who is bradford', 'no experience', "can't win", 'weak candidate',
+  'hate bradford', 'against bradford', 'bradford is bad', 'bradford failed', 'brad sucks',
+  'bradford incompetent', 'rain on our parade', 'pander', 'pandering'
 ];
 
 export function mentionsChow(text: string): boolean {
@@ -36,22 +45,30 @@ export function mentionsBradford(text: string): boolean {
   return lower.includes('bradford') || lower.includes('brad ');
 }
 
-export function getSentiment(text: string, posKw: string[], negKw: string[]): 'positive' | 'negative' | 'neutral' {
+function countMatches(text: string, keywords: string[]): number {
   const lower = text.toLowerCase();
-  let score = 0;
-  for (const kw of posKw) if (lower.includes(kw)) score++;
-  for (const kw of negKw) if (lower.includes(kw)) score--;
+  return keywords.reduce((acc, kw) => acc + (lower.includes(kw) ? 1 : 0), 0);
+}
+
+export function getSentimentScore(text: string, posKw: string[], negKw: string[]): number {
+  const pos = countMatches(text, [...GLOBAL_POSITIVE, ...posKw]);
+  const neg = countMatches(text, [...GLOBAL_NEGATIVE, ...negKw]);
+  return pos - neg;
+}
+
+export function getSentiment(text: string, posKw: string[], negKw: string[]): 'positive' | 'negative' | 'neutral' {
+  const score = getSentimentScore(text, posKw, negKw);
   if (score > 0) return 'positive';
   if (score < 0) return 'negative';
   return 'neutral';
 }
 
 export function getItemSentiment(text: string): 'positive' | 'negative' | 'neutral' {
-  if (mentionsChow(text)) {
-    return getSentiment(text, CHOW_POSITIVE, CHOW_NEGATIVE);
-  }
-  if (mentionsBradford(text)) {
-    return getSentiment(text, BRADFORD_POSITIVE, BRADFORD_NEGATIVE);
-  }
+  const lower = text.toLowerCase();
+  const chow = mentionsChow(lower) ? getSentimentScore(lower, CHOW_POSITIVE, CHOW_NEGATIVE) : 0;
+  const brad = mentionsBradford(lower) ? getSentimentScore(lower, BRADFORD_POSITIVE, BRADFORD_NEGATIVE) : 0;
+  const score = chow + brad;
+  if (score > 0) return 'positive';
+  if (score < 0) return 'negative';
   return 'neutral';
 }
