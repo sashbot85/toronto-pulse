@@ -47,6 +47,7 @@ export default function Home() {
 
       if (pulseRes.status === 'fulfilled' && pulseRes.value.ok) {
         const data = await pulseRes.value.json();
+        console.log('[TorontoPulse] Data loaded:', { posts: data.posts?.length, comments: data.comments?.length, tweets: data.tweets?.length, sentiment: !!data.sentiment });
         setPosts(data.posts || []);
         setComments(data.comments || []);
         setTweets(data.tweets || []);
@@ -130,119 +131,94 @@ export default function Home() {
   ].sort((a, b) => b.created_utc - a.created_utc);
 
   return (
-    <div className="terminal-shell">
-      <div className="app-grid">
-        <aside className="side-nav">
-          <div style={{ marginBottom: '26px' }}>
-            <div style={{ fontSize: '28px', fontWeight: 800, color: '#f5f7fb', letterSpacing: '-0.05em' }}>TO Pulse 2026</div>
-            <div style={{ fontSize: '13px', color: '#7b8494', marginTop: '6px' }}>Mayoral Race Terminal</div>
+    <div style={{ minHeight: '100vh', background: '#0a0f1a' }}>
+      <Header
+        lastUpdated={lastUpdated}
+        autoRefresh={autoRefresh}
+        onToggleRefresh={() => setAutoRefresh(v => !v)}
+        isRefreshing={isRefreshing}
+      />
+
+      {/* Data error warning */}
+      {dataError && (
+        <div style={{
+          background: 'rgba(239, 68, 68, 0.1)',
+          border: '1px solid rgba(239, 68, 68, 0.3)',
+          borderRadius: 0,
+          padding: '10px 24px',
+          textAlign: 'center',
+          fontSize: '12px',
+          color: '#ef4444',
+          fontWeight: 500,
+        }}>
+          ⚠️ Could not load data — scraper may not have run yet. Run the scraper to populate data.
+        </div>
+      )}
+
+      <main style={{ maxWidth: '1600px', margin: '0 auto', padding: '24px' }}>
+
+        {/* KPI Strip */}
+        <KPIStrip sentiment={sentiment} loading={loading} />
+
+        {/* Main Grid */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: '3fr 2fr',
+          gap: '20px',
+          marginBottom: '24px',
+        }}
+          className="main-grid"
+        >
+          {/* Left Column */}
+          <div>
+            <PollingChart polls={polls} loading={loading} />
+            <SentimentChart sentiment={sentiment} loading={loading} />
+            <IssueTracker
+              sentiment={sentiment}
+              loading={loading}
+              onSelectIssue={setSelectedIssue}
+              selectedIssue={selectedIssue}
+            />
           </div>
 
-          <nav style={{ display: 'grid', gap: '8px', marginBottom: '28px' }}>
-            {[
-              ['dashboard', 'Dashboard'],
-              ['compare_arrows', 'Candidate Comparison'],
-              ['analytics', 'Issue Tracker'],
-              ['forum', 'Social Pulse'],
-              ['map', 'Geographic Sentiment'],
-            ].map(([icon, label], index) => (
-              <div key={label} style={{
-                display: 'flex', alignItems: 'center', gap: '12px', padding: '12px 14px', borderRadius: '14px',
-                background: index === 0 ? 'rgba(255,255,255,0.06)' : 'transparent',
-                border: `1px solid ${index === 0 ? 'rgba(255,255,255,0.08)' : 'transparent'}`,
-                color: index === 0 ? '#f5f7fb' : '#97a1b2', fontSize: '14px', fontWeight: 600,
-              }}>
-                <span style={{ fontSize: '16px', opacity: 0.9 }}>{icon}</span>
-                <span>{label}</span>
-              </div>
-            ))}
-          </nav>
-
-          <div className="surface-card" style={{ padding: '16px', marginBottom: '16px' }}>
-            <div style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.08em', color: '#7b8494', marginBottom: '10px' }}>Live stream</div>
-            <div style={{ fontSize: '32px', fontWeight: 800, color: '#f5f7fb', lineHeight: 1 }}>{feedItems.length}</div>
-            <div style={{ fontSize: '13px', color: '#97a1b2', marginTop: '10px' }}>Signals across Reddit, X, and Bluesky</div>
+          {/* Right Column */}
+          <div>
+            <LiveFeed items={feedItems} loading={loading} issueFilter={selectedIssue} />
           </div>
+        </div>
 
-          <div className="surface-card" style={{ padding: '16px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
-              <div style={{ fontSize: '13px', color: '#f5f7fb', fontWeight: 700 }}>Download Report</div>
-              <div style={{ color: '#31d0aa', fontSize: '11px', fontWeight: 700 }}>LIVE</div>
-            </div>
-            <div style={{ fontSize: '12px', color: '#7b8494', lineHeight: 1.5 }}>Designed for a morning pulse check: see momentum, social chatter, and issue clusters before the day starts.</div>
+        {/* Bottom Section */}
+        <CandidateCards sentiment={sentiment} loading={loading} />
+        <GeoSentiment sentiment={sentiment} loading={loading} />
+
+        {/* Footer */}
+        <footer style={{
+          marginTop: '32px',
+          paddingTop: '24px',
+          borderTop: '1px solid #1f2937',
+          textAlign: 'center',
+          color: '#4b5563',
+          fontSize: '12px',
+        }}>
+          <div style={{ marginBottom: '6px', fontWeight: 500 }}>
+            Powered by Reddit Public Data + X/Twitter • Sentiment analysis is keyword-based • Not affiliated with any candidate or campaign
           </div>
-        </aside>
-
-        <main style={{ padding: '28px', minWidth: 0 }}>
-          <Header
-            lastUpdated={lastUpdated}
-            autoRefresh={autoRefresh}
-            onToggleRefresh={() => setAutoRefresh(v => !v)}
-            isRefreshing={isRefreshing}
-          />
-
-          {dataError && (
-            <div style={{
-              background: 'rgba(239, 68, 68, 0.1)',
-              border: '1px solid rgba(239, 68, 68, 0.25)',
-              borderRadius: '18px',
-              padding: '12px 16px',
-              marginBottom: '20px',
-              fontSize: '12px',
-              color: '#ff8d8d',
-              fontWeight: 600,
-            }}>
-              Could not load pulse data — the scraper may not have run yet.
+          <div style={{ color: '#374151' }}>
+            Data sources: r/toronto • r/CanadaPolitics • r/TorontoPolitics • X/Twitter • Polling: Liaison Strategies, Pallas Data
+          </div>
+          {lastUpdated && (
+            <div style={{ marginTop: '8px', color: '#374151' }}>
+              Last scraped: {new Date(lastUpdated).toLocaleString('en-CA', { timeZone: 'America/Toronto' })} ET
             </div>
           )}
-
-          <KPIStrip sentiment={sentiment} loading={loading} />
-
-          <div className="grid-main" style={{ marginBottom: '22px' }}>
-            <div style={{ display: 'grid', gap: '20px', minWidth: 0 }}>
-              <PollingChart polls={polls} loading={loading} />
-              <div style={{ display: 'grid', gridTemplateColumns: '1.08fr 0.92fr', gap: '20px' }} className="two-up">
-                <IssueTracker
-                  sentiment={sentiment}
-                  loading={loading}
-                  onSelectIssue={setSelectedIssue}
-                  selectedIssue={selectedIssue}
-                />
-                <SentimentChart sentiment={sentiment} loading={loading} />
-              </div>
-            </div>
-
-            <div style={{ minWidth: 0 }}>
-              <LiveFeed items={feedItems} loading={loading} issueFilter={selectedIssue} />
-            </div>
-          </div>
-
-          <div style={{ display: 'grid', gap: '20px' }}>
-            <CandidateCards sentiment={sentiment} loading={loading} />
-            <GeoSentiment sentiment={sentiment} loading={loading} />
-          </div>
-
-          <footer style={{
-            marginTop: '28px',
-            paddingTop: '20px',
-            borderTop: '1px solid rgba(123,132,148,0.14)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            gap: '12px',
-            flexWrap: 'wrap',
-            color: '#667083',
-            fontSize: '12px',
-          }}>
-            <div>Powered by Reddit, X API, and Bluesky • Sentiment analysis is keyword-based.</div>
-            {lastUpdated && <div>Last scraped: {new Date(lastUpdated).toLocaleString('en-CA', { timeZone: 'America/Toronto' })} ET</div>}
-          </footer>
-        </main>
-      </div>
+        </footer>
+      </main>
 
       <style>{`
-        @media (max-width: 1180px) {
-          .two-up { grid-template-columns: 1fr !important; }
+        @media (max-width: 1024px) {
+          .main-grid {
+            grid-template-columns: 1fr !important;
+          }
         }
       `}</style>
     </div>

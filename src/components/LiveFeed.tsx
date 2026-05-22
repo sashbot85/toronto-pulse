@@ -70,46 +70,45 @@ export default function LiveFeed({ items, loading, issueFilter }: LiveFeedProps)
 
   return (
     <div style={{
-      background: 'linear-gradient(180deg, rgba(25,29,36,0.98), rgba(18,22,28,0.98))',
-      border: '1px solid #262c36',
-      borderRadius: '24px',
+      background: '#111827',
+      border: '1px solid #1f2937',
+      borderRadius: '16px',
       padding: '24px',
       display: 'flex',
       flexDirection: 'column',
       height: '100%',
-      boxShadow: '0 18px 48px rgba(0,0,0,0.22)',
     }}>
       {/* Header */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
         <div>
-          <h2 style={{ margin: 0, fontSize: '20px', fontWeight: 800, color: '#f5f7fb', letterSpacing: '-0.03em' }}>
-            Live Signal
+          <h2 style={{ margin: 0, fontSize: '16px', fontWeight: 700, color: '#f9fafb' }}>
+            Live Feed
             {issueFilter && (
               <span style={{ marginLeft: '8px', fontSize: '12px', color: '#f59e0b', fontWeight: 600 }}>
                 · {issueFilter}
               </span>
             )}
           </h2>
-          <p style={{ margin: '4px 0 0', fontSize: '12px', color: '#7b8494' }}>
+          <p style={{ margin: '4px 0 0', fontSize: '12px', color: '#6b7280' }}>
             {issueFiltered.length} items
-            {tweetCount > 0 && ` • ${tweetCount} from social feeds`}
+            {tweetCount > 0 && ` • ${tweetCount} from X`}
           </p>
         </div>
         {/* Source filter tabs */}
-        <div style={{ display: 'flex', borderRadius: '999px', overflow: 'hidden', border: '1px solid #262c36', background: 'rgba(255,255,255,0.03)', padding: '4px' }}>
+        <div style={{ display: 'flex', borderRadius: '8px', overflow: 'hidden', border: '1px solid #1f2937' }}>
           {(['all', 'posts', 'comments', 'x'] as const).map((t, i, arr) => (
             <button
               key={t}
               onClick={() => setTab(t)}
               style={{
-                padding: '7px 12px',
+                padding: '5px 12px',
                 fontSize: '11px',
-                fontWeight: 700,
+                fontWeight: 600,
                 cursor: 'pointer',
-                background: tab === t ? '#f3f5f8' : 'transparent',
-                color: tab === t ? '#101418' : '#6b7280',
+                background: tab === t ? '#1f2937' : 'transparent',
+                color: tab === t ? (t === 'x' ? '#1d9bf0' : '#f9fafb') : '#6b7280',
                 border: 'none',
-                borderRadius: '999px',
+                borderRight: i < arr.length - 1 ? '1px solid #1f2937' : 'none',
                 textTransform: 'capitalize',
                 transition: 'all 0.2s ease',
                 display: 'flex',
@@ -133,7 +132,7 @@ export default function LiveFeed({ items, loading, issueFilter }: LiveFeedProps)
         className="feed-scroll"
         style={{
           overflowY: 'auto',
-          maxHeight: '760px',
+          maxHeight: '600px',
           display: 'flex',
           flexDirection: 'column',
           gap: '8px',
@@ -170,21 +169,21 @@ export default function LiveFeed({ items, loading, issueFilter }: LiveFeedProps)
                 rel="noopener noreferrer"
                 style={{
                   display: 'block',
-                  padding: '16px',
-                  background: 'rgba(255,255,255,0.025)',
-                  borderRadius: '18px',
-                  border: `1px solid ${isTwitter ? 'rgba(29,155,240,0.22)' : '#232933'}`,
+                  padding: '12px 14px',
+                  background: isTwitter ? '#060d1a' : '#0d1424',
+                  borderRadius: '10px',
+                  border: `1px solid ${isTwitter ? '#1a2a3a' : '#1f2937'}`,
                   textDecoration: 'none',
                   transition: 'all 0.15s ease',
                   cursor: 'pointer',
                 }}
                 onMouseEnter={e => {
-                  (e.currentTarget as HTMLElement).style.borderColor = isTwitter ? 'rgba(29,155,240,0.45)' : '#3a4352';
-                  (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.045)';
+                  (e.currentTarget as HTMLElement).style.borderColor = isTwitter ? '#1d9bf040' : '#374151';
+                  (e.currentTarget as HTMLElement).style.background = isTwitter ? '#0a1628' : '#111827';
                 }}
                 onMouseLeave={e => {
-                  (e.currentTarget as HTMLElement).style.borderColor = isTwitter ? 'rgba(29,155,240,0.22)' : '#232933';
-                  (e.currentTarget as HTMLElement).style.background = 'rgba(255,255,255,0.025)';
+                  (e.currentTarget as HTMLElement).style.borderColor = isTwitter ? '#1a2a3a' : '#1f2937';
+                  (e.currentTarget as HTMLElement).style.background = isTwitter ? '#060d1a' : '#0d1424';
                 }}
               >
                 {/* Top row */}
@@ -210,8 +209,8 @@ export default function LiveFeed({ items, loading, issueFilter }: LiveFeedProps)
                     <span style={{
                       padding: '2px 8px',
                       borderRadius: '12px',
-                      background: `${subredditColor}16`,
-                      border: `1px solid ${subredditColor}2d`,
+                      background: `${subredditColor}20`,
+                      border: `1px solid ${subredditColor}40`,
                       fontSize: '10px',
                       fontWeight: 600,
                       color: subredditColor,
@@ -224,7 +223,7 @@ export default function LiveFeed({ items, loading, issueFilter }: LiveFeedProps)
                   <span style={{
                     padding: '2px 6px',
                     borderRadius: '4px',
-                    background: 'rgba(255,255,255,0.05)',
+                    background: '#1f2937',
                     fontSize: '9px',
                     fontWeight: 600,
                     color: '#6b7280',
@@ -277,9 +276,9 @@ export default function LiveFeed({ items, loading, issueFilter }: LiveFeedProps)
 
                 {/* Text */}
                 <div style={{
-                  fontSize: '14px',
-                  color: '#e2e8f0',
-                  lineHeight: 1.5,
+                  fontSize: '13px',
+                  color: '#d1d5db',
+                  lineHeight: 1.4,
                   display: '-webkit-box',
                   WebkitLineClamp: 2,
                   WebkitBoxOrient: 'vertical',
@@ -295,7 +294,7 @@ export default function LiveFeed({ items, loading, issueFilter }: LiveFeedProps)
                   alignItems: 'center',
                   gap: '12px',
                   fontSize: '11px',
-                  color: '#7b8494',
+                  color: '#6b7280',
                 }}>
                   <span>{isTwitter ? `@${item.author}` : `u/${item.author}`}</span>
                   <span>·</span>

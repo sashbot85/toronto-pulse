@@ -69,32 +69,30 @@ export default function PollingChart({ polls, loading }: PollingChartProps) {
 
   return (
     <div style={{
-      background: 'linear-gradient(180deg, rgba(25,29,36,0.98), rgba(18,22,28,0.98))',
-      border: '1px solid #262c36',
-      borderRadius: '24px',
+      background: '#111827',
+      border: '1px solid #1f2937',
+      borderRadius: '16px',
       padding: '24px',
       marginBottom: '20px',
-      boxShadow: '0 18px 48px rgba(0,0,0,0.22)',
     }}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px', gap: '12px', flexWrap: 'wrap' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
         <div>
-          <h2 style={{ margin: 0, fontSize: '20px', fontWeight: 800, color: '#f5f7fb', letterSpacing: '-0.03em' }}>
-            Polling Velocity
+          <h2 style={{ margin: 0, fontSize: '16px', fontWeight: 700, color: '#f9fafb' }}>
+            Polling Trends
           </h2>
-          <p style={{ margin: '4px 0 0', fontSize: '12px', color: '#7b8494' }}>
-            Head-to-head polling data across the race cycle
+          <p style={{ margin: '4px 0 0', fontSize: '12px', color: '#6b7280' }}>
+            Head-to-head polling data — Toronto 2026 mayoral race
           </p>
         </div>
         <div style={{
-          padding: '8px 12px',
-          borderRadius: '999px',
-          background: 'rgba(255,255,255,0.04)',
-          border: '1px solid rgba(255,255,255,0.06)',
+          padding: '4px 10px',
+          borderRadius: '20px',
+          background: 'rgba(245, 158, 11, 0.1)',
+          border: '1px solid rgba(245, 158, 11, 0.3)',
           fontSize: '11px',
-          color: '#c7cfdd',
-          fontWeight: 700,
-          letterSpacing: '0.08em',
-          textTransform: 'uppercase',
+          color: '#f59e0b',
+          fontWeight: 600,
+          letterSpacing: '0.05em',
         }}>
           {polls.filter(p => p.type === 'horserace').length} POLLS
         </div>

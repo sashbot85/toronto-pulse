@@ -61,35 +61,34 @@ export default function SentimentChart({ sentiment, loading }: SentimentChartPro
 
   return (
     <div style={{
-      background: 'linear-gradient(180deg, rgba(25,29,36,0.98), rgba(18,22,28,0.98))',
-      border: '1px solid #262c36',
-      borderRadius: '24px',
+      background: '#111827',
+      border: '1px solid #1f2937',
+      borderRadius: '16px',
       padding: '24px',
       marginBottom: '20px',
-      boxShadow: '0 18px 48px rgba(0,0,0,0.18)',
     }}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px', gap: '12px', flexWrap: 'wrap' }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
         <div>
-          <h2 style={{ margin: 0, fontSize: '18px', fontWeight: 800, color: '#f5f7fb', letterSpacing: '-0.02em' }}>
-            Daily Sentiment Mix
+          <h2 style={{ margin: 0, fontSize: '16px', fontWeight: 700, color: '#f9fafb' }}>
+            Sentiment Over Time
           </h2>
-          <p style={{ margin: '4px 0 0', fontSize: '12px', color: '#7b8494' }}>
-            Day-by-day signal mix across the recent window
+          <p style={{ margin: '4px 0 0', fontSize: '12px', color: '#6b7280' }}>
+            Daily Reddit mention sentiment — last 10 days
           </p>
         </div>
         {/* Candidate toggle */}
-        <div style={{ display: 'flex', borderRadius: '999px', overflow: 'hidden', border: '1px solid #262c36', background: 'rgba(255,255,255,0.03)', padding: '4px' }}>
+        <div style={{ display: 'flex', borderRadius: '8px', overflow: 'hidden', border: '1px solid #1f2937' }}>
           <button
             onClick={() => setCandidate('chow')}
             style={{
-              padding: '7px 14px',
+              padding: '6px 14px',
               fontSize: '12px',
               fontWeight: 600,
               cursor: 'pointer',
-              background: candidate === 'chow' ? 'rgba(245, 158, 11, 0.14)' : 'transparent',
+              background: candidate === 'chow' ? 'rgba(245, 158, 11, 0.15)' : 'transparent',
               color: candidate === 'chow' ? '#f59e0b' : '#6b7280',
               border: 'none',
-              borderRadius: '999px',
+              borderRight: '1px solid #1f2937',
               transition: 'all 0.2s ease',
             }}
           >
@@ -98,14 +97,13 @@ export default function SentimentChart({ sentiment, loading }: SentimentChartPro
           <button
             onClick={() => setCandidate('bradford')}
             style={{
-              padding: '7px 14px',
+              padding: '6px 14px',
               fontSize: '12px',
               fontWeight: 600,
               cursor: 'pointer',
               background: candidate === 'bradford' ? 'rgba(59, 130, 246, 0.15)' : 'transparent',
               color: candidate === 'bradford' ? '#3b82f6' : '#6b7280',
               border: 'none',
-              borderRadius: '999px',
               transition: 'all 0.2s ease',
             }}
           >

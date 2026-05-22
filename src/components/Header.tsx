@@ -24,114 +24,112 @@ export default function Header({ lastUpdated, autoRefresh, onToggleRefresh, isRe
   }, [lastUpdated]);
 
   return (
-    <header style={{ marginBottom: '24px' }}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px', marginBottom: '18px', flexWrap: 'wrap' }}>
-        <div className="top-tabs">
-          <span className="top-tab active">Real-time</span>
-          <span className="top-tab">Forecasts</span>
-          <span className="top-tab">History</span>
+    <header style={{
+      position: 'sticky',
+      top: 0,
+      zIndex: 50,
+      background: 'rgba(10, 15, 26, 0.9)',
+      backdropFilter: 'blur(12px)',
+      WebkitBackdropFilter: 'blur(12px)',
+      borderBottom: '1px solid #1f2937',
+    }}>
+      <div style={{
+        maxWidth: '1600px',
+        margin: '0 auto',
+        padding: '12px 24px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        gap: '16px',
+      }}>
+        {/* Logo */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <span style={{ fontSize: '24px' }}>🗳️</span>
+          <div>
+            <div style={{
+              fontSize: '18px',
+              fontWeight: 800,
+              color: '#f9fafb',
+              letterSpacing: '-0.5px',
+              lineHeight: 1.2,
+            }}>
+              Toronto Pulse
+            </div>
+            <div style={{
+              fontSize: '11px',
+              color: '#6b7280',
+              letterSpacing: '0.05em',
+              textTransform: 'uppercase',
+              fontWeight: 500,
+            }}>
+              2026 Municipal Election Monitor
+            </div>
+          </div>
         </div>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
-          <div style={{
-            minWidth: '230px',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '10px',
-            padding: '12px 14px',
-            borderRadius: '16px',
-            border: '1px solid #262c36',
-            background: '#171b21',
-            color: '#7b8494',
-            fontSize: '13px',
-          }}>
-            <span style={{ fontSize: '14px' }}>⌕</span>
-            <span>Search data points...</span>
+        {/* Status */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+          {/* Last updated */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12px', color: '#9ca3af' }}>
+            <div
+              className="pulse-dot"
+              style={{
+                width: '8px',
+                height: '8px',
+                borderRadius: '50%',
+                backgroundColor: isRefreshing ? '#f59e0b' : '#10b981',
+              }}
+            />
+            <span>
+              {isRefreshing ? 'Refreshing...' : lastUpdated ? `Updated ${timeAgo}` : 'Loading...'}
+            </span>
           </div>
 
+          {/* Auto-refresh toggle */}
           <button
             onClick={onToggleRefresh}
             style={{
               display: 'flex',
               alignItems: 'center',
               gap: '8px',
-              padding: '12px 14px',
-              borderRadius: '16px',
-              border: '1px solid #262c36',
-              background: '#171b21',
-              color: autoRefresh ? '#f5f7fb' : '#7b8494',
+              padding: '6px 12px',
+              borderRadius: '8px',
+              border: `1px solid ${autoRefresh ? '#374151' : '#1f2937'}`,
+              background: autoRefresh ? '#1f2937' : 'transparent',
+              color: autoRefresh ? '#10b981' : '#6b7280',
               fontSize: '12px',
-              fontWeight: 600,
+              fontWeight: 500,
               cursor: 'pointer',
+              transition: 'all 0.2s ease',
             }}
           >
-            <span>{isRefreshing ? '↻' : '⟳'}</span>
-            {autoRefresh ? 'Auto-refresh on' : 'Auto-refresh off'}
+            {/* Refresh SVG */}
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.3"/>
+            </svg>
+            Auto-refresh {autoRefresh ? 'ON' : 'OFF'}
           </button>
 
+          {/* Live badge */}
           <div style={{
-            width: '42px',
-            height: '42px',
-            borderRadius: '14px',
-            border: '1px solid #262c36',
-            background: '#171b21',
-            display: 'grid',
-            placeItems: 'center',
-            color: '#c7cfdd',
-          }}>◌</div>
-          <div style={{
-            width: '42px',
-            height: '42px',
-            borderRadius: '14px',
-            border: '1px solid #262c36',
-            background: '#171b21',
-            display: 'grid',
-            placeItems: 'center',
-            color: '#c7cfdd',
-          }}>◔</div>
-          <div style={{
-            width: '42px',
-            height: '42px',
-            borderRadius: '14px',
-            background: 'linear-gradient(135deg, #f59e0b, #fb7185)',
-            display: 'grid',
-            placeItems: 'center',
-            color: '#fff',
-            fontWeight: 800,
-          }}>S</div>
-        </div>
-      </div>
-
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px', flexWrap: 'wrap' }}>
-        <div>
-          <div style={{ fontSize: '13px', color: '#7b8494', marginBottom: '6px', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
-            Toronto Pulse Dashboard
-          </div>
-          <div style={{ fontSize: '30px', fontWeight: 800, color: '#f5f7fb', letterSpacing: '-0.04em', lineHeight: 1 }}>
-            Toronto Mayoral Sentiment Tracker
-          </div>
-        </div>
-
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '12px', color: '#9ca3af' }}>
-            <div className="pulse-dot" style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: isRefreshing ? '#f59e0b' : '#10b981' }} />
-            <span>{isRefreshing ? 'Refreshing…' : lastUpdated ? `Updated ${timeAgo}` : 'Loading…'}</span>
-          </div>
-          <div style={{
-            display: 'inline-flex',
+            display: 'flex',
             alignItems: 'center',
-            gap: '8px',
-            padding: '8px 12px',
-            borderRadius: '999px',
-            background: 'rgba(16, 185, 129, 0.12)',
-            border: '1px solid rgba(16, 185, 129, 0.25)',
-            color: '#8df0c8',
+            gap: '6px',
+            padding: '4px 10px',
+            borderRadius: '20px',
+            background: 'rgba(16, 185, 129, 0.1)',
+            border: '1px solid rgba(16, 185, 129, 0.3)',
             fontSize: '11px',
-            fontWeight: 700,
-            letterSpacing: '0.08em',
+            fontWeight: 600,
+            color: '#10b981',
+            letterSpacing: '0.05em',
             textTransform: 'uppercase',
           }}>
-            Live stream
+            <div className="pulse-dot" style={{
+              width: '6px', height: '6px', borderRadius: '50%',
+              backgroundColor: '#10b981',
+            }} />
+            LIVE
           </div>
         </div>
       </div>

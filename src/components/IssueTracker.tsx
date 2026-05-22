@@ -27,19 +27,18 @@ export default function IssueTracker({ sentiment, loading, onSelectIssue, select
 
   return (
     <div style={{
-      background: 'linear-gradient(180deg, rgba(25,29,36,0.98), rgba(18,22,28,0.98))',
-      border: '1px solid #262c36',
-      borderRadius: '24px',
+      background: '#111827',
+      border: '1px solid #1f2937',
+      borderRadius: '16px',
       padding: '24px',
-      boxShadow: '0 18px 48px rgba(0,0,0,0.18)',
     }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '20px' }}>
         <div>
-          <h2 style={{ margin: 0, fontSize: '18px', fontWeight: 800, color: '#f5f7fb', letterSpacing: '-0.02em' }}>
-            Top Issue Clusters
+          <h2 style={{ margin: 0, fontSize: '16px', fontWeight: 700, color: '#f9fafb' }}>
+            Issue Tracker
           </h2>
-          <p style={{ margin: '4px 0 0', fontSize: '12px', color: '#7b8494' }}>
-            Tap a cluster to focus the signal feed
+          <p style={{ margin: '4px 0 0', fontSize: '12px', color: '#6b7280' }}>
+            Click to filter feed by issue
           </p>
         </div>
         {selectedIssue && (
@@ -82,49 +81,54 @@ export default function IssueTracker({ sentiment, loading, onSelectIssue, select
                 key={issue.name}
                 onClick={() => onSelectIssue(isSelected ? null : issue.name)}
                 style={{
-                  display: 'grid',
-                  gridTemplateColumns: '1fr auto',
+                  display: 'flex',
                   alignItems: 'center',
-                  gap: '10px',
-                  padding: '14px 14px',
-                  background: isSelected ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.02)',
-                  border: `1px solid ${isSelected ? '#3a4352' : '#232933'}`,
-                  borderRadius: '16px',
+                  gap: '12px',
+                  padding: '10px 12px',
+                  background: isSelected ? '#1f2937' : 'transparent',
+                  border: `1px solid ${isSelected ? '#374151' : 'transparent'}`,
+                  borderRadius: '10px',
                   cursor: 'pointer',
                   width: '100%',
                   textAlign: 'left',
                   transition: 'all 0.15s ease',
                 }}
               >
-                <div>
-                  <div style={{ fontSize: '14px', fontWeight: 700, color: '#f5f7fb', marginBottom: '8px' }}>
-                    {issue.name}
-                  </div>
-                  <div style={{ height: '8px', background: '#252b33', borderRadius: '999px', overflow: 'hidden' }}>
-                    <div style={{
-                      height: '100%',
-                      width: `${pct}%`,
-                      background: `linear-gradient(90deg, ${color}, ${color}cc)`,
-                      borderRadius: '999px',
-                      transition: 'width 0.5s ease',
-                    }} />
-                  </div>
+                {/* Issue name */}
+                <div style={{ width: '110px', fontSize: '13px', fontWeight: 600, color: '#d1d5db', flexShrink: 0 }}>
+                  {issue.name}
                 </div>
-                <div style={{ display: 'grid', justifyItems: 'end', gap: '8px' }}>
-                  <div className="font-mono-num" style={{ fontSize: '15px', fontWeight: 800, color: '#f5f7fb' }}>
-                    {issue.count.toLocaleString()}
-                  </div>
+
+                {/* Bar */}
+                <div style={{ flex: 1, height: '6px', background: '#1f2937', borderRadius: '3px', overflow: 'hidden' }}>
                   <div style={{
-                    padding: '4px 10px',
-                    borderRadius: '999px',
-                    background: `${color}18`,
-                    border: `1px solid ${color}33`,
-                    fontSize: '10px',
-                    fontWeight: 700,
-                    color,
-                  }}>
-                    {getSentimentLabel(issue.sentiment)}
-                  </div>
+                    height: '100%',
+                    width: `${pct}%`,
+                    background: color,
+                    borderRadius: '3px',
+                    transition: 'width 0.5s ease',
+                  }} />
+                </div>
+
+                {/* Count */}
+                <div className="font-mono-num" style={{ width: '32px', fontSize: '13px', fontWeight: 700, color: '#f9fafb', textAlign: 'right', flexShrink: 0 }}>
+                  {issue.count}
+                </div>
+
+                {/* Sentiment pill */}
+                <div style={{
+                  padding: '2px 8px',
+                  borderRadius: '20px',
+                  background: `${color}20`,
+                  border: `1px solid ${color}40`,
+                  fontSize: '10px',
+                  fontWeight: 600,
+                  color,
+                  width: '60px',
+                  textAlign: 'center',
+                  flexShrink: 0,
+                }}>
+                  {getSentimentLabel(issue.sentiment)}
                 </div>
               </button>
             );
