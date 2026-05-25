@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import fs from 'node:fs';
+import path from 'node:path';
 import {
   generatePulseData,
   getPulseDataOutputPath,
@@ -62,7 +63,7 @@ type GitHubSyncResult =
   | { synced: true; owner: string; repo: string; branch: string }
   | { synced: false; reason: string };
 
-async function syncSnapshotToGitHub(dataPath: string, historyPath: string): Promise<GitHubSyncResult> {
+async function syncSnapshotToGitHub(dataContent: string, historyContent: string): Promise<GitHubSyncResult> {
   const token = process.env.GITHUB_TOKEN;
   if (!token) {
     return { synced: false, reason: 'missing GITHUB_TOKEN' };
@@ -72,9 +73,6 @@ async function syncSnapshotToGitHub(dataPath: string, historyPath: string): Prom
   const repo = process.env.GITHUB_REPO_NAME || 'toronto-pulse';
   const branch = process.env.GITHUB_REPO_BRANCH || 'main';
   const commitMessage = `data: pulse update ${new Date().toISOString()}`;
-
-  const dataContent = fs.readFileSync(dataPath, 'utf8');
-  const historyContent = fs.readFileSync(historyPath, 'utf8');
 
   await putGitHubFile(owner, repo, 'public/data/pulse-data.json', dataContent, token, branch, commitMessage);
   await putGitHubFile(owner, repo, 'public/data/pulse-history.json', historyContent, token, branch, commitMessage);
@@ -102,12 +100,22 @@ export async function POST() {
     const data = await generatePulseData();
     const dataPath = getPulseDataOutputPath();
     const historyPath = getPulseHistoryOutputPath();
+    const dataContent = JSON.stringify(data, null, 2);
+    const historyContent = JSON.stringify(data.sentiment.volumeByDay.slice(-30), null, 2);
 
-    writePulseDataFile(data, dataPath);
+    let localFilesPersisted = false;
+    try {
+      writePulseDataFile(data, dataPath);
+      fs.mkdirSync(path.dirname(historyPath), { recursive: true });
+      fs.writeFileSync(historyPath, historyContent);
+      localFilesPersisted = true;
+    } catch (localWriteError) {
+      console.warn('[TorontoPulse] Local file persistence skipped:', localWriteError);
+    }
 
     let githubSync: GitHubSyncResult | null = null;
     try {
-      githubSync = await syncSnapshotToGitHub(dataPath, historyPath);
+      githubSync = await syncSnapshotToGitHub(dataContent, historyContent);
     } catch (githubError) {
       console.error('[TorontoPulse] GitHub sync failed:', githubError);
       githubSync = { synced: false, reason: String(githubError) };
@@ -117,7 +125,7 @@ export async function POST() {
       {
         ...data,
         persisted: {
-          localFiles: true,
+          localFiles: localFilesPersisted,
           github: githubSync,
         },
       },
