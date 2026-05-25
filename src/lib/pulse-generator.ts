@@ -11,6 +11,7 @@ import {
   mentionsBradford,
   mentionsChow,
 } from './sentiment';
+import type { WeightedRule } from './sentiment';
 
 export interface RedditPost {
   id: string;
@@ -85,7 +86,7 @@ const GEO_KEYWORDS: Record<string, string[]> = {
   'East York': ['east york', 'danforth', 'greektown', 'pape', 'broadview'],
 };
 
-function scoreText(text: string, positiveKw: string[], negativeKw: string[]): number {
+function scoreText(text: string, positiveKw: WeightedRule[], negativeKw: WeightedRule[]): number {
   const score = getSentimentScore(text, positiveKw, negativeKw);
   if (score > 0) return 1;
   if (score < 0) return -1;

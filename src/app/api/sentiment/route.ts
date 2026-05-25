@@ -9,6 +9,7 @@ import {
   mentionsBradford,
   mentionsChow,
 } from '@/lib/sentiment';
+import type { WeightedRule } from '@/lib/sentiment';
 
 const ISSUE_KEYWORDS: Record<string, string[]> = {
   'Housing': ['housing', 'rent', 'affordable housing', 'condo', 'landlord', 'tenant', 'eviction', 'homeless shelter', 'zoning'],
@@ -34,7 +35,7 @@ interface TextItem {
   created_utc: number;
 }
 
-function scoreText(text: string, positiveKw: string[], negativeKw: string[]): number {
+function scoreText(text: string, positiveKw: WeightedRule[], negativeKw: WeightedRule[]): number {
   const score = getSentimentScore(text, positiveKw, negativeKw);
   if (score > 0) return 1;
   if (score < 0) return -1;
