@@ -1,43 +1,803 @@
 [
   {
+    "date": "2026-02-25",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-02-26",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-02-27",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-02-28",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-03-01",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-03-02",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-03-03",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-03-04",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-03-05",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-03-06",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-03-07",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-03-08",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-03-09",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-03-10",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-03-11",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-03-12",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-03-13",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-03-14",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-03-15",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-03-16",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-03-17",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-03-18",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-03-19",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-03-20",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-03-21",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-03-22",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-03-23",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-03-24",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-03-25",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-03-26",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-03-27",
+    "chowPos": 0,
+    "chowNeg": 1,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 1
+  },
+  {
+    "date": "2026-03-28",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-03-29",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-03-30",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-03-31",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-04-01",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-04-02",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-04-03",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-04-04",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-04-05",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-04-06",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-04-07",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-04-08",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-04-09",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-04-10",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 1,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 1
+  },
+  {
+    "date": "2026-04-11",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-04-12",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-04-13",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-04-14",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-04-15",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 1,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 1
+  },
+  {
+    "date": "2026-04-16",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-04-17",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 2,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 1,
+    "total": 3
+  },
+  {
+    "date": "2026-04-18",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-04-19",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-04-20",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-04-21",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-04-22",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 1,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 1
+  },
+  {
+    "date": "2026-04-23",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 1,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 1
+  },
+  {
+    "date": "2026-04-24",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 1,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 1
+  },
+  {
+    "date": "2026-04-25",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 1,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 1
+  },
+  {
+    "date": "2026-04-26",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 1,
+    "total": 1
+  },
+  {
+    "date": "2026-04-27",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-04-28",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-04-29",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-04-30",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-05-01",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-05-02",
+    "chowPos": 1,
+    "chowNeg": 0,
+    "chowNeutral": 1,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 1,
+    "total": 3
+  },
+  {
+    "date": "2026-05-03",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-05-04",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-05-05",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-05-06",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-05-07",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 1,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 1
+  },
+  {
+    "date": "2026-05-08",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-05-09",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-05-10",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
+    "date": "2026-05-11",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
+  },
+  {
     "date": "2026-05-12",
     "chowPos": 0,
     "chowNeg": 0,
     "chowNeutral": 0,
     "bradPos": 0,
     "bradNeg": 0,
-    "bradNeutral": 0,
-    "total": 0
+    "bradNeutral": 1,
+    "total": 1
   },
   {
     "date": "2026-05-13",
-    "chowPos": 0,
+    "chowPos": 1,
     "chowNeg": 0,
     "chowNeutral": 0,
     "bradPos": 0,
     "bradNeg": 0,
     "bradNeutral": 0,
-    "total": 0
+    "total": 1
   },
   {
     "date": "2026-05-14",
     "chowPos": 0,
     "chowNeg": 0,
-    "chowNeutral": 0,
+    "chowNeutral": 1,
     "bradPos": 0,
     "bradNeg": 0,
-    "bradNeutral": 0,
-    "total": 0
+    "bradNeutral": 1,
+    "total": 2
   },
   {
     "date": "2026-05-15",
     "chowPos": 0,
     "chowNeg": 0,
-    "chowNeutral": 0,
+    "chowNeutral": 1,
     "bradPos": 0,
     "bradNeg": 0,
     "bradNeutral": 0,
-    "total": 0
+    "total": 1
   },
   {
     "date": "2026-05-16",
@@ -46,8 +806,8 @@
     "chowNeutral": 0,
     "bradPos": 0,
     "bradNeg": 0,
-    "bradNeutral": 0,
-    "total": 0
+    "bradNeutral": 1,
+    "total": 1
   },
   {
     "date": "2026-05-17",
@@ -73,11 +833,11 @@
     "date": "2026-05-19",
     "chowPos": 0,
     "chowNeg": 0,
-    "chowNeutral": 0,
+    "chowNeutral": 1,
     "bradPos": 0,
     "bradNeg": 0,
-    "bradNeutral": 0,
-    "total": 0
+    "bradNeutral": 1,
+    "total": 2
   },
   {
     "date": "2026-05-20",
@@ -91,23 +851,23 @@
   },
   {
     "date": "2026-05-21",
-    "chowPos": 0,
+    "chowPos": 1,
     "chowNeg": 0,
     "chowNeutral": 0,
     "bradPos": 0,
     "bradNeg": 0,
     "bradNeutral": 0,
-    "total": 0
+    "total": 1
   },
   {
     "date": "2026-05-22",
-    "chowPos": 0,
+    "chowPos": 1,
     "chowNeg": 0,
-    "chowNeutral": 0,
+    "chowNeutral": 1,
     "bradPos": 0,
     "bradNeg": 0,
     "bradNeutral": 0,
-    "total": 0
+    "total": 2
   },
   {
     "date": "2026-05-23",
@@ -125,18 +885,18 @@
     "chowNeg": 1,
     "chowNeutral": 0,
     "bradPos": 1,
-    "bradNeg": 1,
+    "bradNeg": 2,
     "bradNeutral": 1,
-    "total": 4
+    "total": 5
   },
   {
     "date": "2026-05-25",
-    "chowPos": 11,
+    "chowPos": 15,
     "chowNeg": 27,
-    "chowNeutral": 54,
-    "bradPos": 17,
+    "chowNeutral": 65,
+    "bradPos": 18,
     "bradNeg": 5,
-    "bradNeutral": 25,
-    "total": 139
+    "bradNeutral": 28,
+    "total": 158
   }
 ]

@@ -69,6 +69,15 @@ interface DailyHistoryPoint {
   total: number;
 }
 
+interface DailyArchiveEntry {
+  date: string;
+  capturedAt: number;
+  posts: RedditPost[];
+  comments: RedditComment[];
+  tweets: Tweet[];
+  sentiment: ReturnType<typeof runSentimentAnalysis>;
+}
+
 const ISSUE_KEYWORDS: Record<string, string[]> = {
   'Housing': ['housing', 'rent', 'affordable', 'condo', 'landlord', 'tenant', 'eviction', 'zoning'],
   'Transit/TTC': ['transit', 'ttc', 'subway', 'bus', 'traffic', 'bike lane', 'eglinton', 'streetcar'],
@@ -407,7 +416,7 @@ function runSentimentAnalysis(
     chowPos: number; chowNeg: number; chowNeutral: number;
     bradPos: number; bradNeg: number; bradNeutral: number; total: number;
   }> = {};
-  for (let i = 13; i >= 0; i--) {
+  for (let i = 89; i >= 0; i--) {
     const day = format(subDays(new Date(), i), 'yyyy-MM-dd');
     dayBuckets[day] = { chowPos: 0, chowNeg: 0, chowNeutral: 0, bradPos: 0, bradNeg: 0, bradNeutral: 0, total: 0 };
   }
@@ -446,18 +455,20 @@ function runSentimentAnalysis(
       }
     }
 
+    const overallS = hasChow
+      ? scoreText(text, CHOW_POSITIVE, CHOW_NEGATIVE)
+      : hasBrad ? scoreText(text, BRADFORD_POSITIVE, BRADFORD_NEGATIVE) : 0;
+
     for (const issue of detectIssues(text)) {
       if (!issueCounts[issue]) issueCounts[issue] = { count: 0, sentiment: 0 };
       issueCounts[issue].count++;
-      const overallS = hasChow
-        ? scoreText(text, CHOW_POSITIVE, CHOW_NEGATIVE)
-        : hasBrad ? scoreText(text, BRADFORD_POSITIVE, BRADFORD_NEGATIVE) : 0;
       issueCounts[issue].sentiment += overallS;
     }
 
     for (const geo of detectGeo(text)) {
       if (!geoCounts[geo]) geoCounts[geo] = { count: 0, sentiment: 0 };
       geoCounts[geo].count++;
+      geoCounts[geo].sentiment += overallS;
     }
   }
 
@@ -465,7 +476,7 @@ function runSentimentAnalysis(
   const historyMap = new Map<string, DailyHistoryPoint>();
   for (const item of history) historyMap.set(item.date, item);
   for (const item of liveVolumeByDay) historyMap.set(item.date, item);
-  const volumeByDay = Array.from(historyMap.values()).sort((a, b) => a.date.localeCompare(b.date)).slice(-14);
+  const volumeByDay = Array.from(historyMap.values()).sort((a, b) => a.date.localeCompare(b.date)).slice(-90);
   const recentDays = volumeByDay.slice(-7);
   const prevDays = volumeByDay.slice(-14, -7);
   const recentChowScore = recentDays.reduce((a, d) => a + d.chowPos - d.chowNeg, 0);
@@ -560,8 +571,16 @@ export async function generatePulseData(): Promise<PulseData> {
 
   try {
     writePulseHistoryFile(historyPath, sentiment.volumeByDay);
+    writePulseArchiveFile(getPulseArchiveOutputPath(), {
+      date: format(new Date(), 'yyyy-MM-dd'),
+      capturedAt: Date.now(),
+      posts: uniquePosts,
+      comments: allComments,
+      tweets,
+      sentiment,
+    });
   } catch (error) {
-    console.warn('[Toronto Pulse Scraper] History file write skipped:', error);
+    console.warn('[Toronto Pulse Scraper] History/archive file write skipped:', error);
   }
 
   return {
@@ -583,6 +602,11 @@ export function getPulseHistoryOutputPath(): string {
   return path.join(fileDir, '..', '..', 'public', 'data', 'pulse-history.json');
 }
 
+export function getPulseArchiveOutputPath(): string {
+  const fileDir = path.dirname(fileURLToPath(import.meta.url));
+  return path.join(fileDir, '..', '..', 'public', 'data', 'pulse-archive.json');
+}
+
 function readPulseHistoryFile(historyPath = getPulseHistoryOutputPath()): DailyHistoryPoint[] {
   try {
     if (!fs.existsSync(historyPath)) return [];
@@ -595,7 +619,27 @@ function readPulseHistoryFile(historyPath = getPulseHistoryOutputPath()): DailyH
 
 function writePulseHistoryFile(historyPath: string, data: DailyHistoryPoint[]): void {
   fs.mkdirSync(path.dirname(historyPath), { recursive: true });
-  fs.writeFileSync(historyPath, JSON.stringify(data.slice(-30), null, 2));
+  fs.writeFileSync(historyPath, JSON.stringify(data.slice(-90), null, 2));
+}
+
+function readPulseArchiveFile(archivePath = getPulseArchiveOutputPath()): DailyArchiveEntry[] {
+  try {
+    if (!fs.existsSync(archivePath)) return [];
+    const parsed = JSON.parse(fs.readFileSync(archivePath, 'utf8'));
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
+function writePulseArchiveFile(archivePath: string, entry: DailyArchiveEntry): void {
+  fs.mkdirSync(path.dirname(archivePath), { recursive: true });
+  const existing = readPulseArchiveFile(archivePath);
+  const filtered = existing.filter(item => item.date !== entry.date);
+  const next = [...filtered, entry]
+    .sort((a, b) => a.date.localeCompare(b.date))
+    .slice(-90);
+  fs.writeFileSync(archivePath, JSON.stringify(next, null, 2));
 }
 
 export function writePulseDataFile(output: PulseData, outputPath = getPulseDataOutputPath()): void {

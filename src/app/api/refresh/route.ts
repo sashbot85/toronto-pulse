@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import {
   generatePulseData,
+  getPulseArchiveOutputPath,
   getPulseDataOutputPath,
   getPulseHistoryOutputPath,
   writePulseDataFile,
@@ -19,7 +20,7 @@ function toBase64(value: string): string {
   return Buffer.from(value, 'utf8').toString('base64');
 }
 
-async function getGitHubFileSha(owner: string, repo: string, path: string, token: string, branch: string): Promise<string | undefined> {
+async function getGitHubFile(owner: string, repo: string, path: string, token: string, branch: string): Promise<{ sha?: string; content?: string }> {
   const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}?ref=${branch}`, {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -28,15 +29,19 @@ async function getGitHubFileSha(owner: string, repo: string, path: string, token
     cache: 'no-store',
   });
 
-  if (response.status === 404) return undefined;
-  if (!response.ok) throw new Error(`GitHub SHA lookup failed for ${path}: ${response.status}`);
+  if (response.status === 404) return {};
+  if (!response.ok) throw new Error(`GitHub lookup failed for ${path}: ${response.status}`);
 
-  const payload = await response.json() as { sha?: string };
-  return payload.sha;
+  const payload = await response.json() as { sha?: string; content?: string; encoding?: string };
+  const content = payload.content && payload.encoding === 'base64'
+    ? Buffer.from(payload.content.replace(/\n/g, ''), 'base64').toString('utf8')
+    : undefined;
+
+  return { sha: payload.sha, content };
 }
 
 async function putGitHubFile(owner: string, repo: string, path: string, content: string, token: string, branch: string, message: string) {
-  const sha = await getGitHubFileSha(owner, repo, path, token, branch);
+  const { sha } = await getGitHubFile(owner, repo, path, token, branch);
 
   const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, {
     method: 'PUT',
@@ -63,7 +68,7 @@ type GitHubSyncResult =
   | { synced: true; owner: string; repo: string; branch: string }
   | { synced: false; reason: string };
 
-async function syncSnapshotToGitHub(dataContent: string, historyContent: string): Promise<GitHubSyncResult> {
+async function syncSnapshotToGitHub(dataContent: string, historyContent: string, archiveContent: string): Promise<GitHubSyncResult> {
   const token = process.env.GITHUB_TOKEN;
   if (!token) {
     return { synced: false, reason: 'missing GITHUB_TOKEN' };
@@ -76,6 +81,7 @@ async function syncSnapshotToGitHub(dataContent: string, historyContent: string)
 
   await putGitHubFile(owner, repo, 'public/data/pulse-data.json', dataContent, token, branch, commitMessage);
   await putGitHubFile(owner, repo, 'public/data/pulse-history.json', historyContent, token, branch, commitMessage);
+  await putGitHubFile(owner, repo, 'public/data/pulse-archive.json', archiveContent, token, branch, commitMessage);
 
   return { synced: true, owner, repo, branch };
 }
@@ -100,14 +106,57 @@ export async function POST() {
     const data = await generatePulseData();
     const dataPath = getPulseDataOutputPath();
     const historyPath = getPulseHistoryOutputPath();
+    const archivePath = getPulseArchiveOutputPath();
     const dataContent = JSON.stringify(data, null, 2);
-    const historyContent = JSON.stringify(data.sentiment.volumeByDay.slice(-30), null, 2);
+    const historyContent = JSON.stringify(data.sentiment.volumeByDay.slice(-90), null, 2);
+
+    const archiveEntry = {
+      date: new Date().toISOString().slice(0, 10),
+      capturedAt: Date.now(),
+      posts: data.posts,
+      comments: data.comments,
+      tweets: data.tweets,
+      sentiment: data.sentiment,
+    };
+
+    let archiveContent = '[]';
+    if (fs.existsSync(archivePath)) {
+      archiveContent = fs.readFileSync(archivePath, 'utf8');
+    } else if (process.env.GITHUB_TOKEN) {
+      try {
+        const owner = process.env.GITHUB_REPO_OWNER || 'sashbot85';
+        const repo = process.env.GITHUB_REPO_NAME || 'toronto-pulse';
+        const branch = process.env.GITHUB_REPO_BRANCH || 'main';
+        const existing = await getGitHubFile(owner, repo, 'public/data/pulse-archive.json', process.env.GITHUB_TOKEN, branch);
+        archiveContent = existing.content || '[]';
+      } catch (error) {
+        console.warn('[TorontoPulse] Failed to load GitHub archive before merge:', error);
+      }
+    }
+
+    try {
+      const parsed = JSON.parse(archiveContent);
+      const archiveArray = Array.isArray(parsed) ? parsed : [];
+      archiveContent = JSON.stringify(
+        [...archiveArray.filter((item) => item?.date !== archiveEntry.date), archiveEntry]
+          .sort((a, b) => String(a.date).localeCompare(String(b.date)))
+          .slice(-90),
+        null,
+        2
+      );
+    } catch {
+      archiveContent = JSON.stringify([archiveEntry], null, 2);
+    }
 
     let localFilesPersisted = false;
     try {
       writePulseDataFile(data, dataPath);
       fs.mkdirSync(path.dirname(historyPath), { recursive: true });
       fs.writeFileSync(historyPath, historyContent);
+      if (!fs.existsSync(archivePath)) {
+        fs.mkdirSync(path.dirname(archivePath), { recursive: true });
+        fs.writeFileSync(archivePath, archiveContent);
+      }
       localFilesPersisted = true;
     } catch (localWriteError) {
       console.warn('[TorontoPulse] Local file persistence skipped:', localWriteError);
@@ -115,7 +164,7 @@ export async function POST() {
 
     let githubSync: GitHubSyncResult | null = null;
     try {
-      githubSync = await syncSnapshotToGitHub(dataContent, historyContent);
+      githubSync = await syncSnapshotToGitHub(dataContent, historyContent, archiveContent);
     } catch (githubError) {
       console.error('[TorontoPulse] GitHub sync failed:', githubError);
       githubSync = { synced: false, reason: String(githubError) };
