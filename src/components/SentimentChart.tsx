@@ -48,6 +48,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
 
 export default function SentimentChart({ sentiment, loading }: SentimentChartProps) {
   const [candidate, setCandidate] = useState<'chow' | 'bradford'>('chow');
+  const [range, setRange] = useState<10 | 30 | 90>(30);
 
   const chartData = sentiment?.volumeByDay.map(d => ({
     date: (() => { try { return format(parseISO(d.date), 'MMM d'); } catch { return d.date; } })(),
@@ -56,8 +57,7 @@ export default function SentimentChart({ sentiment, loading }: SentimentChartPro
     Negative: candidate === 'chow' ? d.chowNeg : d.bradNeg,
   })) || [];
 
-  // Only show last 10 days
-  const displayData = chartData.slice(-10);
+  const displayData = chartData.slice(-range);
 
   return (
     <div style={{
@@ -73,42 +73,63 @@ export default function SentimentChart({ sentiment, loading }: SentimentChartPro
             Sentiment Over Time
           </h2>
           <p style={{ margin: '4px 0 0', fontSize: '12px', color: '#6b7280' }}>
-            Daily candidate sentiment snapshots — last 10 days
+            Daily candidate sentiment snapshots — last {range} days
           </p>
         </div>
-        {/* Candidate toggle */}
-        <div style={{ display: 'flex', borderRadius: '8px', overflow: 'hidden', border: '1px solid #1f2937' }}>
-          <button
-            onClick={() => setCandidate('chow')}
-            style={{
-              padding: '6px 14px',
-              fontSize: '12px',
-              fontWeight: 600,
-              cursor: 'pointer',
-              background: candidate === 'chow' ? 'rgba(245, 158, 11, 0.15)' : 'transparent',
-              color: candidate === 'chow' ? '#f59e0b' : '#6b7280',
-              border: 'none',
-              borderRight: '1px solid #1f2937',
-              transition: 'all 0.2s ease',
-            }}
-          >
-            Chow
-          </button>
-          <button
-            onClick={() => setCandidate('bradford')}
-            style={{
-              padding: '6px 14px',
-              fontSize: '12px',
-              fontWeight: 600,
-              cursor: 'pointer',
-              background: candidate === 'bradford' ? 'rgba(59, 130, 246, 0.15)' : 'transparent',
-              color: candidate === 'bradford' ? '#3b82f6' : '#6b7280',
-              border: 'none',
-              transition: 'all 0.2s ease',
-            }}
-          >
-            Bradford
-          </button>
+        <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+          <div style={{ display: 'flex', borderRadius: '8px', overflow: 'hidden', border: '1px solid #1f2937' }}>
+            <button
+              onClick={() => setCandidate('chow')}
+              style={{
+                padding: '6px 14px',
+                fontSize: '12px',
+                fontWeight: 600,
+                cursor: 'pointer',
+                background: candidate === 'chow' ? 'rgba(245, 158, 11, 0.15)' : 'transparent',
+                color: candidate === 'chow' ? '#f59e0b' : '#6b7280',
+                border: 'none',
+                borderRight: '1px solid #1f2937',
+                transition: 'all 0.2s ease',
+              }}
+            >
+              Chow
+            </button>
+            <button
+              onClick={() => setCandidate('bradford')}
+              style={{
+                padding: '6px 14px',
+                fontSize: '12px',
+                fontWeight: 600,
+                cursor: 'pointer',
+                background: candidate === 'bradford' ? 'rgba(59, 130, 246, 0.15)' : 'transparent',
+                color: candidate === 'bradford' ? '#3b82f6' : '#6b7280',
+                border: 'none',
+                transition: 'all 0.2s ease',
+              }}
+            >
+              Bradford
+            </button>
+          </div>
+          <div style={{ display: 'flex', borderRadius: '8px', overflow: 'hidden', border: '1px solid #1f2937' }}>
+            {[10, 30, 90].map((days) => (
+              <button
+                key={days}
+                onClick={() => setRange(days as 10 | 30 | 90)}
+                style={{
+                  padding: '6px 10px',
+                  fontSize: '11px',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  background: range === days ? '#1f2937' : 'transparent',
+                  color: range === days ? '#f9fafb' : '#6b7280',
+                  border: 'none',
+                  borderLeft: days === 10 ? 'none' : '1px solid #1f2937',
+                }}
+              >
+                {days}d
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 

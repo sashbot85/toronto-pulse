@@ -66,6 +66,16 @@ export interface SentimentData {
     count: number;
     sentiment: number;
   }>;
+  issueHistory: Array<{
+    name: string;
+    totalCount: number;
+    avgSentiment: number;
+    days: Array<{
+      date: string;
+      count: number;
+      sentiment: number;
+    }>;
+  }>;
   volumeByDay: Array<{
     date: string;
     chowPos: number;
@@ -80,6 +90,16 @@ export interface SentimentData {
     area: string;
     count: number;
     sentiment: number;
+  }>;
+  geoHistory: Array<{
+    name: string;
+    totalCount: number;
+    avgSentiment: number;
+    days: Array<{
+      date: string;
+      count: number;
+      sentiment: number;
+    }>;
   }>;
   postsAnalyzed: number;
   lastUpdated: number;

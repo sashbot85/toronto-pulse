@@ -55,7 +55,7 @@ export interface PulseData {
   posts: RedditPost[];
   comments: RedditComment[];
   tweets: Tweet[];
-  sentiment: ReturnType<typeof runSentimentAnalysis>;
+  sentiment: SentimentAnalysisResult;
 }
 
 interface DailyHistoryPoint {
@@ -75,8 +75,65 @@ interface DailyArchiveEntry {
   posts: RedditPost[];
   comments: RedditComment[];
   tweets: Tweet[];
-  sentiment: ReturnType<typeof runSentimentAnalysis>;
+  sentiment: SentimentAnalysisResult;
 }
+
+interface TopicHistoryPoint {
+  date: string;
+  count: number;
+  sentiment: number;
+}
+
+interface TopicHistorySeries {
+  name: string;
+  totalCount: number;
+  avgSentiment: number;
+  days: TopicHistoryPoint[];
+}
+
+interface SentimentAnalysisResult {
+  chowSentiment: {
+    positive: number;
+    negative: number;
+    neutral: number;
+    total: number;
+    score: number;
+    trend: 'up' | 'down';
+  };
+  bradfordSentiment: {
+    positive: number;
+    negative: number;
+    neutral: number;
+    total: number;
+    score: number;
+    trend: 'up' | 'down';
+  };
+  topIssues: Array<{
+    name: string;
+    count: number;
+    sentiment: number;
+  }>;
+  issueHistory: TopicHistorySeries[];
+  volumeByDay: DailyHistoryPoint[];
+  geoData: Array<{
+    area: string;
+    count: number;
+    sentiment: number;
+  }>;
+  geoHistory: TopicHistorySeries[];
+  postsAnalyzed: number;
+  lastUpdated: number;
+}
+
+interface TrendArchiveEntry {
+  date: string;
+  sentiment: {
+    topIssues: SentimentAnalysisResult['topIssues'];
+    geoData: SentimentAnalysisResult['geoData'];
+  };
+}
+
+const HISTORY_DAYS = 90;
 
 const ISSUE_KEYWORDS: Record<string, string[]> = {
   'Housing': ['housing', 'rent', 'affordable', 'condo', 'landlord', 'tenant', 'eviction', 'zoning'],
@@ -94,6 +151,9 @@ const GEO_KEYWORDS: Record<string, string[]> = {
   'Etobicoke': ['etobicoke', 'mississauga rd', 'bloor west', 'humber', 'long branch'],
   'East York': ['east york', 'danforth', 'greektown', 'pape', 'broadview'],
 };
+
+const GENERIC_POSITIVE = [...CHOW_POSITIVE, ...BRADFORD_POSITIVE];
+const GENERIC_NEGATIVE = [...CHOW_NEGATIVE, ...BRADFORD_NEGATIVE];
 
 function scoreText(text: string, positiveKw: WeightedRule[], negativeKw: WeightedRule[]): number {
   const score = getSentimentScore(text, positiveKw, negativeKw);
@@ -114,6 +174,47 @@ function detectGeo(text: string): string[] {
   return Object.entries(GEO_KEYWORDS)
     .filter(([, keywords]) => keywords.some(kw => lower.includes(kw)))
     .map(([area]) => area);
+}
+
+function scoreOverallText(text: string, hasChow: boolean, hasBrad: boolean): number {
+  if (hasChow) return scoreText(text, CHOW_POSITIVE, CHOW_NEGATIVE);
+  if (hasBrad) return scoreText(text, BRADFORD_POSITIVE, BRADFORD_NEGATIVE);
+  return scoreText(text, GENERIC_POSITIVE, GENERIC_NEGATIVE);
+}
+
+function buildTopicHistoryFromArchive(
+  archiveEntries: TrendArchiveEntry[],
+  selector: (entry: TrendArchiveEntry) => Array<{ name: string; count: number; sentiment: number }>,
+  limit = 6,
+): TopicHistorySeries[] {
+  const seriesMap = new Map<string, { totalCount: number; weightedSentiment: number; days: TopicHistoryPoint[] }>();
+
+  for (const entry of archiveEntries.slice(-HISTORY_DAYS)) {
+    for (const item of selector(entry)) {
+      if (!seriesMap.has(item.name)) {
+        seriesMap.set(item.name, { totalCount: 0, weightedSentiment: 0, days: [] });
+      }
+
+      const current = seriesMap.get(item.name)!;
+      current.totalCount += item.count;
+      current.weightedSentiment += item.sentiment * item.count;
+      current.days.push({
+        date: entry.date,
+        count: item.count,
+        sentiment: item.sentiment,
+      });
+    }
+  }
+
+  return Array.from(seriesMap.entries())
+    .map(([name, value]) => ({
+      name,
+      totalCount: value.totalCount,
+      avgSentiment: value.totalCount > 0 ? Math.max(-1, Math.min(1, value.weightedSentiment / value.totalCount)) : 0,
+      days: value.days.sort((a, b) => a.date.localeCompare(b.date)),
+    }))
+    .sort((a, b) => b.totalCount - a.totalCount)
+    .slice(0, limit);
 }
 
 async function fetchSubredditPosts(subreddit: string): Promise<RedditPost[]> {
@@ -399,8 +500,9 @@ function runSentimentAnalysis(
   posts: RedditPost[],
   comments: RedditComment[],
   tweets: Tweet[],
-  history: DailyHistoryPoint[] = []
-) {
+  history: DailyHistoryPoint[] = [],
+  archiveEntries: DailyArchiveEntry[] = [],
+): SentimentAnalysisResult {
   const allItems: Array<{ text: string; created_utc: number }> = [
     ...posts.map(p => ({ text: `${p.title} ${p.selftext}`, created_utc: p.created_utc })),
     ...comments.map(c => ({ text: c.body, created_utc: c.created_utc })),
@@ -416,7 +518,7 @@ function runSentimentAnalysis(
     chowPos: number; chowNeg: number; chowNeutral: number;
     bradPos: number; bradNeg: number; bradNeutral: number; total: number;
   }> = {};
-  for (let i = 89; i >= 0; i--) {
+  for (let i = HISTORY_DAYS - 1; i >= 0; i--) {
     const day = format(subDays(new Date(), i), 'yyyy-MM-dd');
     dayBuckets[day] = { chowPos: 0, chowNeg: 0, chowNeutral: 0, bradPos: 0, bradNeg: 0, bradNeutral: 0, total: 0 };
   }
@@ -455,9 +557,7 @@ function runSentimentAnalysis(
       }
     }
 
-    const overallS = hasChow
-      ? scoreText(text, CHOW_POSITIVE, CHOW_NEGATIVE)
-      : hasBrad ? scoreText(text, BRADFORD_POSITIVE, BRADFORD_NEGATIVE) : 0;
+    const overallS = scoreOverallText(text, hasChow, hasBrad);
 
     for (const issue of detectIssues(text)) {
       if (!issueCounts[issue]) issueCounts[issue] = { count: 0, sentiment: 0 };
@@ -476,7 +576,7 @@ function runSentimentAnalysis(
   const historyMap = new Map<string, DailyHistoryPoint>();
   for (const item of history) historyMap.set(item.date, item);
   for (const item of liveVolumeByDay) historyMap.set(item.date, item);
-  const volumeByDay = Array.from(historyMap.values()).sort((a, b) => a.date.localeCompare(b.date)).slice(-90);
+  const volumeByDay = Array.from(historyMap.values()).sort((a, b) => a.date.localeCompare(b.date)).slice(-HISTORY_DAYS);
   const recentDays = volumeByDay.slice(-7);
   const prevDays = volumeByDay.slice(-14, -7);
   const recentChowScore = recentDays.reduce((a, d) => a + d.chowPos - d.chowNeg, 0);
@@ -486,6 +586,26 @@ function runSentimentAnalysis(
 
   const chowTotal = chowPos + chowNeg + chowNeutral;
   const bradTotal = bradPos + bradNeg + bradNeutral;
+  const topIssues = Object.entries(issueCounts)
+    .map(([name, { count, sentiment }]) => ({
+      name, count,
+      sentiment: count > 0 ? Math.max(-1, Math.min(1, sentiment / count)) : 0,
+    }))
+    .sort((a, b) => b.count - a.count);
+  const geoData = Object.entries(geoCounts)
+    .map(([area, { count, sentiment }]) => ({
+      area, count,
+      sentiment: count > 0 ? Math.max(-1, Math.min(1, sentiment / count)) : 0,
+    }))
+    .sort((a, b) => b.count - a.count);
+
+  const archiveForTrends: TrendArchiveEntry[] = [...archiveEntries.filter(item => item.date !== format(new Date(), 'yyyy-MM-dd')), {
+    date: format(new Date(), 'yyyy-MM-dd'),
+    sentiment: {
+      topIssues,
+      geoData,
+    },
+  }];
 
   return {
     chowSentiment: {
@@ -500,19 +620,25 @@ function runSentimentAnalysis(
       score: bradTotal > 0 ? Math.round((bradPos / bradTotal) * 100) : 0,
       trend: (recentBradScore >= prevBradScore ? 'up' : 'down') as 'up' | 'down',
     },
-    topIssues: Object.entries(issueCounts)
-      .map(([name, { count, sentiment }]) => ({
-        name, count,
-        sentiment: count > 0 ? Math.max(-1, Math.min(1, sentiment / count)) : 0,
-      }))
-      .sort((a, b) => b.count - a.count),
+    topIssues,
     volumeByDay,
-    geoData: Object.entries(geoCounts)
-      .map(([area, { count, sentiment }]) => ({
-        area, count,
-        sentiment: count > 0 ? Math.max(-1, Math.min(1, sentiment / count)) : 0,
-      }))
-      .sort((a, b) => b.count - a.count),
+    issueHistory: buildTopicHistoryFromArchive(
+      archiveForTrends,
+      (entry) => (entry.sentiment.topIssues || []).map((issue) => ({
+        name: issue.name,
+        count: issue.count,
+        sentiment: issue.sentiment,
+      })),
+    ),
+    geoData,
+    geoHistory: buildTopicHistoryFromArchive(
+      archiveForTrends,
+      (entry) => (entry.sentiment.geoData || []).map((geo) => ({
+        name: geo.area,
+        count: geo.count,
+        sentiment: geo.sentiment,
+      })),
+    ),
     postsAnalyzed: allItems.length,
     lastUpdated: Date.now(),
   };
@@ -565,7 +691,8 @@ export async function generatePulseData(): Promise<PulseData> {
   console.log('\n[Sentiment] Analyzing...');
   const historyPath = getPulseHistoryOutputPath();
   const history = readPulseHistoryFile(historyPath);
-  const sentiment = runSentimentAnalysis(uniquePosts, allComments, tweets, history);
+  const archive = readPulseArchiveFile(getPulseArchiveOutputPath());
+  const sentiment = runSentimentAnalysis(uniquePosts, allComments, tweets, history, archive);
   console.log(`  Posts analyzed: ${sentiment.postsAnalyzed}`);
   console.log(`  Chow mentions: ${sentiment.chowSentiment.total}, Bradford mentions: ${sentiment.bradfordSentiment.total}`);
 
