@@ -1,33 +1,14 @@
 import { NextResponse } from 'next/server';
 import { format, subDays } from 'date-fns';
-
-const CHOW_POSITIVE = [
-  'good mayor', 'support chow', 'voting chow', 'chow is right',
-  'approve', 'great job', 'doing well', 'better than', 're-elect',
-  'good leadership', 'love chow', 'chow doing', 'olivia is',
-  'chow has', 'chow will', 'backing chow', 'chow plan'
-];
-
-const CHOW_NEGATIVE = [
-  'chow sucks', 'worst mayor', 'fire chow', 'chow failed',
-  'terrible', 'incompetent', 'vote her out', 'disappointed',
-  'disaster', 'hate chow', 'chow is bad', 'chow is wrong',
-  'against chow', 'dump chow', 'chow is the worst', 'recall chow'
-];
-
-const BRADFORD_POSITIVE = [
-  'support bradford', 'voting bradford', 'bradford is right',
-  'fresh start', 'new leadership', 'better option', 'good platform',
-  'love bradford', 'brad is', 'bradford has', 'backing bradford',
-  'bradford plan', 'go bradford', 'vote bradford'
-];
-
-const BRADFORD_NEGATIVE = [
-  'bradford sucks', 'unknown', 'no experience', 'who is bradford',
-  "can't win", 'weak candidate', 'hate bradford', 'against bradford',
-  'bradford is bad', 'bradford failed', 'bradford is wrong',
-  'no bradford', 'dump bradford', 'brad sucks'
-];
+import {
+  BRADFORD_NEGATIVE,
+  BRADFORD_POSITIVE,
+  CHOW_NEGATIVE,
+  CHOW_POSITIVE,
+  getSentimentScore,
+  mentionsBradford,
+  mentionsChow,
+} from '@/lib/sentiment';
 
 const ISSUE_KEYWORDS: Record<string, string[]> = {
   'Housing': ['housing', 'rent', 'affordable housing', 'condo', 'landlord', 'tenant', 'eviction', 'homeless shelter', 'zoning'],
@@ -54,19 +35,15 @@ interface TextItem {
 }
 
 function scoreText(text: string, positiveKw: string[], negativeKw: string[]): number {
-  const lower = text.toLowerCase();
-  let score = 0;
-  for (const kw of positiveKw) if (lower.includes(kw)) score++;
-  for (const kw of negativeKw) if (lower.includes(kw)) score--;
+  const score = getSentimentScore(text, positiveKw, negativeKw);
   if (score > 0) return 1;
   if (score < 0) return -1;
   return 0;
 }
 
 function mentionsCandidate(text: string, candidate: 'chow' | 'bradford'): boolean {
-  const lower = text.toLowerCase();
-  if (candidate === 'chow') return lower.includes('chow') || lower.includes('olivia');
-  if (candidate === 'bradford') return lower.includes('bradford') || lower.includes('brad ');
+  if (candidate === 'chow') return mentionsChow(text);
+  if (candidate === 'bradford') return mentionsBradford(text);
   return false;
 }
 

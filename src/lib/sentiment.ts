@@ -1,14 +1,18 @@
 const GLOBAL_POSITIVE = [
   'good', 'great', 'strong', 'smart', 'effective', 'improved', 'improving', 'progress', 'popular',
   'support', 'backing', 'endorse', 'endorsed', 'approve', 'approved', 'right', 'love', 'liked',
-  'winning', 'win', 'better', 'best', 'serious', 'competent', 'leadership', 'solid', 'praised'
+  'winning', 'win', 'better', 'best', 'competent', 'leadership', 'solid', 'praised', 'hopeful',
+  'promising', 'impressive', 'responsible', 'honest', 'trusted', 'trustworthy', 'clear plan'
 ];
 
 const GLOBAL_NEGATIVE = [
   'bad', 'terrible', 'awful', 'incompetent', 'failed', 'failure', 'weak', 'worse', 'worst',
   'hate', 'angry', 'criticized', 'criticised', 'wrong', 'corrupt', 'clown', 'joke', 'embarrassing',
   'threatened', 'threaten', 'tax hike', 'raise taxes', 'property taxes', 'pander', 'pandering',
-  'unsafe', 'disaster', 'mess', 'blame', 'out of touch', 'unpopular', 'frustrating', 'ridiculous'
+  'unsafe', 'disaster', 'mess', 'blame', 'out of touch', 'unpopular', 'frustrating', 'ridiculous',
+  'shit hole', 'shithole', 'dump', 'ruined', 'disgusting', 'broken', 'pathetic', 'garbage',
+  'trash', 'disgrace', 'horrible', 'brutal', 'clueless', 'liar', 'lying', 'dishonest', 'crooked',
+  "won't visit", 'will not visit', 'never visit', "can't be serious", 'cannot be serious', 'useless'
 ];
 
 export const CHOW_POSITIVE = [
@@ -21,7 +25,8 @@ export const CHOW_NEGATIVE = [
   'chow sucks', 'worst mayor', 'fire chow', 'chow failed', 'vote her out',
   'hate chow', 'chow is bad', 'chow is wrong', 'against chow', 'dump chow',
   'recall chow', 'olivia chow threatened', 'olivia chow made sure', 'mean comments',
-  'chow tax hike', 'chow raise taxes'
+  'chow tax hike', 'chow raise taxes', 'olivia chow ruined', 'under olivia chow', 'chow ruined',
+  'olivia chow is the worst'
 ];
 
 export const BRADFORD_POSITIVE = [
@@ -45,14 +50,48 @@ export function mentionsBradford(text: string): boolean {
   return lower.includes('bradford') || lower.includes('brad ');
 }
 
+const NEGATION_PATTERNS = [
+  /can't be serious/g,
+  /cannot be serious/g,
+  /not serious/g,
+  /not good/g,
+  /not great/g,
+  /not better/g,
+  /not right/g,
+  /no good/g,
+  /never good/g,
+  /isn't good/g,
+  /wasn't good/g,
+  /don't support/g,
+  /do not support/g,
+  /won't support/g,
+  /will not support/g,
+];
+
 function countMatches(text: string, keywords: string[]): number {
   const lower = text.toLowerCase();
   return keywords.reduce((acc, kw) => acc + (lower.includes(kw) ? 1 : 0), 0);
 }
 
+function countPatternMatches(text: string, patterns: RegExp[]): number {
+  return patterns.reduce((acc, pattern) => acc + ((text.match(pattern) || []).length), 0);
+}
+
 export function getSentimentScore(text: string, posKw: string[], negKw: string[]): number {
-  const pos = countMatches(text, [...GLOBAL_POSITIVE, ...posKw]);
-  const neg = countMatches(text, [...GLOBAL_NEGATIVE, ...negKw]);
+  const lower = text.toLowerCase();
+  let pos = countMatches(lower, [...GLOBAL_POSITIVE, ...posKw]);
+  let neg = countMatches(lower, [...GLOBAL_NEGATIVE, ...negKw]);
+
+  const negationHits = countPatternMatches(lower, NEGATION_PATTERNS);
+  if (negationHits > 0) {
+    pos = Math.max(0, pos - negationHits);
+    neg += negationHits;
+  }
+
+  if ((lower.includes('under olivia chow') || lower.includes('under chow')) && neg > 0) {
+    neg += 1;
+  }
+
   return pos - neg;
 }
 
