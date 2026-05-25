@@ -2,6 +2,44 @@
 
 import { SentimentData } from '@/lib/types';
 
+function getTrendDirection(values: number[]): 'up' | 'down' | 'flat' {
+  if (values.length < 2) return 'flat';
+  const midpoint = Math.ceil(values.length / 2);
+  const first = values.slice(0, midpoint).reduce((sum, value) => sum + value, 0);
+  const second = values.slice(midpoint).reduce((sum, value) => sum + value, 0);
+  if (second > first) return 'up';
+  if (second < first) return 'down';
+  return 'flat';
+}
+
+function TrendSparkline({ values, color }: { values: number[]; color: string }) {
+  if (!values.length) return null;
+  const width = 70;
+  const height = 24;
+  const max = Math.max(...values, 1);
+  const step = values.length > 1 ? width / (values.length - 1) : width;
+  const points = values
+    .map((value, index) => {
+      const x = index * step;
+      const y = height - (value / max) * (height - 4) - 2;
+      return `${x},${y}`;
+    })
+    .join(' ');
+
+  return (
+    <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} style={{ overflow: 'visible' }}>
+      <polyline
+        fill="none"
+        stroke={color}
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        points={points}
+      />
+    </svg>
+  );
+}
+
 interface IssueTrackerProps {
   sentiment: SentimentData | null;
   loading: boolean;
@@ -23,6 +61,7 @@ function getSentimentLabel(s: number): string {
 
 export default function IssueTracker({ sentiment, loading, onSelectIssue, selectedIssue }: IssueTrackerProps) {
   const issues = sentiment?.topIssues || [];
+  const issueHistory = sentiment?.issueHistory || [];
   const maxCount = Math.max(...issues.map(i => i.count), 1);
 
   return (
@@ -38,7 +77,7 @@ export default function IssueTracker({ sentiment, loading, onSelectIssue, select
             Issue Tracker
           </h2>
           <p style={{ margin: '4px 0 0', fontSize: '12px', color: '#6b7280' }}>
-            Click to filter feed by issue
+            Click to filter feed by issue • trend shows recent daily momentum
           </p>
         </div>
         {selectedIssue && (
@@ -75,6 +114,10 @@ export default function IssueTracker({ sentiment, loading, onSelectIssue, select
             const color = getSentimentColor(issue.sentiment);
             const pct = Math.round((issue.count / maxCount) * 100);
             const isSelected = selectedIssue === issue.name;
+            const history = issueHistory.find((entry) => entry.name === issue.name);
+            const trendValues = history?.days.slice(-14).map((day) => day.count) || [];
+            const trendDirection = getTrendDirection(trendValues);
+            const trendLabel = trendDirection === 'up' ? '↑' : trendDirection === 'down' ? '↓' : '→';
 
             return (
               <button
@@ -93,13 +136,16 @@ export default function IssueTracker({ sentiment, loading, onSelectIssue, select
                   textAlign: 'left',
                   transition: 'all 0.15s ease',
                 }}
-              >
-                {/* Issue name */}
-                <div style={{ width: '110px', fontSize: '13px', fontWeight: 600, color: '#d1d5db', flexShrink: 0 }}>
-                  {issue.name}
+                >
+                <div style={{ width: '130px', flexShrink: 0 }}>
+                  <div style={{ fontSize: '13px', fontWeight: 600, color: '#d1d5db' }}>
+                    {issue.name}
+                  </div>
+                  <div style={{ fontSize: '10px', color: '#6b7280', marginTop: '3px' }}>
+                    {history?.totalCount || issue.count} mentions • 90d
+                  </div>
                 </div>
 
-                {/* Bar */}
                 <div style={{ flex: 1, height: '6px', background: '#1f2937', borderRadius: '3px', overflow: 'hidden' }}>
                   <div style={{
                     height: '100%',
@@ -110,12 +156,17 @@ export default function IssueTracker({ sentiment, loading, onSelectIssue, select
                   }} />
                 </div>
 
-                {/* Count */}
+                <div style={{ width: '90px', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px', flexShrink: 0 }}>
+                  <span style={{ fontSize: '11px', color: trendDirection === 'up' ? '#10b981' : trendDirection === 'down' ? '#ef4444' : '#9ca3af', fontWeight: 700 }}>
+                    {trendLabel}
+                  </span>
+                  <TrendSparkline values={trendValues.length ? trendValues : [issue.count]} color={color} />
+                </div>
+
                 <div className="font-mono-num" style={{ width: '32px', fontSize: '13px', fontWeight: 700, color: '#f9fafb', textAlign: 'right', flexShrink: 0 }}>
                   {issue.count}
                 </div>
 
-                {/* Sentiment pill */}
                 <div style={{
                   padding: '2px 8px',
                   borderRadius: '20px',
