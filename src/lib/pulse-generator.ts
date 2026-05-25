@@ -176,6 +176,52 @@ function detectGeo(text: string): string[] {
     .map(([area]) => area);
 }
 
+function canonicalizeTweetText(text: string): string {
+  return text
+    .replace(/^RT\s+@[^:]+:\s*/i, '')
+    .replace(/https?:\/\/t\.co\/\S+/gi, '')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .toLowerCase();
+}
+
+function dedupeTweetsByContent(tweets: Tweet[]): Tweet[] {
+  const bestByKey = new Map<string, Tweet>();
+
+  for (const tweet of tweets) {
+    const canonicalText = canonicalizeTweetText(tweet.text);
+    const key = canonicalText || tweet.id;
+    const existing = bestByKey.get(key);
+
+    if (!existing) {
+      bestByKey.set(key, tweet);
+      continue;
+    }
+
+    const existingIsRetweet = /^RT\s+@/i.test(existing.text);
+    const currentIsRetweet = /^RT\s+@/i.test(tweet.text);
+
+    if (existingIsRetweet && !currentIsRetweet) {
+      bestByKey.set(key, tweet);
+      continue;
+    }
+
+    const existingEngagement = existing.likes + existing.retweets;
+    const currentEngagement = tweet.likes + tweet.retweets;
+
+    if (currentEngagement > existingEngagement) {
+      bestByKey.set(key, tweet);
+      continue;
+    }
+
+    if (currentEngagement === existingEngagement && tweet.created_utc > existing.created_utc) {
+      bestByKey.set(key, tweet);
+    }
+  }
+
+  return Array.from(bestByKey.values()).sort((a, b) => b.created_utc - a.created_utc);
+}
+
 function scoreOverallText(text: string, hasChow: boolean, hasBrad: boolean): number {
   if (hasChow) return scoreText(text, CHOW_POSITIVE, CHOW_NEGATIVE);
   if (hasBrad) return scoreText(text, BRADFORD_POSITIVE, BRADFORD_NEGATIVE);
@@ -387,7 +433,7 @@ async function fetchXTweets(): Promise<Tweet[]> {
     }
   }
 
-  return allTweets.sort((a, b) => b.created_utc - a.created_utc);
+  return dedupeTweetsByContent(allTweets);
 }
 
 const BLUESKY_ACTORS = [
