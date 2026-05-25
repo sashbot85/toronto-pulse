@@ -67,6 +67,7 @@ function DominantSentimentCard({ sentiment, loading }: { sentiment: SentimentDat
   let label = 'Mixed';
   let color = '#6b7280';
   let bg = 'rgba(107, 114, 128, 0.1)';
+  let subtitle = 'Overall tone across both candidates';
 
   if (sentiment) {
     const chowScore = sentiment.chowSentiment.score;
@@ -82,6 +83,8 @@ function DominantSentimentCard({ sentiment, loading }: { sentiment: SentimentDat
       color = '#ef4444';
       bg = 'rgba(239, 68, 68, 0.1)';
     }
+
+    subtitle = `Average positive-share across Chow and Bradford mentions: ${Math.round(avgScore)}%`;
   }
 
   return (
@@ -97,7 +100,7 @@ function DominantSentimentCard({ sentiment, loading }: { sentiment: SentimentDat
       }}
     >
       <div style={{ fontSize: '11px', color: '#6b7280', textTransform: 'uppercase', letterSpacing: '0.08em', fontWeight: 600, marginBottom: '8px' }}>
-        Dominant Sentiment
+        Overall Tone
       </div>
       {loading ? (
         <div className="skeleton" style={{ height: '36px', width: '70%' }} />
@@ -119,6 +122,11 @@ function DominantSentimentCard({ sentiment, loading }: { sentiment: SentimentDat
           <span style={{ fontSize: '20px', fontWeight: 700, color, fontFamily: 'JetBrains Mono, monospace' }}>
             {label}
           </span>
+        </div>
+      )}
+      {!loading && (
+        <div style={{ fontSize: '12px', color: '#6b7280', marginTop: '10px' }}>
+          {subtitle}
         </div>
       )}
     </div>

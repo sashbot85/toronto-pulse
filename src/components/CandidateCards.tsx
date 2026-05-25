@@ -7,78 +7,32 @@ interface CandidateCardsProps {
   loading: boolean;
 }
 
-function GaugeChart({ score, color }: { score: number; color: string }) {
-  const clampedScore = Math.max(0, Math.min(100, score));
-  const angle = (clampedScore / 100) * 180 - 90; // -90 to +90 degrees
-  const cx = 80;
-  const cy = 70;
-  const r = 55;
-
-  // Arc path
-  const startAngle = -180;
-  const endAngle = 0;
-  const startRad = (startAngle * Math.PI) / 180;
-  const endRad = (endAngle * Math.PI) / 180;
-  const x1 = cx + r * Math.cos(startRad);
-  const y1 = cy + r * Math.sin(startRad);
-  const x2 = cx + r * Math.cos(endRad);
-  const y2 = cy + r * Math.sin(endRad);
-
-  // Needle
-  const needleRad = (angle * Math.PI) / 180;
-  const needleX = cx + (r - 10) * Math.cos(needleRad);
-  const needleY = cy + (r - 10) * Math.sin(needleRad);
+function SentimentMixBar({ positive, neutral, negative }: { positive: number; neutral: number; negative: number }) {
+  const total = positive + neutral + negative;
+  const positivePct = total > 0 ? (positive / total) * 100 : 0;
+  const neutralPct = total > 0 ? (neutral / total) * 100 : 0;
+  const negativePct = total > 0 ? (negative / total) * 100 : 0;
 
   return (
-    <svg width="160" height="90" viewBox="0 0 160 90">
-      {/* Background arc */}
-      <path
-        d={`M ${x1} ${y1} A ${r} ${r} 0 0 1 ${x2} ${y2}`}
-        fill="none"
-        stroke="#1f2937"
-        strokeWidth="8"
-        strokeLinecap="round"
-      />
-      {/* Colored arc (filled portion) */}
-      {clampedScore > 0 && (() => {
-        const fillEnd = (((clampedScore / 100) * 180) - 180) * Math.PI / 180;
-        const fX = cx + r * Math.cos(fillEnd);
-        const fY = cy + r * Math.sin(fillEnd);
-        const largeArc = clampedScore > 50 ? 1 : 0;
-        return (
-          <path
-            d={`M ${x1} ${y1} A ${r} ${r} 0 ${largeArc} 1 ${fX} ${fY}`}
-            fill="none"
-            stroke={color}
-            strokeWidth="8"
-            strokeLinecap="round"
-          />
-        );
-      })()}
-      {/* Needle */}
-      <line
-        x1={cx}
-        y1={cy}
-        x2={needleX}
-        y2={needleY}
-        stroke={color}
-        strokeWidth="2.5"
-        strokeLinecap="round"
-      />
-      <circle cx={cx} cy={cy} r="5" fill={color} />
-      {/* Score label */}
-      <text
-        x={cx}
-        y={cy + 20}
-        textAnchor="middle"
-        fill={color}
-        fontSize="18"
-        fontWeight="700"
-        fontFamily="JetBrains Mono, monospace"
-      >
-        {score}%
-      </text>
-    </svg>
+    <div>
+      <div style={{
+        height: '12px',
+        background: '#1f2937',
+        borderRadius: '999px',
+        overflow: 'hidden',
+        display: 'flex',
+        marginBottom: '10px',
+      }}>
+        <div style={{ width: `${positivePct}%`, background: '#10b981' }} />
+        <div style={{ width: `${neutralPct}%`, background: '#6b7280' }} />
+        <div style={{ width: `${negativePct}%`, background: '#ef4444' }} />
+      </div>
+      <div style={{ display: 'flex', justifyContent: 'space-between', gap: '8px', fontSize: '11px', color: '#9ca3af' }}>
+        <span><span style={{ color: '#10b981', fontWeight: 700 }}>{Math.round(positivePct)}%</span> positive</span>
+        <span><span style={{ color: '#6b7280', fontWeight: 700 }}>{Math.round(neutralPct)}%</span> neutral</span>
+        <span><span style={{ color: '#ef4444', fontWeight: 700 }}>{Math.round(negativePct)}%</span> negative</span>
+      </div>
+    </div>
   );
 }
 
@@ -154,17 +108,24 @@ function CandidateCard({
         </div>
       </div>
 
-      {/* Gauge */}
+      {/* Sentiment share */}
       {loading ? (
         <div className="skeleton" style={{ height: '90px', borderRadius: '12px', marginBottom: '16px' }} />
       ) : (
-        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '4px' }}>
-          <GaugeChart score={sentiment?.score || 0} color={color} />
+        <div style={{ marginBottom: '8px' }}>
+          <div className="font-mono-num" style={{ fontSize: '30px', fontWeight: 800, color, textAlign: 'center', marginBottom: '8px' }}>
+            {sentiment?.score || 0}%
+          </div>
+          <SentimentMixBar
+            positive={sentiment?.positive || 0}
+            neutral={sentiment?.neutral || 0}
+            negative={sentiment?.negative || 0}
+          />
         </div>
       )}
 
       <div style={{ textAlign: 'center', fontSize: '12px', color: '#6b7280', marginBottom: '20px' }}>
-        Positive sentiment score
+        Positive share of this candidate's mentions
       </div>
 
       {/* Stats row */}
