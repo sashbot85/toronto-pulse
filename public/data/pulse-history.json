@@ -131,12 +131,12 @@
   },
   {
     "date": "2026-05-25",
-    "chowPos": 19,
+    "chowPos": 20,
     "chowNeg": 4,
-    "chowNeutral": 49,
+    "chowNeutral": 47,
     "bradPos": 7,
     "bradNeg": 3,
     "bradNeutral": 8,
-    "total": 90
+    "total": 89
   }
 ]
