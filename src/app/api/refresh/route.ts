@@ -137,8 +137,9 @@ export async function POST() {
     );
   } catch (error) {
     console.error('[TorontoPulse] Manual refresh failed:', error);
+    const detail = error instanceof Error ? `${error.name}: ${error.message}` : String(error);
     return NextResponse.json(
-      { error: 'Manual refresh failed.' },
+      { error: 'Manual refresh failed.', detail },
       { status: 500 }
     );
   }
