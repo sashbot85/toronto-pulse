@@ -558,7 +558,11 @@ export async function generatePulseData(): Promise<PulseData> {
   console.log(`  Posts analyzed: ${sentiment.postsAnalyzed}`);
   console.log(`  Chow mentions: ${sentiment.chowSentiment.total}, Bradford mentions: ${sentiment.bradfordSentiment.total}`);
 
-  writePulseHistoryFile(historyPath, sentiment.volumeByDay);
+  try {
+    writePulseHistoryFile(historyPath, sentiment.volumeByDay);
+  } catch (error) {
+    console.warn('[Toronto Pulse Scraper] History file write skipped:', error);
+  }
 
   return {
     lastScraped: Date.now(),
