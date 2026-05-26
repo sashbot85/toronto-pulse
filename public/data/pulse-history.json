@@ -882,12 +882,12 @@
   {
     "date": "2026-05-25",
     "chowPos": 4,
-    "chowNeg": 1,
+    "chowNeg": 2,
     "chowNeutral": 10,
     "bradPos": 1,
-    "bradNeg": 3,
-    "bradNeutral": 4,
-    "total": 23
+    "bradNeg": 4,
+    "bradNeutral": 3,
+    "total": 24
   },
   {
     "date": "2026-05-26",
