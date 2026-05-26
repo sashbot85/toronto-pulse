@@ -50,23 +50,29 @@ const ISSUE_KEYWORDS: Record<string, string[]> = {
 
 export default function LiveFeed({ items, loading, issueFilter }: LiveFeedProps) {
   const [tab, setTab] = useState<'all' | 'posts' | 'comments' | 'x'>('all');
+  const [candidateFilter, setCandidateFilter] = useState<'all' | 'chow' | 'bradford'>('all');
+  const [sentimentFilter, setSentimentFilter] = useState<'all' | 'positive' | 'neutral' | 'negative'>('all');
 
   const filtered = items.filter(item => {
     if (tab === 'posts' && item.type !== 'post') return false;
     if (tab === 'comments' && item.type !== 'comment') return false;
     if (tab === 'x' && item.source !== 'twitter') return false;
+
+    if (candidateFilter === 'chow' && !item.mentionsChow) return false;
+    if (candidateFilter === 'bradford' && !item.mentionsBradford) return false;
+
+    if (sentimentFilter !== 'all' && item.sentiment !== sentimentFilter) return false;
+
+    if (issueFilter) {
+      const lower = item.text.toLowerCase();
+      const keywords = ISSUE_KEYWORDS[issueFilter] || [];
+      if (!keywords.some(kw => lower.includes(kw))) return false;
+    }
+
     return true;
   }).slice(0, 50);
 
-  const issueFiltered = issueFilter
-    ? filtered.filter(item => {
-        const lower = item.text.toLowerCase();
-        const keywords = ISSUE_KEYWORDS[issueFilter] || [];
-        return keywords.some(kw => lower.includes(kw));
-      })
-    : filtered;
-
-  const tweetCount = items.filter(i => i.source === 'twitter').length;
+  const tweetCount = filtered.filter(i => i.source === 'twitter').length;
 
   return (
     <div style={{
@@ -90,7 +96,7 @@ export default function LiveFeed({ items, loading, issueFilter }: LiveFeedProps)
             )}
           </h2>
           <p style={{ margin: '4px 0 0', fontSize: '12px', color: '#6b7280' }}>
-            {issueFiltered.length} items
+            {filtered.length} items
             {tweetCount > 0 && ` • ${tweetCount} from X`}
           </p>
         </div>
@@ -127,6 +133,68 @@ export default function LiveFeed({ items, loading, issueFilter }: LiveFeedProps)
         </div>
       </div>
 
+      <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', marginBottom: '16px' }}>
+        <div style={{ display: 'flex', borderRadius: '8px', overflow: 'hidden', border: '1px solid #1f2937' }}>
+          {([
+            { key: 'all', label: 'All' },
+            { key: 'chow', label: 'Chow' },
+            { key: 'bradford', label: 'Bradford' },
+          ] as const).map((option, i, arr) => (
+            <button
+              key={option.key}
+              onClick={() => setCandidateFilter(option.key)}
+              style={{
+                padding: '5px 12px',
+                fontSize: '11px',
+                fontWeight: 600,
+                cursor: 'pointer',
+                background: candidateFilter === option.key ? '#1f2937' : 'transparent',
+                color:
+                  candidateFilter === option.key
+                    ? option.key === 'chow'
+                      ? '#f59e0b'
+                      : option.key === 'bradford'
+                        ? '#3b82f6'
+                        : '#f9fafb'
+                    : '#6b7280',
+                border: 'none',
+                borderRight: i < arr.length - 1 ? '1px solid #1f2937' : 'none',
+                transition: 'all 0.2s ease',
+              }}
+            >
+              {option.label}
+            </button>
+          ))}
+        </div>
+
+        <div style={{ display: 'flex', borderRadius: '8px', overflow: 'hidden', border: '1px solid #1f2937' }}>
+          {([
+            { key: 'all', label: 'All sentiment', color: '#f9fafb' },
+            { key: 'positive', label: 'Positive', color: '#10b981' },
+            { key: 'neutral', label: 'Neutral', color: '#9ca3af' },
+            { key: 'negative', label: 'Negative', color: '#ef4444' },
+          ] as const).map((option, i, arr) => (
+            <button
+              key={option.key}
+              onClick={() => setSentimentFilter(option.key)}
+              style={{
+                padding: '5px 12px',
+                fontSize: '11px',
+                fontWeight: 600,
+                cursor: 'pointer',
+                background: sentimentFilter === option.key ? '#1f2937' : 'transparent',
+                color: sentimentFilter === option.key ? option.color : '#6b7280',
+                border: 'none',
+                borderRight: i < arr.length - 1 ? '1px solid #1f2937' : 'none',
+                transition: 'all 0.2s ease',
+              }}
+            >
+              {option.label}
+            </button>
+          ))}
+        </div>
+      </div>
+
       {/* Feed */}
       <div
         className="feed-scroll"
@@ -142,7 +210,7 @@ export default function LiveFeed({ items, loading, issueFilter }: LiveFeedProps)
           [...Array(8)].map((_, i) => (
             <div key={i} className="skeleton" style={{ height: '80px', borderRadius: '10px' }} />
           ))
-        ) : issueFiltered.length === 0 ? (
+        ) : filtered.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '48px 24px', color: '#6b7280' }}>
             <div style={{ fontSize: '32px', marginBottom: '12px' }}>📭</div>
             <div style={{ fontSize: '14px', fontWeight: 600, color: '#9ca3af', marginBottom: '4px' }}>
@@ -153,7 +221,7 @@ export default function LiveFeed({ items, loading, issueFilter }: LiveFeedProps)
             </div>
           </div>
         ) : (
-          issueFiltered.map((item) => {
+          filtered.map((item) => {
             const isTwitter = item.source === 'twitter';
             const subredditColor = item.subreddit ? (SUBREDDIT_COLORS[item.subreddit] || '#6b7280') : '#6b7280';
             const sentimentColor = SENTIMENT_COLORS[item.sentiment];
