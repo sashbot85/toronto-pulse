@@ -620,8 +620,23 @@ function runSentimentAnalysis(
 
   const liveVolumeByDay = Object.entries(dayBuckets).map(([date, data]) => ({ date, ...data }));
   const historyMap = new Map<string, DailyHistoryPoint>();
+  const today = format(new Date(), 'yyyy-MM-dd');
+
   for (const item of history) historyMap.set(item.date, item);
-  for (const item of liveVolumeByDay) historyMap.set(item.date, item);
+  for (const item of liveVolumeByDay) {
+    const hasActivity = item.total > 0
+      || item.chowPos > 0
+      || item.chowNeg > 0
+      || item.chowNeutral > 0
+      || item.bradPos > 0
+      || item.bradNeg > 0
+      || item.bradNeutral > 0;
+
+    if (item.date === today || hasActivity || !historyMap.has(item.date)) {
+      historyMap.set(item.date, item);
+    }
+  }
+
   const volumeByDay = Array.from(historyMap.values()).sort((a, b) => a.date.localeCompare(b.date)).slice(-HISTORY_DAYS);
   const recentDays = volumeByDay.slice(-7);
   const prevDays = volumeByDay.slice(-14, -7);

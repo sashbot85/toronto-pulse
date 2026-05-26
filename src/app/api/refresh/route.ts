@@ -153,10 +153,8 @@ export async function POST() {
       writePulseDataFile(data, dataPath);
       fs.mkdirSync(path.dirname(historyPath), { recursive: true });
       fs.writeFileSync(historyPath, historyContent);
-      if (!fs.existsSync(archivePath)) {
-        fs.mkdirSync(path.dirname(archivePath), { recursive: true });
-        fs.writeFileSync(archivePath, archiveContent);
-      }
+      fs.mkdirSync(path.dirname(archivePath), { recursive: true });
+      fs.writeFileSync(archivePath, archiveContent);
       localFilesPersisted = true;
     } catch (localWriteError) {
       console.warn('[TorontoPulse] Local file persistence skipped:', localWriteError);

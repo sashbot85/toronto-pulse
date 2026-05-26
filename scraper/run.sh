@@ -13,7 +13,7 @@ echo "[$(date)] PATH=$PATH"
 "$NPX_BIN" tsx scraper/scrape.ts
 
 echo "[$(date)] Committing data..."
-"$GIT_BIN" add public/data/pulse-data.json public/data/pulse-history.json
+"$GIT_BIN" add public/data/pulse-data.json public/data/pulse-history.json public/data/pulse-archive.json
 "$GIT_BIN" commit -m "data: pulse update $(date +%Y-%m-%d_%H:%M)" --allow-empty
 
 echo "[$(date)] Pushing to main..."
