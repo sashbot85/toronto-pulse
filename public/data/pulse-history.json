@@ -871,32 +871,32 @@
   },
   {
     "date": "2026-05-25",
-    "chowPos": 2,
+    "chowPos": 3,
     "chowNeg": 1,
     "chowNeutral": 11,
     "bradPos": 1,
     "bradNeg": 1,
-    "bradNeutral": 3,
-    "total": 19
+    "bradNeutral": 4,
+    "total": 21
   },
   {
     "date": "2026-05-26",
-    "chowPos": 3,
+    "chowPos": 2,
     "chowNeg": 4,
-    "chowNeutral": 18,
-    "bradPos": 5,
+    "chowNeutral": 11,
+    "bradPos": 4,
     "bradNeg": 1,
     "bradNeutral": 17,
-    "total": 48
+    "total": 39
   },
   {
     "date": "2026-05-27",
     "chowPos": 0,
-    "chowNeg": 3,
-    "chowNeutral": 5,
-    "bradPos": 0,
+    "chowNeg": 6,
+    "chowNeutral": 8,
+    "bradPos": 1,
     "bradNeg": 0,
     "bradNeutral": 1,
-    "total": 9
+    "total": 16
   }
 ]
