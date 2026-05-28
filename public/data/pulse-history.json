@@ -866,21 +866,11 @@
     "chowNeutral": 7,
     "bradPos": 1,
     "bradNeg": 0,
-    "bradNeutral": 0,
-    "total": 10
+    "bradNeutral": 1,
+    "total": 11
   },
   {
     "date": "2026-05-26",
-    "chowPos": 0,
-    "chowNeg": 0,
-    "chowNeutral": 1,
-    "bradPos": 0,
-    "bradNeg": 0,
-    "bradNeutral": 1,
-    "total": 2
-  },
-  {
-    "date": "2026-05-27",
     "chowPos": 0,
     "chowNeg": 0,
     "chowNeutral": 1,
@@ -890,13 +880,23 @@
     "total": 1
   },
   {
-    "date": "2026-05-28",
-    "chowPos": 4,
-    "chowNeg": 1,
-    "chowNeutral": 13,
+    "date": "2026-05-27",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 1,
     "bradPos": 0,
-    "bradNeg": 2,
-    "bradNeutral": 8,
-    "total": 28
+    "bradNeg": 1,
+    "bradNeutral": 1,
+    "total": 3
+  },
+  {
+    "date": "2026-05-28",
+    "chowPos": 1,
+    "chowNeg": 2,
+    "chowNeutral": 7,
+    "bradPos": 1,
+    "bradNeg": 1,
+    "bradNeutral": 11,
+    "total": 23
   }
 ]
