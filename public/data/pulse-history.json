@@ -883,20 +883,20 @@
     "date": "2026-05-29",
     "chowPos": 0,
     "chowNeg": 0,
-    "chowNeutral": 4,
+    "chowNeutral": 2,
     "bradPos": 1,
     "bradNeg": 0,
     "bradNeutral": 5,
-    "total": 10
+    "total": 8
   },
   {
     "date": "2026-05-30",
-    "chowPos": 1,
+    "chowPos": 3,
     "chowNeg": 0,
-    "chowNeutral": 8,
+    "chowNeutral": 15,
     "bradPos": 0,
     "bradNeg": 0,
-    "bradNeutral": 5,
-    "total": 14
+    "bradNeutral": 6,
+    "total": 24
   }
 ]
