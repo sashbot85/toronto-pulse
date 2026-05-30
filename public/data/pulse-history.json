@@ -883,11 +883,11 @@
     "date": "2026-05-29",
     "chowPos": 0,
     "chowNeg": 0,
-    "chowNeutral": 2,
+    "chowNeutral": 1,
     "bradPos": 1,
     "bradNeg": 0,
     "bradNeutral": 5,
-    "total": 8
+    "total": 7
   },
   {
     "date": "2026-05-30",
