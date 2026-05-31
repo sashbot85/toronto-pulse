@@ -873,30 +873,30 @@
     "date": "2026-05-29",
     "chowPos": 0,
     "chowNeg": 0,
-    "chowNeutral": 1,
+    "chowNeutral": 0,
     "bradPos": 1,
     "bradNeg": 0,
     "bradNeutral": 5,
-    "total": 7
+    "total": 6
   },
   {
     "date": "2026-05-30",
-    "chowPos": 1,
-    "chowNeg": 2,
-    "chowNeutral": 6,
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
     "bradPos": 0,
     "bradNeg": 0,
     "bradNeutral": 9,
-    "total": 18
+    "total": 9
   },
   {
     "date": "2026-05-31",
-    "chowPos": 0,
-    "chowNeg": 1,
-    "chowNeutral": 5,
+    "chowPos": 3,
+    "chowNeg": 2,
+    "chowNeutral": 7,
     "bradPos": 0,
     "bradNeg": 0,
     "bradNeutral": 0,
-    "total": 6
+    "total": 12
   }
 ]
