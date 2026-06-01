@@ -1,15 +1,5 @@
 [
   {
-    "date": "2026-03-03",
-    "chowPos": 0,
-    "chowNeg": 0,
-    "chowNeutral": 0,
-    "bradPos": 0,
-    "bradNeg": 0,
-    "bradNeutral": 0,
-    "total": 0
-  },
-  {
     "date": "2026-03-04",
     "chowPos": 0,
     "chowNeg": 0,
@@ -831,13 +821,13 @@
   },
   {
     "date": "2026-05-25",
-    "chowPos": 2,
+    "chowPos": 1,
     "chowNeg": 0,
     "chowNeutral": 5,
     "bradPos": 1,
     "bradNeg": 0,
     "bradNeutral": 0,
-    "total": 8
+    "total": 7
   },
   {
     "date": "2026-05-26",
@@ -891,12 +881,22 @@
   },
   {
     "date": "2026-05-31",
-    "chowPos": 0,
-    "chowNeg": 1,
-    "chowNeutral": 6,
+    "chowPos": 1,
+    "chowNeg": 0,
+    "chowNeutral": 0,
     "bradPos": 0,
     "bradNeg": 0,
     "bradNeutral": 1,
-    "total": 8
+    "total": 2
+  },
+  {
+    "date": "2026-06-01",
+    "chowPos": 1,
+    "chowNeg": 2,
+    "chowNeutral": 8,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 11
   }
 ]
