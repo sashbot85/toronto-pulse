@@ -893,10 +893,10 @@
     "date": "2026-06-01",
     "chowPos": 0,
     "chowNeg": 0,
-    "chowNeutral": 5,
+    "chowNeutral": 6,
     "bradPos": 0,
     "bradNeg": 0,
-    "bradNeutral": 2,
-    "total": 7
+    "bradNeutral": 3,
+    "total": 9
   }
 ]
