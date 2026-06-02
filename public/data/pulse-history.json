@@ -886,17 +886,17 @@
     "chowNeutral": 0,
     "bradPos": 0,
     "bradNeg": 2,
-    "bradNeutral": 5,
-    "total": 7
+    "bradNeutral": 4,
+    "total": 6
   },
   {
     "date": "2026-06-02",
     "chowPos": 1,
-    "chowNeg": 4,
-    "chowNeutral": 20,
+    "chowNeg": 2,
+    "chowNeutral": 23,
     "bradPos": 1,
     "bradNeg": 0,
-    "bradNeutral": 4,
-    "total": 30
+    "bradNeutral": 7,
+    "total": 34
   }
 ]
