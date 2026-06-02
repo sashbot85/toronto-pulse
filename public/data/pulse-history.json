@@ -882,21 +882,21 @@
   {
     "date": "2026-06-01",
     "chowPos": 0,
-    "chowNeg": 1,
-    "chowNeutral": 2,
+    "chowNeg": 0,
+    "chowNeutral": 0,
     "bradPos": 0,
     "bradNeg": 2,
     "bradNeutral": 5,
-    "total": 10
+    "total": 7
   },
   {
     "date": "2026-06-02",
-    "chowPos": 0,
-    "chowNeg": 1,
-    "chowNeutral": 10,
+    "chowPos": 1,
+    "chowNeg": 3,
+    "chowNeutral": 18,
     "bradPos": 0,
     "bradNeg": 0,
-    "bradNeutral": 1,
-    "total": 12
+    "bradNeutral": 4,
+    "total": 26
   }
 ]
