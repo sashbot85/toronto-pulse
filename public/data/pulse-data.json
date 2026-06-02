@@ -1,8 +1,19 @@
 {
-  "lastScraped": 1780408822801,
+  "lastScraped": 1780408855988,
   "posts": [],
   "comments": [],
   "tweets": [
+    {
+      "id": "x_2061810117935595636",
+      "text": "@mitch6669 Which one is Olivia Chow?",
+      "author": "bobs your uncle",
+      "handle": "@do73253",
+      "likes": 0,
+      "retweets": 0,
+      "created_utc": 1780408813,
+      "permalink": "https://x.com/do73253/status/2061810117935595636",
+      "source": "twitter"
+    },
     {
       "id": "x_2061808861942538677",
       "text": "Something Big Is Happening at Toronto City Hall 👀🇨🇦 #travel https://t.co/oEFbfD7NSX 来自 @YouTube",
@@ -463,17 +474,6 @@
       "retweets": 0,
       "created_utc": 1780388264,
       "permalink": "https://x.com/PinPoin19502075/status/2061723930281353372",
-      "source": "twitter"
-    },
-    {
-      "id": "x_2061723883989032993",
-      "text": "@globepolitics Olivia Chow certainly entertains Hamas. We have many radical Iranians living in Canada that havrno business here. We have dome clean-up to do.",
-      "author": "Cate",
-      "handle": "@Cate63799787",
-      "likes": 0,
-      "retweets": 0,
-      "created_utc": 1780388253,
-      "permalink": "https://x.com/Cate63799787/status/2061723883989032993",
       "source": "twitter"
     },
     {
@@ -1085,7 +1085,7 @@
       },
       {
         "name": "Transit/TTC",
-        "count": 3,
+        "count": 2,
         "sentiment": 0
       },
       {
@@ -2004,8 +2004,8 @@
     "issueHistory": [
       {
         "name": "Transit/TTC",
-        "totalCount": 57,
-        "avgSentiment": 0.07017543859649122,
+        "totalCount": 56,
+        "avgSentiment": 0.07142857142857142,
         "days": [
           {
             "date": "2026-05-27",
@@ -2039,7 +2039,7 @@
           },
           {
             "date": "2026-06-02",
-            "count": 3,
+            "count": 2,
             "sentiment": 0
           }
         ]
@@ -2340,6 +2340,6 @@
       }
     ],
     "postsAnalyzed": 96,
-    "lastUpdated": 1780408822789
+    "lastUpdated": 1780408855978
   }
 }
