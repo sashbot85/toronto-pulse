@@ -892,11 +892,11 @@
   {
     "date": "2026-06-03",
     "chowPos": 0,
-    "chowNeg": 0,
+    "chowNeg": 1,
     "chowNeutral": 10,
     "bradPos": 1,
     "bradNeg": 1,
     "bradNeutral": 2,
-    "total": 14
+    "total": 15
   }
 ]
