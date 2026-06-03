@@ -15983,272 +15983,294 @@
   },
   {
     "date": "2026-06-02",
-    "capturedAt": 1780437623080,
+    "capturedAt": 1780452026848,
     "posts": [],
     "comments": [],
     "tweets": [
+      {
+        "id": "x_2061991284181487828",
+        "text": "RT @OrbitStudios: REMINDER: Ford cut Toronto council IN HALF DURING THE MIDDLE OF THE MUNICIPAL ELECTION CAMPAIGN IN 2018, but sure Steve.…",
+        "author": "Donald MacIvor",
+        "handle": "@dmac53",
+        "likes": 0,
+        "retweets": 59,
+        "created_utc": 1780452006,
+        "permalink": "https://x.com/dmac53/status/2061991284181487828",
+        "source": "twitter"
+      },
+      {
+        "id": "x_2061990487108547049",
+        "text": "RT @RebelNewsOnline: Olivia Chow won't walk with Israel — but she'll dress up for Eid\n\nToronto Mayor Olivia Chow called Israel's independen…",
+        "author": "Alireza Tehrani 🇮🇷🇮🇱🇨🇦🇺🇸",
+        "handle": "@Alirezaht25",
+        "likes": 0,
+        "retweets": 37,
+        "created_utc": 1780451816,
+        "permalink": "https://x.com/Alirezaht25/status/2061990487108547049",
+        "source": "twitter"
+      },
+      {
+        "id": "x_2061990411237748907",
+        "text": "RT @BillboardChris: Toronto’s mayor, Olivia Chow, learning how to twerk from a drag queen. https://t.co/IemEBwKPLl",
+        "author": "Corrina Torrenga",
+        "handle": "@CorrinaTorrenga",
+        "likes": 0,
+        "retweets": 81,
+        "created_utc": 1780451798,
+        "permalink": "https://x.com/CorrinaTorrenga/status/2061990411237748907",
+        "source": "twitter"
+      },
+      {
+        "id": "x_2061990293239464167",
+        "text": "Mayor Olivia Chow gets $240,000/year — plus expenses. \n\nTo dance like an idiot as terrorists run Toronto.\n\nHow much you wanna bet she’ll get re-elected? https://t.co/bsJj1ONtiR",
+        "author": "dahlia kurtz ✡︎ דליה קורץ",
+        "handle": "@DahliaKurtz",
+        "likes": 8,
+        "retweets": 0,
+        "created_utc": 1780451770,
+        "permalink": "https://x.com/DahliaKurtz/status/2061990293239464167",
+        "source": "twitter"
+      },
+      {
+        "id": "x_2061989830574199125",
+        "text": "@4floorwalkup I’ve contacted Olivia Chow she’s working on it",
+        "author": "jan levinson",
+        "handle": "@janlevinson69",
+        "likes": 0,
+        "retweets": 0,
+        "created_utc": 1780451660,
+        "permalink": "https://x.com/janlevinson69/status/2061989830574199125",
+        "source": "twitter"
+      },
+      {
+        "id": "x_2061982754141540654",
+        "text": "RT @RebelNews_CA: Olivia Chow won't walk with Israel — but she'll dress up for Eid\n\nToronto Mayor Olivia Chow called Israel's independence…",
+        "author": "Lyndia Edwards",
+        "handle": "@LyndaE222",
+        "likes": 0,
+        "retweets": 28,
+        "created_utc": 1780449973,
+        "permalink": "https://x.com/LyndaE222/status/2061982754141540654",
+        "source": "twitter"
+      },
+      {
+        "id": "x_2061981797836058771",
+        "text": "RT @cityoftoronto: Mayor Olivia Chow kicks off Pride Month with flag raising and Key to the City presentation to faith leaders in honour of…",
+        "author": "PulsePilot",
+        "handle": "@Pulse1Pilot",
+        "likes": 0,
+        "retweets": 6,
+        "created_utc": 1780449745,
+        "permalink": "https://x.com/Pulse1Pilot/status/2061981797836058771",
+        "source": "twitter"
+      },
+      {
+        "id": "x_2061973980240629807",
+        "text": "RT @mitch6669: Olivia Chow gets down low with local Toronto drag queen while celebrating the first day of Pride at the city hall flag-raisi…",
+        "author": "goose",
+        "handle": "@goosebxmps",
+        "likes": 0,
+        "retweets": 142,
+        "created_utc": 1780447881,
+        "permalink": "https://x.com/goosebxmps/status/2061973980240629807",
+        "source": "twitter"
+      },
+      {
+        "id": "x_2061973677009215756",
+        "text": "RT @Concern70732755: Toronto deserves so much better than this mayor !!",
+        "author": "Crafty Crawford #Trump/Vance2024🇺🇸👏🏻❤️🇨🇦",
+        "handle": "@debjamiec",
+        "likes": 0,
+        "retweets": 8,
+        "created_utc": 1780447808,
+        "permalink": "https://x.com/debjamiec/status/2061973677009215756",
+        "source": "twitter"
+      },
+      {
+        "id": "x_2061973193628274896",
+        "text": "RT @rdassaly: Toronto Star editor-in-chief announces the paper will be using AI to cover the upcoming municipal election. \n\nhttps://t.co/6T…",
+        "author": "wes 🍉",
+        "handle": "@_wzc__",
+        "likes": 0,
+        "retweets": 65,
+        "created_utc": 1780447693,
+        "permalink": "https://x.com/_wzc__/status/2061973193628274896",
+        "source": "twitter"
+      },
+      {
+        "id": "x_2061973142483149055",
+        "text": "Toronto City Hall Council … https://t.co/U4Np0v3GxY",
+        "author": "Lt (Retired LAPD) Frank Columbo 🏴󠁧󠁢󠁳󠁣󠁴󠁿🇨🇦",
+        "handle": "@jsam10983741",
+        "likes": 3,
+        "retweets": 1,
+        "created_utc": 1780447681,
+        "permalink": "https://x.com/jsam10983741/status/2061973142483149055",
+        "source": "twitter"
+      },
+      {
+        "id": "x_2061972457792135567",
+        "text": "RT @nowtoronto: Toronto Mayor Olivia Chow showed off some dance moves alongside a drag queen during a #Pride flag-raising ceremony, celebra…",
+        "author": "Ginger Bear",
+        "handle": "@GingerB50518219",
+        "likes": 0,
+        "retweets": 7,
+        "created_utc": 1780447518,
+        "permalink": "https://x.com/GingerB50518219/status/2061972457792135567",
+        "source": "twitter"
+      },
+      {
+        "id": "x_2061967534350291114",
+        "text": "@aliyapabani No. Antisemitism is when Mark Carney supports Israel and calls for a \"zionist\" Palestinian state. Reporting on this would be much, much worse. Toronto Mayor Olivia Chow is Khamaaas after all... according to the zionists.",
+        "author": "Pitta Maxima",
+        "handle": "@Longhornscarab",
+        "likes": 0,
+        "retweets": 0,
+        "created_utc": 1780446344,
+        "permalink": "https://x.com/Longhornscarab/status/2061967534350291114",
+        "source": "twitter"
+      },
+      {
+        "id": "x_2061964509476974970",
+        "text": "Cobra chickens is the hottest video!! No ice in the cup, boots off at the door...\nOlivia Chow featured in it...pul-lease watch?! 👏🏽😂🤣🇨🇦\nhttps://t.co/vlRFYo15wj",
+        "author": "LadyTBird🍁🇨🇦Humanity! ReneDescartesb4dehorse",
+        "handle": "@LadyATSings_67",
+        "likes": 0,
+        "retweets": 0,
+        "created_utc": 1780445623,
+        "permalink": "https://x.com/LadyATSings_67/status/2061964509476974970",
+        "source": "twitter"
+      },
+      {
+        "id": "x_2061961203925008812",
+        "text": "📢 Closing Soon – Call for Submissions: Assembly Hall Gallery 2027 Exhibitions @ City of Toronto Cultural Centres &amp; Galleries. Early, mid-career, and professional individual artists or collectives are welcome to apply. Deadline: June 15, 2026. https://t.co/IxypJgPrN0 https://t.co/cETJUFG0ZT",
+        "author": "Akimbo",
+        "handle": "@akimboart",
+        "likes": 0,
+        "retweets": 0,
+        "created_utc": 1780444835,
+        "permalink": "https://x.com/akimboart/status/2061961203925008812",
+        "source": "twitter"
+      },
+      {
+        "id": "x_2061960181324648921",
+        "text": "@TheTorontoSun Warren Kinsella? The political prostitute who worked for Olivia Chow?\n\nTHAT Warren Kinsella?",
+        "author": "George Graham",
+        "handle": "@rockinpessimism",
+        "likes": 0,
+        "retweets": 0,
+        "created_utc": 1780444591,
+        "permalink": "https://x.com/rockinpessimism/status/2061960181324648921",
+        "source": "twitter"
+      },
+      {
+        "id": "x_2061958161288831330",
+        "text": "@RebelNewsOnline To every Jewish voter in Toronto. Don’t forget to vote and send Olivia Chow a strong message on election night October 26th!!",
+        "author": "Sheldon Kiestin",
+        "handle": "@Sheldon_Kiestin",
+        "likes": 0,
+        "retweets": 0,
+        "created_utc": 1780444109,
+        "permalink": "https://x.com/Sheldon_Kiestin/status/2061958161288831330",
+        "source": "twitter"
+      },
+      {
+        "id": "x_2061949991824802082",
+        "text": "RT @RT_com: 69-YEAR-OLD Toronto mayor Olivia Chow TWERKS for gay month https://t.co/XyU2rlD5Xr",
+        "author": "$0ńñø /\\/\\¡@〇",
+        "handle": "@Sonno_Miao",
+        "likes": 0,
+        "retweets": 18,
+        "created_utc": 1780442161,
+        "permalink": "https://x.com/Sonno_Miao/status/2061949991824802082",
+        "source": "twitter"
+      },
+      {
+        "id": "x_2061947405503762932",
+        "text": "https://t.co/8Yg86XXr2v\n\nThe new @Grok 4.3 does way better and more accurate research than 4.20, with wiser wording to avoid pitfalls of hallucinated claims; impressive, to say the least:\n\n**AGi refers to Autonomicity Games Inc. (often abbreviated AGi), a Canadian company where",
+        "author": "Sherif Botros",
+        "handle": "@AlphaProMega",
+        "likes": 1,
+        "retweets": 0,
+        "created_utc": 1780441545,
+        "permalink": "https://x.com/AlphaProMega/status/2061947405503762932",
+        "source": "twitter"
+      },
+      {
+        "id": "x_2061946129382514707",
+        "text": "@RebelNewsOnline The worst mayor Toronto has ever had. Weak, cowardly and only qualified to cut ribbons",
+        "author": "drummerdude",
+        "handle": "@drummerduseDave",
+        "likes": 0,
+        "retweets": 0,
+        "created_utc": 1780441241,
+        "permalink": "https://x.com/drummerduseDave/status/2061946129382514707",
+        "source": "twitter"
+      },
+      {
+        "id": "x_2061945630134841589",
+        "text": "@bettybloodclot Cant blame the cop, the Toronto mayor would probably have him fired if he tried to do his job. BTW these are the freaks as this person says. \nhttps://t.co/eXRgsv3iGT",
+        "author": "Mike Benter",
+        "handle": "@mvbenter",
+        "likes": 0,
+        "retweets": 0,
+        "created_utc": 1780441121,
+        "permalink": "https://x.com/mvbenter/status/2061945630134841589",
+        "source": "twitter"
+      },
+      {
+        "id": "x_2061944910987567166",
+        "text": "🚨 A 10 días del Mundial 2026, la Policía de Toronto realizó la mayor incautación de mercancía futbolística falsa en la historia de Canadá. Confiscaron más de 16 mil artículos valuados en 3.5 millones de dólares canadienses y detuvieron a dos personas.\n#Mundial2026 #Toronto #FIFA https://t.co/bXWiipO7q7",
+        "author": "Rotativo de México",
+        "handle": "@rotativodemex",
+        "likes": 0,
+        "retweets": 0,
+        "created_utc": 1780440950,
+        "permalink": "https://x.com/rotativodemex/status/2061944910987567166",
+        "source": "twitter"
+      },
+      {
+        "id": "x_2061944757258011039",
+        "text": "@finwiz416 ANY fucked up scene can be expected in Toronto as long as the mayor is this CCP agent BITCH👇👇 https://t.co/vx4BRZGbwd",
+        "author": "Daryoosh رضاشاه_روحت_شاد #KingRezaPahlavi",
+        "handle": "@CanuckRock",
+        "likes": 0,
+        "retweets": 0,
+        "created_utc": 1780440913,
+        "permalink": "https://x.com/CanuckRock/status/2061944757258011039",
+        "source": "twitter"
+      },
+      {
+        "id": "x_2061942419093111164",
+        "text": "RT @JanJekielek: Thank you @ScarlettGrace92 for your excellent question and top notch reporting on the Toronto City Hall debut of @Stateorg…",
+        "author": "Moonlight",
+        "handle": "@Moonlight137487",
+        "likes": 0,
+        "retweets": 38,
+        "created_utc": 1780440356,
+        "permalink": "https://x.com/Moonlight137487/status/2061942419093111164",
+        "source": "twitter"
+      },
+      {
+        "id": "x_2061941478578913624",
+        "text": "RT @mitch6669: Councillors Ausma Malik, Alejandra Bravo, Brad Bradford, Chris Moise, Dianne Saxe, Jamal Myers, and Parthi Kandavel, along w…",
+        "author": "Mitch 🇨🇦",
+        "handle": "@mitch6669",
+        "likes": 0,
+        "retweets": 1,
+        "created_utc": 1780440132,
+        "permalink": "https://x.com/mitch6669/status/2061941478578913624",
+        "source": "twitter"
+      },
       {
         "id": "x_2061930865362628741",
         "text": "Toronto Mayor Olivia Chow is once again going viral for her dance moves.\n\nThe mayor was spotted dropping it low alongside a drag performer during a Pride flag-raising ceremony outside City Hall on Monday. #TOpoli\n\nhttps://t.co/claW2Lxz6g",
         "author": "Now Toronto",
         "handle": "@nowtoronto",
-        "likes": 0,
+        "likes": 1,
         "retweets": 0,
         "created_utc": 1780437601,
         "permalink": "https://x.com/nowtoronto/status/2061930865362628741",
-        "source": "twitter"
-      },
-      {
-        "id": "x_2061930523082002778",
-        "text": "RT @nowtoronto: Toronto Mayor Olivia Chow showed off some dance moves alongside a drag queen during a #Pride flag-raising ceremony, celebra…",
-        "author": "k.g. Sambrano • fiction • poetry • photography",
-        "handle": "@kgsambrano",
-        "likes": 0,
-        "retweets": 6,
-        "created_utc": 1780437520,
-        "permalink": "https://x.com/kgsambrano/status/2061930523082002778",
-        "source": "twitter"
-      },
-      {
-        "id": "x_2061930190607904985",
-        "text": "RT @OrbitStudios: REMINDER: Ford cut Toronto council IN HALF DURING THE MIDDLE OF THE MUNICIPAL ELECTION CAMPAIGN IN 2018, but sure Steve.…",
-        "author": "Vivien Jane Wyn",
-        "handle": "@VivienJaneWyn4",
-        "likes": 0,
-        "retweets": 41,
-        "created_utc": 1780437440,
-        "permalink": "https://x.com/VivienJaneWyn4/status/2061930190607904985",
-        "source": "twitter"
-      },
-      {
-        "id": "x_2061930055274778897",
-        "text": "RT @BillboardChris: Toronto’s mayor, Olivia Chow, learning how to twerk from a drag queen. https://t.co/IemEBwKPLl",
-        "author": "Chris",
-        "handle": "@ChrisMc16146495",
-        "likes": 0,
-        "retweets": 47,
-        "created_utc": 1780437408,
-        "permalink": "https://x.com/ChrisMc16146495/status/2061930055274778897",
-        "source": "twitter"
-      },
-      {
-        "id": "x_2061929076814729393",
-        "text": "Policía de Toronto decomisa la mayor cantidad de camisas de futbol falsificadas en Canadá: https://t.co/R261sThjyW https://t.co/FQ2uqTvkUG",
-        "author": "ElSalvadorjournalist",
-        "handle": "@SVJournalist",
-        "likes": 0,
-        "retweets": 0,
-        "created_utc": 1780437175,
-        "permalink": "https://x.com/SVJournalist/status/2061929076814729393",
-        "source": "twitter"
-      },
-      {
-        "id": "x_2061928549246714109",
-        "text": "RT @RebelNewsOnline: Olivia Chow won't walk with Israel — but she'll dress up for Eid\n\nToronto Mayor Olivia Chow called Israel's independen…",
-        "author": "Defund CBC",
-        "handle": "@ESLTeac16885695",
-        "likes": 0,
-        "retweets": 6,
-        "created_utc": 1780437049,
-        "permalink": "https://x.com/ESLTeac16885695/status/2061928549246714109",
-        "source": "twitter"
-      },
-      {
-        "id": "x_2061927900337557929",
-        "text": "@ezralevant @Poilu55 The toronto mayor \n@IFindCADRetards",
-        "author": "Jim Sheridan",
-        "handle": "@jpsottawa",
-        "likes": 0,
-        "retweets": 0,
-        "created_utc": 1780436894,
-        "permalink": "https://x.com/jpsottawa/status/2061927900337557929",
-        "source": "twitter"
-      },
-      {
-        "id": "x_2061927814819922133",
-        "text": "@JonFraserTF Is there any verbal communication at all with the people who are supposed to be running the city of Toronto &gt; mayor, cheif of police TTC  any of them\nGuess not",
-        "author": "Butterfly 🇨🇦🍁🍂🪻",
-        "handle": "@xolburne20339",
-        "likes": 1,
-        "retweets": 0,
-        "created_utc": 1780436874,
-        "permalink": "https://x.com/xolburne20339/status/2061927814819922133",
-        "source": "twitter"
-      },
-      {
-        "id": "x_2061927444836159911",
-        "text": "RT @RebelNews_CA: Olivia Chow won't walk with Israel — but she'll dress up for Eid\n\nToronto Mayor Olivia Chow called Israel's independence…",
-        "author": "KD_North",
-        "handle": "@Krush_Canada",
-        "likes": 0,
-        "retweets": 14,
-        "created_utc": 1780436786,
-        "permalink": "https://x.com/Krush_Canada/status/2061927444836159911",
-        "source": "twitter"
-      },
-      {
-        "id": "x_2061925647358832773",
-        "text": "@gregbradyx Olivia Chow play for the Leafs?",
-        "author": "Conscientious Observer",
-        "handle": "@ConscienceIsIt",
-        "likes": 0,
-        "retweets": 0,
-        "created_utc": 1780436357,
-        "permalink": "https://x.com/ConscienceIsIt/status/2061925647358832773",
-        "source": "twitter"
-      },
-      {
-        "id": "x_2061925076203909454",
-        "text": "@BillboardChris Olivia Chow never learns.",
-        "author": "mande",
-        "handle": "@mande374",
-        "likes": 0,
-        "retweets": 0,
-        "created_utc": 1780436221,
-        "permalink": "https://x.com/mande374/status/2061925076203909454",
-        "source": "twitter"
-      },
-      {
-        "id": "x_2061924647327645945",
-        "text": "RT @mitch6669: Olivia Chow gets down low with local Toronto drag queen while celebrating the first day of Pride at the city hall flag-raisi…",
-        "author": "Charlie🫧",
-        "handle": "@charliezpz",
-        "likes": 0,
-        "retweets": 133,
-        "created_utc": 1780436119,
-        "permalink": "https://x.com/charliezpz/status/2061924647327645945",
-        "source": "twitter"
-      },
-      {
-        "id": "x_2061924302103224543",
-        "text": "RT @WrathMary: @sesamestreet Greetings from @Toronto \n\nMayor @oliviachow has a message for all the little boys and girls tuning in to Sesam…",
-        "author": "Rhonda🇨🇦 ❌❌",
-        "handle": "@Rhonda574394913",
-        "likes": 0,
-        "retweets": 1,
-        "created_utc": 1780436036,
-        "permalink": "https://x.com/Rhonda574394913/status/2061924302103224543",
-        "source": "twitter"
-      },
-      {
-        "id": "x_2061923296589853029",
-        "text": "The success of New York’s mayor in securing 1,000 World Cup 2026 tickets for locals at just $50 each — along with free transport to matches — has sparked debate in Toronto. https://t.co/mQ1qtJaUjg",
-        "author": "New York Auto Museum Experience Center - NYAM",
-        "handle": "@NYAutoMuseum",
-        "likes": 0,
-        "retweets": 0,
-        "created_utc": 1780435797,
-        "permalink": "https://x.com/NYAutoMuseum/status/2061923296589853029",
-        "source": "twitter"
-      },
-      {
-        "id": "x_2061921309135630402",
-        "text": "Torontonian. Father. Leader. Ready to put people over politics. Join me in building a Toronto we're all proud of. Mayor 2026 🇨🇦",
-        "author": "Gabe For Mayor of Toronto",
-        "handle": "@GabeForMayorTO",
-        "likes": 0,
-        "retweets": 0,
-        "created_utc": 1780435323,
-        "permalink": "https://x.com/GabeForMayorTO/status/2061921309135630402",
-        "source": "twitter"
-      },
-      {
-        "id": "x_2061921195528794512",
-        "text": "Toronto-first. Fighting for safer streets, affordable homes &amp; a city that works for everyone. Running for Mayor 2026. 🗳️",
-        "author": "Gabe For Mayor of Toronto",
-        "handle": "@GabeForMayorTO",
-        "likes": 0,
-        "retweets": 0,
-        "created_utc": 1780435296,
-        "permalink": "https://x.com/GabeForMayorTO/status/2061921195528794512",
-        "source": "twitter"
-      },
-      {
-        "id": "x_2061921145067077707",
-        "text": "@BillboardChris I'd rather see a Tranny twerk than Olivia Chow",
-        "author": "DesperadoRED",
-        "handle": "@Desperador3dRed",
-        "likes": 0,
-        "retweets": 0,
-        "created_utc": 1780435284,
-        "permalink": "https://x.com/Desperador3dRed/status/2061921145067077707",
-        "source": "twitter"
-      },
-      {
-        "id": "x_2061918680749945141",
-        "text": "@KatKanada_TM This Mayor is such a joke on the international front....embarrassment to Toronto Asians",
-        "author": "Ecybertek",
-        "handle": "@EcybertekFong",
-        "likes": 0,
-        "retweets": 0,
-        "created_utc": 1780434696,
-        "permalink": "https://x.com/EcybertekFong/status/2061918680749945141",
-        "source": "twitter"
-      },
-      {
-        "id": "x_2061918298799796285",
-        "text": "@JJN22 @RonFilipkowski That guy used to be mayor of Toronto. (Or Governor of Maine)",
-        "author": "John D Kromkowski",
-        "handle": "@JDKromkowski",
-        "likes": 0,
-        "retweets": 0,
-        "created_utc": 1780434605,
-        "permalink": "https://x.com/JDKromkowski/status/2061918298799796285",
-        "source": "twitter"
-      },
-      {
-        "id": "x_2061917311636836682",
-        "text": "@RT_com CCP helped her get in as mayor of Toronto to push socialist communist agenda",
-        "author": "wurthy",
-        "handle": "@wurthy",
-        "likes": 1,
-        "retweets": 0,
-        "created_utc": 1780434370,
-        "permalink": "https://x.com/wurthy/status/2061917311636836682",
-        "source": "twitter"
-      },
-      {
-        "id": "x_2061916567068156190",
-        "text": "@gregbradyx Greg, the memo went out to the staff under the city manager. Olivia Chow doesn't work for Paul Johnson.",
-        "author": "Justin Holmes",
-        "handle": "@sunjustinholmes",
-        "likes": 0,
-        "retweets": 0,
-        "created_utc": 1780434192,
-        "permalink": "https://x.com/sunjustinholmes/status/2061916567068156190",
-        "source": "twitter"
-      },
-      {
-        "id": "x_2061915314711838918",
-        "text": "69-YEAR-OLD Toronto mayor Olivia Chow TWERKS for gay month https://t.co/XyU2rlD5Xr",
-        "author": "RT",
-        "handle": "@RT_com",
-        "likes": 40,
-        "retweets": 8,
-        "created_utc": 1780433894,
-        "permalink": "https://x.com/RT_com/status/2061915314711838918",
-        "source": "twitter"
-      },
-      {
-        "id": "x_2061914745192452368",
-        "text": "RT @rdassaly: Toronto Star editor-in-chief announces the paper will be using AI to cover the upcoming municipal election. \n\nhttps://t.co/6T…",
-        "author": "amy 作 amy 死",
-        "handle": "@yoodaengii",
-        "likes": 0,
-        "retweets": 63,
-        "created_utc": 1780433758,
-        "permalink": "https://x.com/yoodaengii/status/2061914745192452368",
-        "source": "twitter"
-      },
-      {
-        "id": "x_2061914606054891748",
-        "text": "Toronto deserves so much better than this mayor !! https://t.co/QKTPxljLjG",
-        "author": "Concerned Canadian",
-        "handle": "@Concern70732755",
-        "likes": 11,
-        "retweets": 2,
-        "created_utc": 1780433725,
-        "permalink": "https://x.com/Concern70732755/status/2061914606054891748",
         "source": "twitter"
       },
       {
@@ -16256,43 +16278,10 @@
         "text": "Happy Pride Month!\n\nPride Month is a time of joy and celebration for the 2SLGBTQIA+ community. A celebration of diversity, love, culture and community. An opportunity to acknowledge the hard work and sacrifice of the generations before us. A time to renew our commitment in the https://t.co/LBLKJuAH2v",
         "author": "Kristyn Wong-Tam 🇨🇦",
         "handle": "@kristynwongtam",
-        "likes": 5,
+        "likes": 15,
         "retweets": 1,
         "created_utc": 1780433543,
         "permalink": "https://x.com/kristynwongtam/status/2061913843543035940",
-        "source": "twitter"
-      },
-      {
-        "id": "x_2061911898770297305",
-        "text": "@owenbroadcast Never forget that lovable rascal Rob Ford, the mayor of Toronto who was smashing Crack rocks on camera. https://t.co/KtXlPskFZc",
-        "author": "Kyle",
-        "handle": "@KylePostingOnX",
-        "likes": 3,
-        "retweets": 0,
-        "created_utc": 1780433079,
-        "permalink": "https://x.com/KylePostingOnX/status/2061911898770297305",
-        "source": "twitter"
-      },
-      {
-        "id": "x_2061909851089858698",
-        "text": "Olivia Chow won't walk with Israel — but she'll dress up for Eid\n\nToronto Mayor Olivia Chow called Israel's independence day flag raising “divisive” — but had no problem appearing in full Islamic dress to wish the Muslim community Eid Mubarak.\n\nhttps://t.co/fDgOtkTPXi",
-        "author": "Rebel News Canada",
-        "handle": "@RebelNews_CA",
-        "likes": 25,
-        "retweets": 14,
-        "created_utc": 1780432591,
-        "permalink": "https://x.com/RebelNews_CA/status/2061909851089858698",
-        "source": "twitter"
-      },
-      {
-        "id": "x_2061909498093281434",
-        "text": "@sesamestreet Greetings from @Toronto \n\nMayor @oliviachow has a message for all the little boys and girls tuning in to Sesame Street. https://t.co/eCOk5cwllr",
-        "author": "Mary Wrath The Ultra & Far-Right Feminist 🇨🇦",
-        "handle": "@WrathMary",
-        "likes": 2,
-        "retweets": 1,
-        "created_utc": 1780432507,
-        "permalink": "https://x.com/WrathMary/status/2061909498093281434",
         "source": "twitter"
       },
       {
@@ -16311,8 +16300,8 @@
         "text": "@bradlander You mean like Brad Lander who via @WorkingFamilies @nywfp takes contributions from @georgesoros and his @OpenSociety foundations, right Bradford and his Panderistas? The same Soros who funds antifa, communist and terrorist-related groups as well as jihadist @ZohranKMamdani? https://t.co/bIcpySc3Wi",
         "author": "Young Ideas",
         "handle": "@DickYoungsGhost",
-        "likes": 3,
-        "retweets": 2,
+        "likes": 5,
+        "retweets": 3,
         "created_utc": 1780429456,
         "permalink": "https://x.com/DickYoungsGhost/status/2061896702504698224",
         "source": "twitter"
@@ -16333,7 +16322,7 @@
         "text": "@cllrainslie @siomoCTV That happened in June 2018 when the former Hash dealer @fordnation was elected!! \nOne would think if you’re from Scarborough you would remember the “decorum” Doug and his Crack addicted brother Rob brought to Toronto City Hall! 🙄\n#onpoli\n#topoli https://t.co/hKSV56DBSW",
         "author": "Beachlover 🇨🇦",
         "handle": "@BeachLoverOnt",
-        "likes": 7,
+        "likes": 8,
         "retweets": 1,
         "created_utc": 1780424622,
         "permalink": "https://x.com/BeachLoverOnt/status/2061876428157681717",
@@ -16348,17 +16337,6 @@
         "retweets": 0,
         "created_utc": 1780423000,
         "permalink": "https://x.com/Torontolife168/status/2061869621909635397",
-        "source": "twitter"
-      },
-      {
-        "id": "x_2061861157300813891",
-        "text": "@TinaYazdani @portagebaygirl1 Good grief, @SteveClarkPC, municipal elections never stopped your interference in the past. Wasn’t yours the government that changed the number of candidates that could run in Toronto in the middle of the actual election period?",
-        "author": "BarbClarkRoss",
-        "handle": "@barbclarkross",
-        "likes": 21,
-        "retweets": 5,
-        "created_utc": 1780420982,
-        "permalink": "https://x.com/barbclarkross/status/2061861157300813891",
         "source": "twitter"
       },
       {
@@ -16381,28 +16359,6 @@
         "retweets": 0,
         "created_utc": 1780419959,
         "permalink": "https://x.com/mitch6669/status/2061856866922107036",
-        "source": "twitter"
-      },
-      {
-        "id": "x_2061854312506986609",
-        "text": "REMINDER: Ford cut Toronto council IN HALF DURING THE MIDDLE OF THE MUNICIPAL ELECTION CAMPAIGN IN 2018, but sure Steve.\n\nFuck the Ford government to high hell.\n\nJust the fucking worst. https://t.co/XoATkWz23B",
-        "author": "David Brown 🇨🇦💪",
-        "handle": "@OrbitStudios",
-        "likes": 126,
-        "retweets": 41,
-        "created_utc": 1780419350,
-        "permalink": "https://x.com/OrbitStudios/status/2061854312506986609",
-        "source": "twitter"
-      },
-      {
-        "id": "x_2061852209923473435",
-        "text": "RT @GabeOatley: NEW: As the Toronto municipal election race begins to heat up, a new petition is calling on the city to establish rules aro…",
-        "author": "Penny Powers",
-        "handle": "@PennyPo54201061",
-        "likes": 0,
-        "retweets": 21,
-        "created_utc": 1780418848,
-        "permalink": "https://x.com/PennyPo54201061/status/2061852209923473435",
         "source": "twitter"
       },
       {
@@ -16433,7 +16389,7 @@
         "author": "Mitch 🇨🇦",
         "handle": "@mitch6669",
         "likes": 0,
-        "retweets": 0,
+        "retweets": 1,
         "created_utc": 1780412364,
         "permalink": "https://x.com/mitch6669/status/2061825012215038402",
         "source": "twitter"
@@ -16914,35 +16870,35 @@
     ],
     "sentiment": {
       "chowSentiment": {
-        "positive": 0,
-        "negative": 0,
+        "positive": 1,
+        "negative": 1,
         "neutral": 17,
-        "total": 17,
-        "score": 0,
+        "total": 19,
+        "score": 5,
         "trend": "up"
       },
       "bradfordSentiment": {
         "positive": 2,
         "negative": 2,
-        "neutral": 25,
-        "total": 29,
+        "neutral": 26,
+        "total": 30,
         "score": 7,
         "trend": "up"
       },
       "topIssues": [
         {
           "name": "Safety",
-          "count": 5,
+          "count": 4,
           "sentiment": 0
         },
         {
           "name": "Housing",
-          "count": 3,
+          "count": 2,
           "sentiment": 0
         },
         {
           "name": "Transit/TTC",
-          "count": 2,
+          "count": 1,
           "sentiment": 0
         }
       ],
@@ -17839,20 +17795,20 @@
         },
         {
           "date": "2026-06-02",
-          "chowPos": 0,
-          "chowNeg": 0,
+          "chowPos": 1,
+          "chowNeg": 1,
           "chowNeutral": 17,
           "bradPos": 2,
           "bradNeg": 0,
-          "bradNeutral": 6,
-          "total": 25
+          "bradNeutral": 7,
+          "total": 28
         }
       ],
       "issueHistory": [
         {
           "name": "Transit/TTC",
-          "totalCount": 56,
-          "avgSentiment": 0.07142857142857142,
+          "totalCount": 55,
+          "avgSentiment": 0.07272727272727272,
           "days": [
             {
               "date": "2026-05-27",
@@ -17886,15 +17842,15 @@
             },
             {
               "date": "2026-06-02",
-              "count": 2,
+              "count": 1,
               "sentiment": 0
             }
           ]
         },
         {
           "name": "Housing",
-          "totalCount": 45,
-          "avgSentiment": 0.13333333333333333,
+          "totalCount": 44,
+          "avgSentiment": 0.13636363636363635,
           "days": [
             {
               "date": "2026-05-27",
@@ -17928,14 +17884,14 @@
             },
             {
               "date": "2026-06-02",
-              "count": 3,
+              "count": 2,
               "sentiment": 0
             }
           ]
         },
         {
           "name": "Safety",
-          "totalCount": 43,
+          "totalCount": 42,
           "avgSentiment": 0,
           "days": [
             {
@@ -17970,7 +17926,7 @@
             },
             {
               "date": "2026-06-02",
-              "count": 5,
+              "count": 4,
               "sentiment": 0
             }
           ]
@@ -18191,8 +18147,8 @@
           ]
         }
       ],
-      "postsAnalyzed": 84,
-      "lastUpdated": 1780437623078
+      "postsAnalyzed": 80,
+      "lastUpdated": 1780452026847
     }
   }
 ]
