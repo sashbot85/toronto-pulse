@@ -891,12 +891,12 @@
   },
   {
     "date": "2026-06-03",
-    "chowPos": 2,
-    "chowNeg": 1,
-    "chowNeutral": 19,
-    "bradPos": 5,
-    "bradNeg": 2,
-    "bradNeutral": 3,
-    "total": 32
+    "chowPos": 1,
+    "chowNeg": 0,
+    "chowNeutral": 4,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 5
   }
 ]
