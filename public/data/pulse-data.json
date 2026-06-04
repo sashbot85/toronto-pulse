@@ -1,8 +1,19 @@
 {
-  "lastScraped": 1780567219366,
+  "lastScraped": 1780578004307,
   "posts": [],
   "comments": [],
   "tweets": [
+    {
+      "id": "bsky_joshmatlow.bsky.social_3mnhkpfmg7c2c",
+      "text": "Access to drinking water, especially when you’re outside in the heat, should be a right no matter where you are in Toronto. Health & safety is simply more important than FIFA restricting fans to buy Coke products. I’ll be asking city hall to push back on this latest greedy & unreasonable FIFA demand",
+      "author": "Josh Matlow",
+      "handle": "joshmatlow.bsky.social",
+      "likes": 0,
+      "retweets": 0,
+      "created_utc": 1780573898,
+      "permalink": "https://bsky.app/profile/joshmatlow.bsky.social/post/3mnhkpfmg7c2c",
+      "source": "bluesky"
+    },
     {
       "id": "bsky_joshmatlow.bsky.social_3mngmz3qgc224",
       "text": "I disagree with the TTC’s decision to install barrier fences on subway platforms. I’m convinced it’s a waste of money, and won’t effectively prevent tragedies, trespassing onto the tracks or reduce delays. I support working toward installing real platform edge doors. www.cbc.ca/news/canada/...",
@@ -188,6 +199,11 @@
     },
     "topIssues": [
       {
+        "name": "Safety",
+        "count": 3,
+        "sentiment": 0.3333333333333333
+      },
+      {
         "name": "Housing",
         "count": 3,
         "sentiment": 0.3333333333333333
@@ -196,11 +212,6 @@
         "name": "Transit/TTC",
         "count": 2,
         "sentiment": 0.5
-      },
-      {
-        "name": "Safety",
-        "count": 2,
-        "sentiment": 0
       },
       {
         "name": "Development",
@@ -1217,8 +1228,8 @@
       },
       {
         "name": "Safety",
-        "totalCount": 47,
-        "avgSentiment": 0,
+        "totalCount": 48,
+        "avgSentiment": 0.020833333333333332,
         "days": [
           {
             "date": "2026-05-27",
@@ -1262,8 +1273,8 @@
           },
           {
             "date": "2026-06-04",
-            "count": 2,
-            "sentiment": 0
+            "count": 3,
+            "sentiment": 0.3333333333333333
           }
         ]
       },
@@ -1498,7 +1509,7 @@
         ]
       }
     ],
-    "postsAnalyzed": 15,
-    "lastUpdated": 1780567219352
+    "postsAnalyzed": 16,
+    "lastUpdated": 1780578004290
   }
 }
