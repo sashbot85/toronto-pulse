@@ -1,15 +1,5 @@
 [
   {
-    "date": "2026-03-06",
-    "chowPos": 0,
-    "chowNeg": 0,
-    "chowNeutral": 0,
-    "bradPos": 0,
-    "bradNeg": 0,
-    "bradNeutral": 0,
-    "total": 0
-  },
-  {
     "date": "2026-03-07",
     "chowPos": 0,
     "chowNeg": 0,
@@ -898,5 +888,15 @@
     "bradNeg": 0,
     "bradNeutral": 0,
     "total": 5
+  },
+  {
+    "date": "2026-06-04",
+    "chowPos": 0,
+    "chowNeg": 0,
+    "chowNeutral": 0,
+    "bradPos": 0,
+    "bradNeg": 0,
+    "bradNeutral": 0,
+    "total": 0
   }
 ]
