@@ -1,5 +1,5 @@
 {
-  "lastScraped": 1780624818239,
+  "lastScraped": 1780653623215,
   "posts": [],
   "comments": [],
   "tweets": [
@@ -220,16 +220,6 @@
       }
     ],
     "volumeByDay": [
-      {
-        "date": "2026-03-07",
-        "chowPos": 0,
-        "chowNeg": 0,
-        "chowNeutral": 0,
-        "bradPos": 0,
-        "bradNeg": 0,
-        "bradNeutral": 0,
-        "total": 0
-      },
       {
         "date": "2026-03-08",
         "chowPos": 0,
@@ -1119,13 +1109,23 @@
         "bradNeg": 0,
         "bradNeutral": 0,
         "total": 0
+      },
+      {
+        "date": "2026-06-05",
+        "chowPos": 0,
+        "chowNeg": 0,
+        "chowNeutral": 0,
+        "bradPos": 0,
+        "bradNeg": 0,
+        "bradNeutral": 0,
+        "total": 0
       }
     ],
     "issueHistory": [
       {
         "name": "Transit/TTC",
-        "totalCount": 59,
-        "avgSentiment": 0.0847457627118644,
+        "totalCount": 61,
+        "avgSentiment": 0.09836065573770492,
         "days": [
           {
             "date": "2026-05-27",
@@ -1171,13 +1171,18 @@
             "date": "2026-06-04",
             "count": 2,
             "sentiment": 0.5
+          },
+          {
+            "date": "2026-06-05",
+            "count": 2,
+            "sentiment": 0.5
           }
         ]
       },
       {
         "name": "Housing",
-        "totalCount": 51,
-        "avgSentiment": 0.1568627450980392,
+        "totalCount": 54,
+        "avgSentiment": 0.16666666666666666,
         "days": [
           {
             "date": "2026-05-27",
@@ -1223,13 +1228,18 @@
             "date": "2026-06-04",
             "count": 3,
             "sentiment": 0.3333333333333333
+          },
+          {
+            "date": "2026-06-05",
+            "count": 3,
+            "sentiment": 0.3333333333333333
           }
         ]
       },
       {
         "name": "Safety",
-        "totalCount": 48,
-        "avgSentiment": 0.020833333333333332,
+        "totalCount": 51,
+        "avgSentiment": 0.0392156862745098,
         "days": [
           {
             "date": "2026-05-27",
@@ -1275,40 +1285,18 @@
             "date": "2026-06-04",
             "count": 3,
             "sentiment": 0.3333333333333333
-          }
-        ]
-      },
-      {
-        "name": "Affordability",
-        "totalCount": 9,
-        "avgSentiment": 0.2222222222222222,
-        "days": [
-          {
-            "date": "2026-05-27",
-            "count": 6,
-            "sentiment": 0.5
           },
           {
-            "date": "2026-05-29",
-            "count": 1,
-            "sentiment": -1
-          },
-          {
-            "date": "2026-06-01",
-            "count": 1,
-            "sentiment": 0
-          },
-          {
-            "date": "2026-06-03",
-            "count": 1,
-            "sentiment": 0
+            "date": "2026-06-05",
+            "count": 3,
+            "sentiment": 0.3333333333333333
           }
         ]
       },
       {
         "name": "Development",
-        "totalCount": 9,
-        "avgSentiment": 0.4444444444444444,
+        "totalCount": 10,
+        "avgSentiment": 0.5,
         "days": [
           {
             "date": "2026-05-27",
@@ -1339,6 +1327,38 @@
             "date": "2026-06-04",
             "count": 1,
             "sentiment": 1
+          },
+          {
+            "date": "2026-06-05",
+            "count": 1,
+            "sentiment": 1
+          }
+        ]
+      },
+      {
+        "name": "Affordability",
+        "totalCount": 9,
+        "avgSentiment": 0.2222222222222222,
+        "days": [
+          {
+            "date": "2026-05-27",
+            "count": 6,
+            "sentiment": 0.5
+          },
+          {
+            "date": "2026-05-29",
+            "count": 1,
+            "sentiment": -1
+          },
+          {
+            "date": "2026-06-01",
+            "count": 1,
+            "sentiment": 0
+          },
+          {
+            "date": "2026-06-03",
+            "count": 1,
+            "sentiment": 0
           }
         ]
       },
@@ -1385,8 +1405,8 @@
     "geoHistory": [
       {
         "name": "Scarborough",
-        "totalCount": 46,
-        "avgSentiment": 0.41304347826086957,
+        "totalCount": 50,
+        "avgSentiment": 0.42,
         "days": [
           {
             "date": "2026-05-27",
@@ -1430,6 +1450,11 @@
           },
           {
             "date": "2026-06-04",
+            "count": 4,
+            "sentiment": 0.5
+          },
+          {
+            "date": "2026-06-05",
             "count": 4,
             "sentiment": 0.5
           }
@@ -1510,6 +1535,6 @@
       }
     ],
     "postsAnalyzed": 16,
-    "lastUpdated": 1780624818214
+    "lastUpdated": 1780653623199
   }
 }
