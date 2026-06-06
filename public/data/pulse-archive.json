@@ -21297,7 +21297,7 @@
   },
   {
     "date": "2026-06-05",
-    "capturedAt": 1780696819028,
+    "capturedAt": 1780711223498,
     "posts": [],
     "comments": [],
     "tweets": [
@@ -21485,7 +21485,7 @@
         "neutral": 0,
         "total": 0,
         "score": 0,
-        "trend": "down"
+        "trend": "up"
       },
       "bradfordSentiment": {
         "positive": 0,
@@ -21493,7 +21493,7 @@
         "neutral": 0,
         "total": 0,
         "score": 0,
-        "trend": "down"
+        "trend": "up"
       },
       "topIssues": [
         {
@@ -22300,13 +22300,13 @@
         },
         {
           "date": "2026-05-25",
-          "chowPos": 1,
+          "chowPos": 0,
           "chowNeg": 0,
-          "chowNeutral": 1,
-          "bradPos": 1,
+          "chowNeutral": 0,
+          "bradPos": 0,
           "bradNeg": 0,
           "bradNeutral": 0,
-          "total": 3
+          "total": 0
         },
         {
           "date": "2026-05-26",
@@ -22322,21 +22322,21 @@
           "date": "2026-05-27",
           "chowPos": 0,
           "chowNeg": 0,
-          "chowNeutral": 1,
+          "chowNeutral": 0,
           "bradPos": 0,
           "bradNeg": 0,
           "bradNeutral": 0,
-          "total": 1
+          "total": 0
         },
         {
           "date": "2026-05-28",
-          "chowPos": 1,
+          "chowPos": 0,
           "chowNeg": 0,
           "chowNeutral": 0,
-          "bradPos": 1,
+          "bradPos": 0,
           "bradNeg": 0,
-          "bradNeutral": 1,
-          "total": 3
+          "bradNeutral": 0,
+          "total": 0
         },
         {
           "date": "2026-05-29",
@@ -22345,8 +22345,8 @@
           "chowNeutral": 0,
           "bradPos": 0,
           "bradNeg": 0,
-          "bradNeutral": 3,
-          "total": 3
+          "bradNeutral": 0,
+          "total": 0
         },
         {
           "date": "2026-05-30",
@@ -22355,8 +22355,8 @@
           "chowNeutral": 0,
           "bradPos": 0,
           "bradNeg": 0,
-          "bradNeutral": 9,
-          "total": 9
+          "bradNeutral": 0,
+          "total": 0
         },
         {
           "date": "2026-05-31",
@@ -22365,8 +22365,8 @@
           "chowNeutral": 0,
           "bradPos": 0,
           "bradNeg": 0,
-          "bradNeutral": 1,
-          "total": 1
+          "bradNeutral": 0,
+          "total": 0
         },
         {
           "date": "2026-06-01",
@@ -22374,29 +22374,29 @@
           "chowNeg": 0,
           "chowNeutral": 0,
           "bradPos": 0,
-          "bradNeg": 2,
-          "bradNeutral": 4,
-          "total": 6
+          "bradNeg": 0,
+          "bradNeutral": 0,
+          "total": 0
         },
         {
           "date": "2026-06-02",
           "chowPos": 0,
           "chowNeg": 0,
-          "chowNeutral": 3,
-          "bradPos": 2,
-          "bradNeg": 0,
-          "bradNeutral": 6,
-          "total": 11
-        },
-        {
-          "date": "2026-06-03",
-          "chowPos": 1,
-          "chowNeg": 0,
-          "chowNeutral": 4,
+          "chowNeutral": 0,
           "bradPos": 0,
           "bradNeg": 0,
           "bradNeutral": 0,
-          "total": 5
+          "total": 0
+        },
+        {
+          "date": "2026-06-03",
+          "chowPos": 0,
+          "chowNeg": 0,
+          "chowNeutral": 0,
+          "bradPos": 0,
+          "bradNeg": 0,
+          "bradNeutral": 0,
+          "total": 0
         },
         {
           "date": "2026-06-04",
@@ -22833,7 +22833,7 @@
         }
       ],
       "postsAnalyzed": 16,
-      "lastUpdated": 1780696819026
+      "lastUpdated": 1780711223497
     }
   }
 ]
