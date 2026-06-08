@@ -1,8 +1,19 @@
 {
-  "lastScraped": 1780869622218,
+  "lastScraped": 1780884024322,
   "posts": [],
   "comments": [],
   "tweets": [
+    {
+      "id": "bsky_joshmatlow.bsky.social_3mnq7mrxdx22v",
+      "text": "On June 15th, apartment buildings in Toronto will finally begin to display colour-coded RentSafe signs, backed by the city being able to use remedial action or financial penalties if landlords don’t maintain safe and healthy homes for their tenants-holding corporate landlords to account, ensuring…",
+      "author": "Josh Matlow",
+      "handle": "joshmatlow.bsky.social",
+      "likes": 0,
+      "retweets": 0,
+      "created_utc": 1780871237,
+      "permalink": "https://bsky.app/profile/joshmatlow.bsky.social/post/3mnq7mrxdx22v",
+      "source": "bluesky"
+    },
     {
       "id": "bsky_joshmatlow.bsky.social_3mnhkpfmg7c2c",
       "text": "Access to drinking water, especially when you’re outside in the heat, should be a right no matter where you are in Toronto. Health & safety is simply more important than FIFA restricting fans to buy Coke products. I’ll be asking city hall to push back on this latest greedy & unreasonable FIFA demand",
@@ -89,17 +100,6 @@
       "retweets": 0,
       "created_utc": 1780089086,
       "permalink": "https://bsky.app/profile/joshmatlow.bsky.social/post/3mmzh6v5jfk26",
-      "source": "bluesky"
-    },
-    {
-      "id": "bsky_joshmatlow.bsky.social_3mmwrajegyk2l",
-      "text": "Thank goodness! I am so deeply happy for the family. Our kids are everything. Thank you to police, community members, Shomrim, TTC staff and many others who worked together to find Esti.",
-      "author": "Josh Matlow",
-      "handle": "joshmatlow.bsky.social",
-      "likes": 0,
-      "retweets": 0,
-      "created_utc": 1779996799,
-      "permalink": "https://bsky.app/profile/joshmatlow.bsky.social/post/3mmwrajegyk2l",
       "source": "bluesky"
     },
     {
@@ -199,19 +199,19 @@
     },
     "topIssues": [
       {
-        "name": "Safety",
-        "count": 3,
-        "sentiment": 0.3333333333333333
+        "name": "Housing",
+        "count": 4,
+        "sentiment": 0.25
       },
       {
-        "name": "Housing",
-        "count": 3,
-        "sentiment": 0.3333333333333333
+        "name": "Safety",
+        "count": 2,
+        "sentiment": 0.5
       },
       {
         "name": "Transit/TTC",
-        "count": 2,
-        "sentiment": 0.5
+        "count": 1,
+        "sentiment": 1
       },
       {
         "name": "Development",
@@ -1124,8 +1124,8 @@
     "issueHistory": [
       {
         "name": "Transit/TTC",
-        "totalCount": 65,
-        "avgSentiment": 0.12307692307692308,
+        "totalCount": 64,
+        "avgSentiment": 0.125,
         "days": [
           {
             "date": "2026-05-27",
@@ -1184,15 +1184,15 @@
           },
           {
             "date": "2026-06-07",
-            "count": 2,
-            "sentiment": 0.5
+            "count": 1,
+            "sentiment": 1
           }
         ]
       },
       {
         "name": "Housing",
-        "totalCount": 60,
-        "avgSentiment": 0.18333333333333332,
+        "totalCount": 61,
+        "avgSentiment": 0.18032786885245902,
         "days": [
           {
             "date": "2026-05-27",
@@ -1251,15 +1251,15 @@
           },
           {
             "date": "2026-06-07",
-            "count": 3,
-            "sentiment": 0.3333333333333333
+            "count": 4,
+            "sentiment": 0.25
           }
         ]
       },
       {
         "name": "Safety",
-        "totalCount": 57,
-        "avgSentiment": 0.07017543859649122,
+        "totalCount": 56,
+        "avgSentiment": 0.07142857142857142,
         "days": [
           {
             "date": "2026-05-27",
@@ -1318,8 +1318,8 @@
           },
           {
             "date": "2026-06-07",
-            "count": 3,
-            "sentiment": 0.3333333333333333
+            "count": 2,
+            "sentiment": 0.5
           }
         ]
       },
@@ -1585,6 +1585,6 @@
       }
     ],
     "postsAnalyzed": 16,
-    "lastUpdated": 1780869622203
+    "lastUpdated": 1780884024307
   }
 }
