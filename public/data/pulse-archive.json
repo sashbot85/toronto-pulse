@@ -29252,10 +29252,21 @@
   },
   {
     "date": "2026-06-10",
-    "capturedAt": 1781085617216,
+    "capturedAt": 1781096408940,
     "posts": [],
     "comments": [],
     "tweets": [
+      {
+        "id": "bsky_joshmatlow.bsky.social_3mnwjgl43ic2b",
+        "text": "The Republic of Rathnelly is ready to fight for Toronto’s waterfront.",
+        "author": "Josh Matlow",
+        "handle": "joshmatlow.bsky.social",
+        "likes": 0,
+        "retweets": 0,
+        "created_utc": 1781087924,
+        "permalink": "https://bsky.app/profile/joshmatlow.bsky.social/post/3mnwjgl43ic2b",
+        "source": "bluesky"
+      },
       {
         "id": "bsky_joshmatlow.bsky.social_3mnq7mrxdx22v",
         "text": "On June 15th, apartment buildings in Toronto will finally begin to display colour-coded RentSafe signs, backed by the city being able to use remedial action or financial penalties if landlords don’t maintain safe and healthy homes for their tenants-holding corporate landlords to account, ensuring…",
@@ -29342,17 +29353,6 @@
         "retweets": 0,
         "created_utc": 1780310538,
         "permalink": "https://bsky.app/profile/joshmatlow.bsky.social/post/3mn7vgnpou226",
-        "source": "bluesky"
-      },
-      {
-        "id": "bsky_joshmatlow.bsky.social_3mmzh6v5jfk26",
-        "text": "Thank you to CHIN Radio for sharing the stories of Toronto’s many cultures, and celebrating the communities that call our city home, for 60 years! And to Lenny Lombardi, Grace Fusillo-Lombardi, their family and staff who proudly continue the late Johnny Lombardi’s legacy.",
-        "author": "Josh Matlow",
-        "handle": "joshmatlow.bsky.social",
-        "likes": 0,
-        "retweets": 0,
-        "created_utc": 1780089086,
-        "permalink": "https://bsky.app/profile/joshmatlow.bsky.social/post/3mmzh6v5jfk26",
         "source": "bluesky"
       },
       {
@@ -30913,7 +30913,7 @@
         }
       ],
       "postsAnalyzed": 16,
-      "lastUpdated": 1781085617215
+      "lastUpdated": 1781096408939
     }
   }
 ]
